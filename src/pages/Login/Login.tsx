@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import  CookieServices from "../../services/CookieServices/CookieServices";
+import CookieServices from "../../services/CookieServices/CookieServices";
 interface LoginFormInputs {
   email: string;
   password: string;
@@ -36,7 +36,9 @@ const Login = () => {
         </Typography>
         <Typography className="form-subtitle" variant="body2">
           If you don’t have an account register You can{"   "}
-          <Link className="register-link">Register here !</Link>
+          <Link href="register" className="register-link">
+            Register here !
+          </Link>
         </Typography>
       </Grid>
       <Box onSubmit={handleSubmit(onSubmit)} component="form" noValidate>

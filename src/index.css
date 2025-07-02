@@ -16,6 +16,7 @@ a {
   font-size: 30px !important;
   font-weight: 500;
   margin-bottom: 22px;
+
 }
 .leftImageForm {
   background-image: url("./assets//Images//41931307d527e3cec10fb425f8cb83f0219d7ec7.jpg");
@@ -91,7 +92,7 @@ a {
   left: 0;
 }
 .img-content h1 {
-      color: #fdfffc !important;
+  color: #fdfffc !important;
   font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 5px;
@@ -100,4 +101,20 @@ a {
   font-size: 1.125rem;
   font-weight: 500;
   margin-bottom: 1.25rem;
+}
+
+.login-link {
+  font-weight: 600 !important;
+  color: rgba(235, 81, 72, 1) !important;
+  cursor: pointer !important;
+}
+
+.submit-btn-register{
+  background-color: var(--primary-color) !important;
+  margin-top: 2rem !important;
+  color: #fff !important;
+  padding-block: 12px !important;
+  font-size: 17px !important;
+  box-shadow: 0px 8px 15px 0px #3252df4d !important;
+  text-transform: capitalize !important;
 }
