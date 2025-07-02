@@ -1,7 +1,11 @@
 import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
-import axios from "axios";
+
 import { useForm } from "react-hook-form";
-import  CookieServices from "../../services/CookieServices/CookieServices";
+import CookieServices from "../../services/CookieServices/CookieServices";
+import toast from "react-hot-toast";
+import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
+import { useNavigate } from "react-router-dom";
+
 interface LoginFormInputs {
   email: string;
   password: string;
@@ -10,21 +14,19 @@ const Login = () => {
   const {
     register,
     formState: { errors },
+    watch,
     handleSubmit,
   } = useForm<LoginFormInputs>({ mode: "onChange" });
+  const navigate = useNavigate();
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const response = await axios.post(
-        "https://upskilling-egypt.com:3000/api/v0/portal/users/login",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token") ?? ""}`,
-          },
-        }
-      );
+      const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
       CookieServices.set("token", response?.data?.data?.token);
-    } catch (error) {
+      toast.success(response?.data?.message || "Logged in successfully!");
+      navigate("/home-page");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error?.message || "Login failed:");
       console.error("Login failed:", error);
     }
   };
@@ -77,7 +79,13 @@ const Login = () => {
           {...register("password", { required: "Password is required" })}
         />
         {/* ------------------------ forgot password ----------------------- */}
-        <Link variant="body2" className="link-text">
+        <Link
+          variant="body2"
+          className="link-text"
+          onClick={() =>
+            navigate("/change-password", { state: { email: watch("email") } })
+          }
+        >
           Forgot Password ?
         </Link>
         {/* ==================================== */}
