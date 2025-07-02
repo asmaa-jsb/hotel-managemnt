@@ -1,11 +1,13 @@
-import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
 
-import { useForm } from "react-hook-form";
-import CookieServices from "../../services/CookieServices/CookieServices";
 import toast from "react-hot-toast";
-import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
 import { useNavigate } from "react-router-dom";
-
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
+import  CookieServices from "../../services/CookieServices/CookieServices";
+import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
+import { Link } from "react-router-dom";
+import { EmailValidation, PassValidation } from "@/utils/Validations/Validations";
+;
 interface LoginFormInputs {
   email: string;
   password: string;
@@ -20,11 +22,13 @@ const Login = () => {
   const navigate = useNavigate();
   const onSubmit = async (data: LoginFormInputs) => {
     try {
+
       const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
       CookieServices.set("token", response?.data?.data?.token);
       toast.success(response?.data?.message || "Logged in successfully!");
       navigate("/home-page");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.message || "Login failed:");
       console.error("Login failed:", error);
@@ -38,7 +42,7 @@ const Login = () => {
         </Typography>
         <Typography className="form-subtitle" variant="body2">
           If you don’t have an account register You can{"   "}
-          <Link className="register-link">Register here !</Link>
+          <Link to={"/register"} className="register-link">Register here !</Link>
         </Typography>
       </Grid>
       <Box onSubmit={handleSubmit(onSubmit)} component="form" noValidate>
@@ -58,7 +62,7 @@ const Login = () => {
           }
           className="input-field margin-bottom"
           placeholder="Please type here ..."
-          {...register("email", { required: "Email is required" })}
+          {...register("email", EmailValidation)}
         />
         {/* ------------------------ password ----------------------- */}
         <TextField
@@ -76,18 +80,21 @@ const Login = () => {
           }
           placeholder="Please type here ..."
           className="input-field"
-          {...register("password", { required: "Password is required" })}
+          {...register("password", PassValidation)}
         />
         {/* ------------------------ forgot password ----------------------- */}
-        <Link
+
+        <Typography
           variant="body2"
           className="link-text"
           onClick={() =>
             navigate("/change-password", { state: { email: watch("email") } })
           }
         >
+
+       
           Forgot Password ?
-        </Link>
+        </Typography>
         {/* ==================================== */}
         <Button
           type="submit"
