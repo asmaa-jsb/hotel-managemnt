@@ -1,0 +1,6 @@
+@import "./responsive.css";
+@import "./variables.css";
+
+h1 {
+  color: blue;
+}
