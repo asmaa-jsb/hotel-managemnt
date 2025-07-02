@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+:root {
+  --primary-color: #3252df;
+}
+.AuthContainer {
+  height: 100vh;
+}
+.form-title {
+  font-size: 30px !important;
+  font-weight: 500;
+  margin-bottom: 22px;
+}
+.leftImageForm {
+  background-image: url("./assets//Images//41931307d527e3cec10fb425f8cb83f0219d7ec7.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  margin-top: 21px;
+  position: relative;
+}
+.registerImg {
+  background-image: url("./assets/Images//7bf6331d05683c0d11c825315d6665a638528e5f.jpg");
+}
+.reset-forgetImg {
+  background-image: url("./assets/Images//d158185a6e98393b02ffa614503c307e55f33da8.jpg");
+}
+.form-subtitle {
+  width: 308px;
+  font-size: 16px !important;
+  margin-bottom: 28px !important;
+  font-weight: 400 !important;
+}
+.input-field {
+  width: 100%;
+  background-color: #f5f6f8;
+  border: none !important;
+}
+.margin-bottom {
+  margin-bottom: 46px !important;
+}
+.link-text {
+  color: #4d4d4d !important;
+  margin-top: 12px !important;
+  font-size: 12px !important;
+  float: right !important;
+  cursor: pointer !important;
+}
+.submit-btn {
+  background-color: var(--primary-color) !important;
+  margin-top: 5.625rem !important;
+  color: #fff !important;
+  padding-block: 12px !important;
+  font-size: 17px !important;
+  box-shadow: 0px 8px 15px 0px #3252df4d !important;
+  text-transform: capitalize !important;
+}
+.register-link {
+  font-weight: 600 !important;
+  color: #152c5b !important;
+  cursor: pointer !important;
+}
+.form {
+  padding: 5.1875rem 9.8125rem 0 7.75rem;
+}
+@media (max-width: 768px) {
+  .form {
+    padding: 20px;
+  }
+  .leftImageForm {
+    display: none;
+  }
+}
+
+.img-content {
+  color: #fdfffc;
+  padding: 5.625rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.img-content h1 {
+      color: #fdfffc !important;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.img-content p {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
