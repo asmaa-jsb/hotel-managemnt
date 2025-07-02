@@ -1,4 +1,3 @@
-import loginBackground from "./login.png";
-import registerBackground from "./register.png";
+import logo from "./Staycation..png";
 
-export { loginBackground, registerBackground };
+export { logo };
