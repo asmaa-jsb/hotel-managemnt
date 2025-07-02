@@ -59,7 +59,7 @@ a {
 }
 .submit-btn {
   background-color: var(--primary-color) !important;
-  margin-top: 5.625rem !important;
+  /* margin-top: 5.625rem !important; */
   color: #fff !important;
   padding-block: 12px !important;
   font-size: 17px !important;
@@ -69,6 +69,14 @@ a {
 .register-link {
   font-weight: 600 !important;
   color: #152c5b !important;
+  cursor: pointer !important;
+}
+
+.login-link
+{
+  color: #d21919 !important; 
+  font-weight: 600 !important;
+  text-decoration: underline;
   cursor: pointer !important;
 }
 .form {
