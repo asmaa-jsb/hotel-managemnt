@@ -10,8 +10,8 @@ const AuthLayout: React.FC = (): JSX.Element => {
 
   const pathName = path.includes("register")
     ? "Register"
-    : path.includes("forget-password")
-    ? "ForgetPassword"
+    : path.includes("change-password")
+    ? "ChangePassword"
     : path.includes("reset-password")
     ? "ResetPassword"
     : "";
@@ -27,7 +27,7 @@ const AuthLayout: React.FC = (): JSX.Element => {
         className={`${
           pathName === "Register"
             ? "registerImg"
-            : pathName === "ForgetPassword" || pathName === "ResetPassword"
+            : pathName === "ChangePassword" || pathName === "ResetPassword"
             ? "reset-forgetImg"
             : ""
         } leftImageForm`}
@@ -40,7 +40,7 @@ const AuthLayout: React.FC = (): JSX.Element => {
           <Typography component="h1">
             {pathName === "Register"
               ? "Sign up to Roamhome"
-              : pathName === "ForgetPassword"
+              : pathName === "ChangePassword"
               ? "Forgot password"
               : pathName === "ResetPassword"
               ? "Reset Password"
