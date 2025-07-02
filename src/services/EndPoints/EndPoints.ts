@@ -1,4 +1,5 @@
 import axios from "axios";
+import CookieServices from "../CookieServices/CookieServices";
 const baseURL = "https://upskilling-egypt.com:3000";
 export const portalUrl = "api/v0/portal/users";
 // export const imgURL = "https://upskilling-egypt.com:3003";
@@ -6,9 +7,10 @@ export const portalUrl = "api/v0/portal/users";
 export const axiosInstance = axios.create({
   baseURL,
 });
+
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = CookieServices.get("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -22,12 +24,12 @@ axiosInstance.interceptors.request.use(
 // ****************** USERS Portal Auth **********************
 
 export const USERS_URLS = {
-  LOGIN: `/users/login`,
-  FORGET_PASSWORD: `/users/forgot-password`,
-  RESET_PASSWORD: `/users/reset-password`,
-  REGISTER: `/users`,
-  CHANGE_PASSWORD: `/users/change-password`,
-  GET_USER_PROFILE: (id: string) => `/users/${id}`,
-  facebook_auth: `/users/auth/facebook`,
-  google_auth: `/users/auth/google`,
+  LOGIN: `${portalUrl}/login`,
+  FORGET_PASSWORD: `${portalUrl}/forgot-password`,
+  RESET_PASSWORD: `${portalUrl}/reset-password`,
+  REGISTER: `${portalUrl}`,
+  CHANGE_PASSWORD: `${portalUrl}/change-password`,
+  GET_USER_PROFILE: (id: string) => `${portalUrl}/${id}`,
+  facebook_auth: `${portalUrl}/auth/facebook`,
+  google_auth: `${portalUrl}/auth/google`,
 };
