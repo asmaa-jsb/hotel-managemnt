@@ -55,7 +55,6 @@ const Register = () => {
       setLoading(false);
     }
   };
-
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
