@@ -1,14 +1,17 @@
 @import "./responsive.css";
 @import "./variables.css";
+@import "./Auth.css";
 
-.error-reset {
-  color: red !important;
-  font-weight: bold !important;
-  cursor: pointer;
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif !important;
 }
 
-.send-email {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+a {
+  text-decoration: none !important;
 }
+:root {
+  --primary-color: #3252df;
+}
+
+
