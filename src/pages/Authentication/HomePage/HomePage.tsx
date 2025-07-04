@@ -1,5 +1,5 @@
+import CookieServices from "@/services/CookieServices/CookieServices";
 import { Button } from "@mui/material";
-import CookieServices from "../../services/CookieServices/CookieServices";
 
 import { useNavigate } from "react-router-dom";
 

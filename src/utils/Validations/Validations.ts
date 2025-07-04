@@ -10,7 +10,8 @@ export const PassValidation = {
   required: "Password is required",
   pattern: {
     value:
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|\\:;"'<>,.?/~`]).{8,}$/,
+      /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|\\:;"'<>,.?/~`]).{8,}$/,
+
     message:
       "Password must be at least 8 characters, include uppercase, lowercase, number, and symbol",
   },
@@ -21,7 +22,6 @@ export const ConfirmPassValidation = (password: string) => ({
   validate: (value: string) => value === password || "Passwords do not match",
 });
 
-
 export const UserNameValidation = {
   required: "User Name is required",
   pattern: {
@@ -30,7 +30,6 @@ export const UserNameValidation = {
       "User Name must start with a letter and can include letters, numbers, or underscores (3-20 characters)",
   },
 };
-
 
 export const PhoneNumberValidation = {
   required: "Phone number is required",
@@ -46,4 +45,3 @@ export const CountryValidation = {
     message: "Country must contain only letters",
   },
 };
-
