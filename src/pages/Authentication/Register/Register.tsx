@@ -182,6 +182,8 @@ const Register = () => {
         />
         <AuthSubmitButton label="Sign up" loading={isPending} />
         <Box sx={{ height: 24 }} />
+
+        
       </Box>
     </Box>
   );
