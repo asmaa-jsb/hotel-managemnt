@@ -2,7 +2,7 @@ import axios from "axios";
 import CookieServices from "../CookieServices/CookieServices";
 const baseURL = "https://upskilling-egypt.com:3000";
 export const portalUrl = "api/v0/portal/users";
-// export const imgURL = "https://upskilling-egypt.com:3003";
+export const imgURL = "https://upskilling-egypt.com:3003";
 
 export const axiosInstance = axios.create({
   baseURL,

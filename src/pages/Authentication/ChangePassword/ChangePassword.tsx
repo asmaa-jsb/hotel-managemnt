@@ -1,16 +1,19 @@
-import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
+import { Box, Grid, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
-
 import toast from "react-hot-toast";
 import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import type ChangePasswordFormInputs from "@/interfaces/changePassword";
 import CircularProgress from "@mui/material/CircularProgress";
+
+// Reusable components
+import AuthInput from "@/components/AuthInput";
+import AuthSubmitButton from "@/components/AuthSubmitButton";
+
+import type ChangePasswordFormInputs from "@/interfaces/AuthInterface";
 
 const ResetPassword = () => {
   const { register, handleSubmit } = useForm<ChangePasswordFormInputs>();
-
   const navigate = useNavigate();
   const location = useLocation();
   const { email } = location.state || "";
@@ -26,7 +29,6 @@ const ResetPassword = () => {
       );
       toast.success(response?.data?.message || "Email sent successfully!");
       navigate("/login");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "Error in reset password");
       console.error("Reset failed:", error);
@@ -50,38 +52,20 @@ const ResetPassword = () => {
       </Grid>
 
       <Box onSubmit={handleSubmit(onSubmit)} component="form" noValidate>
-        {/* Email Field */}
-        <TextField
+        {/* Email Field (disabled) */}
+        <AuthInput
           label="Email Address"
-          required
-          fullWidth
-          id="email"
+          name="email"
           type="email"
-          autoComplete="email"
+          placeholder="Please type here ..."
+          required
           defaultValue={email}
           disabled
-          className="input-field margin-bottom"
-          placeholder="Please type here ..."
-          {...register("email")}
+          register={register("email")}
         />
 
         {/* Submit Button */}
-        <Button
-          type="submit"
-          className="submit-btn"
-          fullWidth
-          disabled={loading}
-          variant="outlined"
-        >
-          {loading ? (
-            <span className="send-email">
-              <CircularProgress size={18} color="inherit" />
-              Sending...
-            </span>
-          ) : (
-            "Send Email"
-          )}
-        </Button>
+        <AuthSubmitButton label="Send Email" loading={loading} />
       </Box>
     </Box>
   );

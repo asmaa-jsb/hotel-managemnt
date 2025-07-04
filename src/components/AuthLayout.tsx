@@ -19,7 +19,7 @@ const AuthLayout: React.FC = (): JSX.Element => {
     <Grid container component="main" className="AuthContainer">
       {/* Right Form Section */}
       <Grid size={{ md: 6, sm: 12, xs: 12 }} sx={{ order: { xs: 2, md: 1 } }}>
-        <img src={logo} alt="logo" style={{ padding: "30px" }} />
+        <img src={logo} alt="logo" style={{ padding: "20px 16px 0px 20px" }} />
         <Outlet />
       </Grid>
       {/* Left Image Section */}
