@@ -10,8 +10,27 @@ import {
 } from "./pages/index";
 import AuthLayout from "./components/AuthLayout";
 import "./styles/global.css";
+import { useDispatch } from "react-redux";
+import { saveLoginData } from "./redux/slices/authSlice";
+import { useEffect } from "react";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(saveLoginData());
+
+    const handleStorage = () => {
+      dispatch(saveLoginData());
+    };
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, [dispatch]);
+
+
+
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -25,7 +44,13 @@ function App() {
         { path: "change-password", element: <ChangePassword /> },
       ],
     },
-    { path: "/home-page", element: <HomePage /> },
+    {
+      path: "/",
+      element: <ProtectedRoute />,
+      children: [
+        { path: "home-page", element: <HomePage /> },
+      ],
+    },
   ]);
   return (
     <>
