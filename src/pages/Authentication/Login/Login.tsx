@@ -30,7 +30,7 @@ const Login = () => {
       const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
       CookieServices.set("token", response?.data?.data?.token);
       toast.success(response?.data?.message || "Logged in successfully!");
-      navigate("/home-page");
+      navigate("/header");
     } catch (error: any) {
       toast.error(error?.message || "Login failed:");
       console.error("Login failed:", error);

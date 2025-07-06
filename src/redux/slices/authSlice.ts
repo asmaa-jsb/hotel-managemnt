@@ -1,6 +1,7 @@
 // src/redux/authSlice.ts
-import { createSlice } from '@reduxjs/toolkit';
-import { jwtDecode } from 'jwt-decode';
+import CookieServices from "@/services/CookieServices/CookieServices";
+import { createSlice } from "@reduxjs/toolkit";
+import { jwtDecode } from "jwt-decode";
 
 interface DecodedToken {
   userId: number;
@@ -19,17 +20,18 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     saveLoginData: (state) => {
-      const token = localStorage.getItem('token');
+      const token = CookieServices.get("token");
+
       if (token) {
         try {
           const decoded = jwtDecode<DecodedToken>(token);
           state.loginData = decoded;
         } catch (error) {
-          console.error('Invalid token:', error);
+          console.error("Invalid token:", error);
           state.loginData = null;
         }
       }
