@@ -18,3 +18,19 @@ a {
 .Primary-color {
   color: var(--primary-color);
 }
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+
+.nav-link .MuiListItem-root {
+  border-left: 4px solid transparent;
+  border-radius: 0 4px 4px 0;
+}
+
+.nav-link.active-link .MuiListItem-root {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-left: 4px solid white;
+}

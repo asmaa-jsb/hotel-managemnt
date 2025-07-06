@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import RoomList from "./pages/Admin Portal/Room/Components/RoomList/RoomList";
+import PortalMainLayout from "./components/AdminPortalLayout";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,7 +47,12 @@ function App() {
     {
       path: "/",
       element: <ProtectedRoute />,
-      children: [{ path: "header", element: <RoomList /> }],
+      children: [
+        {
+          element: <PortalMainLayout />,
+          children: [{ path: "rooms", element: <RoomList /> }],
+        },
+      ],
     },
 
     // { path: "/home-page", element: <HomePage /> },
