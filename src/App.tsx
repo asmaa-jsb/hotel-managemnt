@@ -10,6 +10,8 @@ import {
 } from "./pages/index";
 import AuthLayout from "./components/AuthLayout";
 import "./styles/global.css";
+import Header from "./components/Header";
+import RoomList from "./pages/Admin Portal/Room/Components/RoomList/RoomList";
 
 function App() {
   const routes = createBrowserRouter([
@@ -25,7 +27,9 @@ function App() {
         { path: "change-password", element: <ChangePassword /> },
       ],
     },
-    { path: "/home-page", element: <HomePage /> },
+
+    // { path: "/home-page", element: <HomePage /> },
+    { path: "header", element: <RoomList /> },
   ]);
   return (
     <>

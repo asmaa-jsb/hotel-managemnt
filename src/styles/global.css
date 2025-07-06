@@ -1,6 +1,7 @@
 @import "./responsive.css";
 @import "./variables.css";
 @import "./Auth.css";
+@import "./AdminPortal.css";
 
 body {
   margin: 0;
@@ -11,7 +12,9 @@ a {
   text-decoration: none !important;
 }
 :root {
-  --primary-color: #3252df;
+  --primary-color: #rgba(50, 82, 223, 0.3);
 }
 
-
+.Primary-color {
+  color: var(--primary-color);
+}

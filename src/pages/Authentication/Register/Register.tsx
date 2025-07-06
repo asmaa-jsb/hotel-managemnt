@@ -41,7 +41,7 @@ const Register = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: registerUser,
     onSuccess: (data) => {
-      toast.success(data?.message || "Registered successfully!");
+      toast.success(data?.message || "Registered successfully!"); 
       navigate("login");
     },
     onError: (error: any) => {
@@ -182,11 +182,10 @@ const Register = () => {
         />
         <AuthSubmitButton label="Sign up" loading={isPending} />
         <Box sx={{ height: 24 }} />
-
-        
       </Box>
     </Box>
   );
 };
 
 export default Register;
+ 
