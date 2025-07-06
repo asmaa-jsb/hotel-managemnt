@@ -41,9 +41,10 @@ const Register = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: registerUser,
     onSuccess: (data) => {
-      toast.success(data?.message || "Registered successfully!"); 
-      navigate("login");
+      toast.success(data?.message || "Registered successfully!");
+      navigate("/login");
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       toast.error(error?.response?.data?.message || "Registration failed");
     },
@@ -57,6 +58,7 @@ const Register = () => {
     const file = e.target.files?.[0];
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setValue("profileImage", e.target.files as any);
     }
   };
@@ -188,4 +190,3 @@ const Register = () => {
 };
 
 export default Register;
- 
