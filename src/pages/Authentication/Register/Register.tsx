@@ -1,12 +1,8 @@
-import { Box, Grid, Link, Typography, Avatar, IconButton } from "@mui/material";
-import { useForm } from "react-hook-form";
+import defultImg from "@/assets/Images/default-avatar.png";
 import AuthInput from "@/components/AuthInput";
 import AuthSubmitButton from "@/components/AuthSubmitButton";
-import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
-import toast from "react-hot-toast";
-import { useEffect, useRef, useState } from "react";
-import defultImg from "@/assets/Images/default-avatar.png";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import type { IRegisterFormInputs } from "@/interfaces/AuthInterface";
+import { registerUser } from "@/services/API/Authapi";
 import {
   ConfirmPassValidation,
   CountryValidation,
@@ -15,13 +11,18 @@ import {
   PhoneNumberValidation,
   UserNameValidation,
 } from "@/utils/Validations/Validations";
-import type { IRegisterFormInputs } from "@/interfaces/AuthInterface";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { Avatar, Box, Grid, Link, Typography } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [loading, setLoading] = useState(false);
+
   const {
     register,
     formState: { errors },
@@ -32,29 +33,22 @@ const Register = () => {
   } = useForm<IRegisterFormInputs>({ mode: "onChange" });
   const navigate = useNavigate();
   const passwordValue = watch("password");
-  const onSubmit = async (data: IRegisterFormInputs) => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("userName", data.userName);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("confirmPassword", data.confirmPassword);
-    formData.append("phoneNumber", data.phoneNumber.toString());
-    formData.append("country", data.country);
-    formData.append("role", "user");
-    if (data.profileImage && data.profileImage[0]) {
-      formData.append("profileImage", data.profileImage[0]);
-    }
 
-    try {
-      const response = await axiosInstance.post(USERS_URLS.REGISTER, formData);
-      navigate("login");
-      toast.success(response?.data?.message || "Registered successfully!");
-    } catch (error) {
-      toast.error("Registration failed");
-      setLoading(false);
-    }
+  const onSubmit = (data: IRegisterFormInputs) => {
+    mutate(data);
   };
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: (data) => {
+      toast.success(data?.message || "Registered successfully!"); 
+      navigate("login");
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message || "Registration failed");
+    },
+  });
+
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
@@ -186,7 +180,7 @@ const Register = () => {
             ConfirmPassValidation(passwordValue)
           )}
         />
-        <AuthSubmitButton label="Sign up" loading={loading} />
+        <AuthSubmitButton label="Sign up" loading={isPending} />
         <Box sx={{ height: 24 }} />
       </Box>
     </Box>
@@ -194,3 +188,4 @@ const Register = () => {
 };
 
 export default Register;
+ 

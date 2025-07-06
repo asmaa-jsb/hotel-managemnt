@@ -5,7 +5,6 @@ import {
   ResetPassword,
   Register,
   NotFound,
-  HomePage,
   ChangePassword,
 } from "./pages/index";
 import AuthLayout from "./components/AuthLayout";
@@ -14,6 +13,8 @@ import { useDispatch } from "react-redux";
 import { saveLoginData } from "./redux/slices/authSlice";
 import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
+
+import RoomList from "./pages/Admin Portal/Room/Components/RoomList/RoomList";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,11 +26,9 @@ function App() {
       dispatch(saveLoginData());
     };
 
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, [dispatch]);
-
-
 
   const routes = createBrowserRouter([
     {
@@ -47,10 +46,10 @@ function App() {
     {
       path: "/",
       element: <ProtectedRoute />,
-      children: [
-        { path: "home-page", element: <HomePage /> },
-      ],
+      children: [{ path: "header", element: <RoomList /> }],
     },
+
+    // { path: "/home-page", element: <HomePage /> },
   ]);
   return (
     <>
