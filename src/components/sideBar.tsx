@@ -18,6 +18,7 @@ import {
   Logout,
   ChevronLeft,
   ChevronRight,
+  Build,
 } from "@mui/icons-material";
 
 import { NavLink } from "react-router-dom";
@@ -27,6 +28,7 @@ const menuItems = [
   { label: "Users", icon: <People />, path: "/users" },
   { label: "Rooms", icon: <MeetingRoom />, path: "/rooms" },
   { label: "Ads", icon: <CalendarToday />, path: "/ads" },
+  { label: "Facilities", icon: <Build />, path: "/facilities" },
   { label: "Bookings", icon: <People />, path: "/bookings" },
   { label: "Change password", icon: <Lock />, path: "/change-password" },
   { label: "Logout", icon: <Logout />, path: "/logout" },
