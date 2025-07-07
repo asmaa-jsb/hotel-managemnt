@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import type { MouseEvent } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { FaRegEdit,FaEye, FaTrash } from "react-icons/fa";
+import { FaRegEdit, FaEye, FaTrash } from "react-icons/fa";
 export interface TableRowData {
   [key: string]: any;
 }
@@ -59,7 +59,11 @@ const ReusableTable = ({
   };
 
   return (
-    <TableContainer component={Paper} className="table-container">
+    <TableContainer
+      // sx={{ boxShadow: "unset" }}
+      // component={Paper}
+      className="table-container"
+    >
       <Table>
         <TableHead>
           <TableRow className="table-head-row">
@@ -117,7 +121,7 @@ const ReusableTable = ({
           }}
           className="action-item"
         >
-          <FaEye className="action-icon"/>
+          <FaEye className="action-icon" />
           <span>View</span>
         </MenuItem>
         <MenuItem
@@ -127,7 +131,7 @@ const ReusableTable = ({
           }}
           className="action-item"
         >
-         <FaRegEdit className="action-icon"/>
+          <FaRegEdit className="action-icon" />
           <span>Edit</span>
         </MenuItem>
         <MenuItem
@@ -137,7 +141,7 @@ const ReusableTable = ({
           }}
           className="action-item"
         >
-          <FaTrash className="action-icon"/>
+          <FaTrash className="action-icon" />
           <span>Delete</span>
         </MenuItem>
       </Menu>

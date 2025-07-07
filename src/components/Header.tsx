@@ -1,13 +1,19 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 const Header = () => {
   return (
-    <Container maxWidth="lg" className="Header-bg">
+    <Box
+      //  px={3}
+      px={{ xs: 2, sm: 4, md: 3 }}
+      // py={{ xs: 2, sm: 3 }}
+      sx={{ width: "94%", marginLeft: "15px" }}
+      className="Header-bg"
+    >
       <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        flexWrap={"wrap"}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        flexWrap="wrap"
         gap={2}
         py={4}
         my={3}
@@ -26,7 +32,7 @@ const Header = () => {
           </Button>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

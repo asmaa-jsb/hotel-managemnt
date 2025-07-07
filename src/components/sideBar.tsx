@@ -4,6 +4,7 @@ import {
   IconButton,
   List,
   ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Tooltip,
@@ -18,7 +19,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "@mui/icons-material";
-import { useState } from "react";
+
 import { NavLink } from "react-router-dom";
 
 const menuItems = [
@@ -34,9 +35,13 @@ const menuItems = [
 const drawerWidth = 240;
 const collapsedWidth = 50;
 
-const Sidebar = () => {
-  const [open, setOpen] = useState(true);
-
+const Sidebar = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+}) => {
   return (
     <Drawer
       variant="permanent"
@@ -67,25 +72,26 @@ const Sidebar = () => {
             }
           >
             <Tooltip title={!open ? item.label : ""} placement="right">
-              <ListItem
-                button
-                sx={{
-                  px: open ? 2 : 1,
-                  py: 1.5,
-                  transition: "padding 0.2s ease",
-                }}
-              >
-                <ListItemIcon
+              <ListItem disablePadding>
+                <ListItemButton
                   sx={{
-                    color: "#fff",
-                    minWidth: 0,
-                    mr: open ? 2 : "auto",
-                    justifyContent: "center",
+                    px: open ? 2 : 1,
+                    py: 1.5,
+                    transition: "padding 0.2s ease",
                   }}
                 >
-                  {item.icon}
-                </ListItemIcon>
-                {open && <ListItemText primary={item.label} />}
+                  <ListItemIcon
+                    sx={{
+                      color: "#fff",
+                      minWidth: 0,
+                      mr: open ? 2 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  {open && <ListItemText primary={item.label} />}
+                </ListItemButton>
               </ListItem>
             </Tooltip>
           </NavLink>

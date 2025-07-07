@@ -6,17 +6,23 @@ import { Avatar } from "@mui/material";
 import { useState } from "react";
 import ReusableModal from "@/components/ReusableModal";
 import ReusableSearchFilters from "@/components/ReusableSearchFilters";
+import ConfirmDeleteModal from "@/components/DeleteModal";
 
 const RoomList = () => {
   const { data, isLoading, isError } = useRooms();
 
   const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<TableRowData | null>(null);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
   const [selectedFacility, setSelectedFacility] = useState("");
 
+  const handleDelete = (id: string | number) => {
+    setOpenDelete(true);
+    console.log("first", id);
+  };
   const handleView = (id: string | number) => {
     const room = rows.find((r) => r.id === id);
     if (room) {
@@ -78,8 +84,6 @@ const RoomList = () => {
     <>
       <Header />
 
-     
-
       <ReusableSearchFilters
         searchValue={searchTerm}
         onSearchChange={setSearchTerm}
@@ -97,7 +101,7 @@ const RoomList = () => {
           rows={filteredRows}
           onView={handleView}
           onEdit={(id) => alert(`Edit room ${id}`)}
-          onDelete={(id) => alert(`Delete room ${id}`)}
+          onDelete={(id) => handleDelete(id)}
         />
       </div>
 
@@ -123,6 +127,17 @@ const RoomList = () => {
           </div>
         )}
       </ReusableModal>
+
+      <ConfirmDeleteModal
+        open={openDelete}
+        onClose={() => setOpenDelete(false)}
+        onConfirm={() => {
+          // handle delete
+          setOpenDelete(false);
+        }}
+        title="Delete This Ads Room?"
+        description="Are you sure you want to delete this item? If you are sure just click on delete it"
+      />
     </>
   );
 };
