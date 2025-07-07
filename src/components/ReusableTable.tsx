@@ -1,19 +1,18 @@
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   IconButton,
   Menu,
   MenuItem,
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
+  TableRow
 } from "@mui/material";
-import { useState } from "react";
 import type { MouseEvent } from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { FaRegEdit, FaEye, FaTrash } from "react-icons/fa";
+import { useState } from "react";
+import { FaEye, FaRegEdit, FaTrash } from "react-icons/fa";
 export interface TableRowData {
   [key: string]: any;
 }
@@ -76,7 +75,7 @@ const ReusableTable = ({
                 {column.label}
               </TableCell>
             ))}
-            <TableCell align="right" className="table-head-cell">
+            <TableCell align="center" className="table-head-cell">
               Actions
             </TableCell>
           </TableRow>

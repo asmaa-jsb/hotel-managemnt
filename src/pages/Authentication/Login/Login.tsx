@@ -28,7 +28,11 @@ const Login = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
-      CookieServices.set("token", response?.data?.data?.token);
+      CookieServices.set("token", response?.data?.data?.token, {
+        path: "/",
+        maxAge: 86400,
+      });
+      console.log("Login Response:", response.data);
       toast.success(response?.data?.message || "Logged in successfully!");
       navigate("/rooms");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

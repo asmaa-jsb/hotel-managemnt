@@ -1,12 +1,12 @@
 import Header from "@/components/Header";
 import ReusableTable from "@/components/ReusableTable";
 import type { Column, TableRowData } from "@/components/ReusableTable";
-import { useRooms } from "@/utils/HelperFunctions/HelperFunctions";
 import { Avatar } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReusableModal from "@/components/ReusableModal";
 import ReusableSearchFilters from "@/components/ReusableSearchFilters";
 import ConfirmDeleteModal from "@/components/DeleteModal";
+import { useRooms } from "@/utils/Hooks/Hooks";
 
 const RoomList = () => {
   const { data, isLoading, isError } = useRooms();
@@ -16,13 +16,15 @@ const RoomList = () => {
   const [selectedRoom, setSelectedRoom] = useState<TableRowData | null>(null);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTag, setSelectedTag] = useState("");
-  const [selectedFacility, setSelectedFacility] = useState("");
+  const [selectedPrice, setSelectedPrice] = useState("");
+  const [selectedCapacity, setSelectedCapacity] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleDelete = (id: string | number) => {
     setOpenDelete(true);
-    console.log("first", id);
+    console.log("Delete room with id:", id);
   };
+
   const handleView = (id: string | number) => {
     const room = rows.find((r) => r.id === id);
     if (room) {
@@ -53,46 +55,62 @@ const RoomList = () => {
     { id: "category", label: "Category" },
   ];
 
-  const rows: TableRowData[] =
-    data?.data.rooms.map((room) => ({
-      id: room._id,
-      roomNumber: room.roomNumber,
-      image: room.images?.[0] || "",
-      price: room.price,
-      discount: `${room.discount}%`,
-      capacity: `${room.capacity} persons`,
-      category: room.facilities?.[0]?.name || "—",
-    })) || [];
+  const rooms = data?.data?.rooms ?? [];
+
+  const rows: TableRowData[] = rooms.map((room) => ({
+    id: room._id,
+    roomNumber: room.roomNumber,
+    image: room.images?.[0] || "",
+    price: room.price.toString(),
+    discount: `${room.discount}%`,
+    capacity: `${room.capacity} persons`,
+    category: room.facilities?.[0]?.name || "—",
+  }));
 
   const filteredRows = rows.filter((row) => {
     const matchesSearch = row.roomNumber
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    const matchesTag =
-      !selectedTag ||
-      row.capacity.toLowerCase().includes(selectedTag.toLowerCase());
-    const matchesFacility =
-      !selectedFacility ||
-      row.category.toLowerCase().includes(selectedFacility.toLowerCase());
-    return matchesSearch && matchesTag && matchesFacility;
+    const matchesPrice =
+      !selectedPrice || row.price.toString() === selectedPrice;
+    const matchesCapacity =
+      !selectedCapacity ||
+      row.capacity.toLowerCase() === selectedCapacity.toLowerCase();
+    const matchesCategory =
+      !selectedCategory ||
+      row.category.toLowerCase() === selectedCategory.toLowerCase();
+
+    return matchesSearch && matchesPrice && matchesCapacity && matchesCategory;
   });
 
-  const tags = ["10 persons", "20 persons", "30 persons"];
-  const facilities = ["Sofa", "Chicken", "Noodles", "Spa", "—"];
+  const unique = (arr: string[]) => [...new Set(arr)];
 
   return (
     <>
       <Header />
-
       <ReusableSearchFilters
         searchValue={searchTerm}
         onSearchChange={setSearchTerm}
-        tagValue={selectedTag}
-        onTagChange={setSelectedTag}
-        facilityValue={selectedFacility}
-        onFacilityChange={setSelectedFacility}
-        tags={tags}
-        facilities={facilities}
+        dropdowns={[
+          {
+            label: "Price",
+            options: unique(rows.map((r) => r.price)),
+            value: selectedPrice,
+            onChange: setSelectedPrice,
+          },
+          {
+            label: "Capacity",
+            options: unique(rows.map((r) => r.capacity)),
+            value: selectedCapacity,
+            onChange: setSelectedCapacity,
+          },
+          {
+            label: "Category",
+            options: unique(rows.map((r) => r.category)),
+            value: selectedCategory,
+            onChange: setSelectedCategory,
+          },
+        ]}
       />
 
       <div className="roomlist-container">
@@ -101,7 +119,7 @@ const RoomList = () => {
           rows={filteredRows}
           onView={handleView}
           onEdit={(id) => alert(`Edit room ${id}`)}
-          onDelete={(id) => handleDelete(id)}
+          onDelete={handleDelete}
         />
       </div>
 
@@ -131,12 +149,9 @@ const RoomList = () => {
       <ConfirmDeleteModal
         open={openDelete}
         onClose={() => setOpenDelete(false)}
-        onConfirm={() => {
-          // handle delete
-          setOpenDelete(false);
-        }}
-        title="Delete This Ads Room?"
-        description="Are you sure you want to delete this item? If you are sure just click on delete it"
+        onConfirm={() => setOpenDelete(false)}
+        title="Delete This Room?"
+        description="Are you sure you want to delete this item?"
       />
     </>
   );
