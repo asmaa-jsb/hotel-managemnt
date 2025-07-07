@@ -1,6 +1,12 @@
 import { Box, Button, Typography } from "@mui/material";
 
-const Header = () => {
+interface HeaderProps {
+  title?: string;
+  btnTitle?: string;
+  description?: string;
+}
+
+const Header = ({ title, btnTitle, description }: HeaderProps) => {
   return (
     <Box
       //  px={3}
@@ -19,8 +25,10 @@ const Header = () => {
         my={3}
       >
         <Box>
-          <Typography variant="h5">Rooms Table Details</Typography>
-          <Typography variant="body1">You can check all details</Typography>
+          <Typography variant="h5">{title || "Rooms Table Details"}</Typography>
+          <Typography variant="body1">
+            {description || "You can check all details"}
+          </Typography>
         </Box>
         <Box>
           <Button
@@ -28,7 +36,7 @@ const Header = () => {
             variant="contained"
             sx={{ py: 1.5, px: 5, textTransform: "none" }}
           >
-            Add New Room
+            {btnTitle || " Add New Room"}
           </Button>
         </Box>
       </Box>

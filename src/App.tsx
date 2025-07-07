@@ -6,6 +6,8 @@ import {
   Register,
   NotFound,
   ChangePassword,
+  RoomList,
+  AdsList,
 } from "./pages/index";
 import AuthLayout from "./components/AuthLayout";
 import "./styles/global.css";
@@ -14,7 +16,6 @@ import { saveLoginData } from "./redux/slices/authSlice";
 import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import RoomList from "./pages/Admin Portal/Room/Components/RoomList/RoomList";
 import PortalMainLayout from "./components/AdminPortalLayout";
 
 function App() {
@@ -50,7 +51,10 @@ function App() {
       children: [
         {
           element: <PortalMainLayout />,
-          children: [{ path: "rooms", element: <RoomList /> }],
+          children: [
+            { path: "rooms", element: <RoomList /> },
+            { path: "ads", element: <AdsList /> },
+          ],
         },
       ],
     },
