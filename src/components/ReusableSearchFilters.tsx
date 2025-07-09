@@ -2,34 +2,27 @@ import React from "react";
 import { TextField, MenuItem, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
+type DropdownOption = {
+  label: string;
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+};
+
 type Props = {
   searchValue: string;
   onSearchChange: (value: string) => void;
-  tagValue: string;
-  onTagChange: (value: string) => void;
-  facilityValue: string;
-  onFacilityChange: (value: string) => void;
-  tags: string[];
-  facilities: string[];
+  dropdowns?: DropdownOption[]; // Optional array of filters (e.g., price, capacity, etc.)
 };
 
-function ReusableSearchFilters({
-  searchValue,
-  onSearchChange,
-  tagValue,
-  onTagChange,
-  facilityValue,
-  onFacilityChange,
-  tags,
-  facilities,
-}: Props) {
+const ReusableSearchFilters = ({ searchValue, onSearchChange, dropdowns = [] }: Props) => {
   return (
-    <div className="search-filters-container">
+    <div className="search-filters-container" style={{ display: "flex", gap: "1rem" }}>
       <TextField
         className="search-input"
         value={searchValue}
         onChange={(e) => onSearchChange(e.target.value)}
-        placeholder="Search by number ..."
+        placeholder="Search..."
         variant="outlined"
         size="small"
         InputProps={{
@@ -41,37 +34,26 @@ function ReusableSearchFilters({
         }}
       />
 
-      <TextField
-        className="dropdown-input"
-        select
-        value={tagValue}
-        onChange={(e) => onTagChange(e.target.value)}
-        size="small"
-      >
-        <MenuItem value="">Tag</MenuItem>
-        {tags.map((tag) => (
-          <MenuItem key={tag} value={tag}>
-            {tag}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <TextField
-        className="dropdown-input"
-        select
-        value={facilityValue}
-        onChange={(e) => onFacilityChange(e.target.value)}
-        size="small"
-      >
-        <MenuItem value="">Facilities</MenuItem>
-        {facilities.map((fac) => (
-          <MenuItem key={fac} value={fac}>
-            {fac}
-          </MenuItem>
-        ))}
-      </TextField>
+      {dropdowns.map((dropdown, index) => (
+        <TextField
+          key={index}
+          select
+          label={`Filter by ${dropdown.label}`}
+          value={dropdown.value}
+          onChange={(e) => dropdown.onChange(e.target.value)}
+          size="small"
+          className="dropdown-input"
+        >
+          <MenuItem value="">All</MenuItem>
+          {[...new Set(dropdown.options)].map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </TextField>
+      ))}
     </div>
   );
-}
+};
 
 export default ReusableSearchFilters;

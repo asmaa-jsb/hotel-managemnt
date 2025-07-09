@@ -1,19 +1,20 @@
+// ✅ ReusableTable.tsx (معدل بحركة framer-motion)
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   IconButton,
   Menu,
   MenuItem,
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
 } from "@mui/material";
-import { useState } from "react";
 import type { MouseEvent } from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { FaRegEdit,FaEye, FaTrash } from "react-icons/fa";
+import { useState } from "react";
+import { FaEye, FaRegEdit, FaTrash } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+
 export interface TableRowData {
   [key: string]: any;
 }
@@ -59,10 +60,10 @@ const ReusableTable = ({
   };
 
   return (
-    <TableContainer component={Paper} className="table-container">
+    <TableContainer className="table-container">
       <Table>
         <TableHead>
-          <TableRow className="table-head-row">
+          <tr className="table-head-row">
             {columns.map((column) => (
               <TableCell
                 key={column.id}
@@ -72,33 +73,41 @@ const ReusableTable = ({
                 {column.label}
               </TableCell>
             ))}
-            <TableCell align="right" className="table-head-cell">
+            <TableCell align="center" className="table-head-cell">
               Actions
             </TableCell>
-          </TableRow>
+          </tr>
         </TableHead>
 
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row[idKey]} className="table-body-row">
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align || "left"}
-                  className="table-cell-no-border"
-                >
-                  {column.render
-                    ? column.render(row[column.id], row)
-                    : row[column.id]}
+          <AnimatePresence>
+            {rows.map((row) => (
+              <motion.tr
+                key={row[idKey]}
+                className="table-body-row"
+                initial={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                transition={{ duration: 0.4 }}
+              >
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align || "left"}
+                    className="table-cell-no-border"
+                  >
+                    {column.render
+                      ? column.render(row[column.id], row)
+                      : row[column.id]}
+                  </TableCell>
+                ))}
+                <TableCell align="right" className="table-cell-no-border">
+                  <IconButton onClick={(e) => handleMenuOpen(e, row[idKey])}>
+                    <MoreVertIcon />
+                  </IconButton>
                 </TableCell>
-              ))}
-              <TableCell align="right" className="table-cell-no-border">
-                <IconButton onClick={(e) => handleMenuOpen(e, row[idKey])}>
-                  <MoreVertIcon />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
+              </motion.tr>
+            ))}
+          </AnimatePresence>
         </TableBody>
       </Table>
 
@@ -117,7 +126,7 @@ const ReusableTable = ({
           }}
           className="action-item"
         >
-          <FaEye className="action-icon"/>
+          <FaEye className="action-icon" />
           <span>View</span>
         </MenuItem>
         <MenuItem
@@ -127,7 +136,7 @@ const ReusableTable = ({
           }}
           className="action-item"
         >
-         <FaRegEdit className="action-icon"/>
+          <FaRegEdit className="action-icon" />
           <span>Edit</span>
         </MenuItem>
         <MenuItem
@@ -137,7 +146,7 @@ const ReusableTable = ({
           }}
           className="action-item"
         >
-          <FaTrash className="action-icon"/>
+          <FaTrash className="action-icon" />
           <span>Delete</span>
         </MenuItem>
       </Menu>

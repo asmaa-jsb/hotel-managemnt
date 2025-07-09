@@ -1,32 +1,32 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
-const Header = () => {
+interface HeaderProps {
+  title?: string;
+  btnTitle?: string;
+  description?: string;
+  linkTo?: string;
+}
+
+const Header = ({ title, btnTitle, description, linkTo }: HeaderProps) => {
   return (
-    <Container maxWidth="lg" className="Header-bg">
-      <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        flexWrap={"wrap"}
-        gap={2}
-        py={4}
-        my={3}
-      >
-        <Box>
-          <Typography variant="h5">Rooms Table Details</Typography>
-          <Typography variant="body1">You can check all details</Typography>
+    <Box className="header-container">
+      <Box className="header-content">
+        <Box className="header-text">
+          <Typography variant="h5" className="Primary-color">
+            {title }
+          </Typography>
+          <Typography variant="body1">
+            {description || "You can check all details"}
+          </Typography>
         </Box>
-        <Box>
-          <Button
-            className="Primary-color"
-            variant="contained"
-            sx={{ py: 1.5, px: 5, textTransform: "none" }}
-          >
-            Add New Room
-          </Button>
-        </Box>
+        {linkTo && (
+          <Link to={linkTo} className="header-link-button">
+            {btnTitle }
+          </Link>
+        )}
       </Box>
-    </Container>
+    </Box>
   );
 };
 

@@ -5,15 +5,34 @@ import {
   ResetPassword,
   Register,
   NotFound,
-  HomePage,
   ChangePassword,
+  RoomList,
+  AdsList,
 } from "./pages/index";
 import AuthLayout from "./components/AuthLayout";
 import "./styles/global.css";
-import Header from "./components/Header";
-import RoomList from "./pages/Admin Portal/Room/Components/RoomList/RoomList";
+import { useDispatch } from "react-redux";
+import { saveLoginData } from "./redux/slices/authSlice";
+import { useEffect } from "react";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import PortalMainLayout from "./components/AdminPortalLayout";
+import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(saveLoginData());
+
+    const handleStorage = () => {
+      dispatch(saveLoginData());
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [dispatch]);
+
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -27,9 +46,23 @@ function App() {
         { path: "change-password", element: <ChangePassword /> },
       ],
     },
+    {
+      path: "/",
+      element: <ProtectedRoute />,
+      children: [
+        {
+          element: <PortalMainLayout />,
+          children: [
+            { path: "rooms", element: <RoomList /> },
+            { path: "rooms/new-room", element: <RoomForm /> },
+            { path: "rooms/:roomId", element: <RoomForm /> },
+            { path: "ads", element: <AdsList /> },
+          ],
+        },
+      ],
+    },
 
     // { path: "/home-page", element: <HomePage /> },
-    { path: "header", element: <RoomList /> },
   ]);
   return (
     <>

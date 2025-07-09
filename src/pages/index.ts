@@ -4,3 +4,5 @@ export { default as ResetPassword } from "./Authentication/ResetPassword/ResetPa
 export { default as ChangePassword } from "./Authentication/ChangePassword/ChangePassword";
 export { default as NotFound } from "./Authentication/NotFound/NotFound";
 export { default as HomePage } from "./Authentication/HomePage/HomePage";
+export { default as RoomList } from "./AdminPortal/Room/Components/RoomList/RoomList";
+export { default as AdsList } from "./AdminPortal/Ads/Components/AdsList/AdsList";

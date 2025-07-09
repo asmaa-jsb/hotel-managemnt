@@ -2,7 +2,7 @@ import axios from "axios";
 import CookieServices from "../CookieServices/CookieServices";
 const baseURL = "https://upskilling-egypt.com:3000";
 export const UserPortal = "api/v0/portal/users";
-export const AdminPortal = "api/v0/portal";
+export const AdminPortal = "/api/v0/admin";
 export const imgURL = "https://upskilling-egypt.com:3003";
 export const axiosInstance = axios.create({
   baseURL,
@@ -12,7 +12,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const token = CookieServices.get("token");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = token;
     }
     return config;
   },
@@ -35,5 +35,10 @@ export const USERS_URLS = {
 };
 
 export const ROOM_URLS = {
-  ROOM_LIST: `${AdminPortal}/rooms/available`,
+  ROOM_LIST: `${AdminPortal}/rooms`,
+  DELETE_ROOM: (id: string) => `${AdminPortal}/rooms/${id}`,
+  UPDATE_ROOM: (id: string) => `${AdminPortal}/rooms/${id}`,
+  CREATE_ROOM: `${AdminPortal}/rooms`,
+  GET_FACILITIES:`${AdminPortal}/room-facilities`,
+   GET_ROOM_DETAILS: (id: string) => `/api/v0/admin/rooms/${id}`
 };
