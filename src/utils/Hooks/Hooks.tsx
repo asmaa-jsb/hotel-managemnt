@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchRooms } from "@/services/API/Roomapi";
-import type { IRoomList } from "@/interfaces/RoomInterface";
+import { fetchBookings, fetchRooms } from "@/services/API/Roomapi";
+import type { IRoomList } from "@/interfaces/Interfaces";
 
 export const useRooms = () => {
   return useQuery<IRoomList>({
@@ -8,6 +8,15 @@ export const useRooms = () => {
     queryFn: () => fetchRooms(),
   });
 };
+
+export const useBookings = () => {
+  return useQuery({
+    queryKey: ["bookings"],
+    queryFn: () => fetchBookings(), 
+  });
+}
+
+
 
 // export const useRoomsFacilities = () => {
 //   return useQuery<IRoomFacilities>({

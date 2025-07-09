@@ -27,9 +27,9 @@ export interface Column {
 interface Props {
   columns: Column[];
   rows: TableRowData[];
-  onView: (id: string | number) => void;
-  onEdit: (id: string | number) => void;
-  onDelete: (id: string | number) => void;
+  onView?: (id: string | number) => void;
+  onEdit?: (id: string | number) => void;
+  onDelete?: (id: string | number) => void;
   idKey?: string;
 }
 
@@ -105,6 +105,7 @@ const ReusableTable = ({
         </TableBody>
       </Table>
 
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -113,37 +114,50 @@ const ReusableTable = ({
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <MenuItem
-          onClick={() => {
-            selectedId && onView(selectedId);
-            handleClose();
-          }}
-          className="action-item"
-        >
-          <FaEye className="action-icon" />
-          <span>View</span>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            selectedId && onEdit(selectedId);
-            handleClose();
-          }}
-          className="action-item"
-        >
-          <FaRegEdit className="action-icon" />
-          <span>Edit</span>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            selectedId && onDelete(selectedId);
-            handleClose();
-          }}
-          className="action-item"
-        >
-          <FaTrash className="action-icon" />
-          <span>Delete</span>
-        </MenuItem>
+        {onView && (
+          <MenuItem
+            onClick={() => {
+              if (selectedId) {
+                onView(selectedId);
+              }
+              handleClose();
+            }}
+            className="action-item"
+          >
+            <FaEye className="action-icon" />
+            <span>View</span>
+          </MenuItem>
+        )}
+        {onEdit && (
+          <MenuItem
+            onClick={() => {
+              if (selectedId) {
+                onEdit(selectedId);
+              }
+              handleClose();
+            }}
+            className="action-item"
+          >
+            <FaRegEdit className="action-icon" />
+            <span>Edit</span>
+          </MenuItem>
+        )}
+        {onDelete && (
+          <MenuItem
+            onClick={() => {
+              if (selectedId) {
+                onDelete(selectedId);
+              }
+              handleClose();
+            }}
+            className="action-item"
+          >
+            <FaTrash className="action-icon" />
+            <span>Delete</span>
+          </MenuItem>
+        )}
       </Menu>
+
     </TableContainer>
   );
 };

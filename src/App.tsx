@@ -17,6 +17,8 @@ import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import PortalMainLayout from "./components/AdminPortalLayout";
+import BookingList from "./pages/AdminPortal/BookingList/BookingList";
+import Users from "./pages/AdminPortal/Users/Users";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +56,9 @@ function App() {
           children: [
             { path: "rooms", element: <RoomList /> },
             { path: "ads", element: <AdsList /> },
+            { path: "bookings", element: <BookingList /> },
+            { path: "users", element: <Users /> },
+             
           ],
         },
       ],
