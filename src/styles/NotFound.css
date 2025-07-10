@@ -13,7 +13,7 @@
 .back-btn {
     padding:20px !important;
     border-radius: 10px;
-    background-color: var(--primary-color) ;
+   background-color: var(--secondary-color) ;
     color: #fff ;
     padding-block: 12px ;
     font-size: 17px ;

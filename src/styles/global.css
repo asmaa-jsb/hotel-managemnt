@@ -2,6 +2,8 @@
 @import "./variables.css";
 @import "./Auth.css";
 @import "./AdminPortal.css";
+@import "./NotFound.css";
+
 
 body {
   margin: 0;
@@ -13,6 +15,7 @@ a {
 }
 :root {
   --primary-color: #rgba(50, 82, 223, 0.3);
+  --secondary-color :#203FC7;
 }
 
 .Primary-color {

@@ -4,7 +4,6 @@ import {
   Login,
   ResetPassword,
   Register,
-  NotFound,
   ChangePassword,
   RoomList,
   AdsList,
@@ -19,6 +18,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PortalMainLayout from "./components/AdminPortalLayout";
 import BookingList from "./pages/AdminPortal/BookingList/BookingList";
 import Users from "./pages/AdminPortal/Users/Users";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ function App() {
     {
       path: "/",
       element: <AuthLayout />,
-      errorElement: <NotFound />,
+      errorElement: <NotFound/>,
       children: [
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
