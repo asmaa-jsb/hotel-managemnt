@@ -13,9 +13,10 @@ export const fetchRooms = async (page = 1, size = 10): Promise<IRoomList> => {
   return response.data;
 };
 
+
 export const fetchRoomDetails = async (id: string): Promise<Room> => {
   const response = await axiosInstance.get(ROOM_URLS.GET_ROOM_DETAILS(id));
-  return response.data.data.room; // تأكد هيكلية الرد من API
+  return response.data.data.room;
 };
 
 export const DeleteRoom = async (id: string): Promise<IRoomList> => {

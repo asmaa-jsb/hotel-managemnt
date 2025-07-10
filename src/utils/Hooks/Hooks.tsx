@@ -9,10 +9,11 @@ import {
 } from "@/services/API/Roomapi";
 import type { CreateRoomInput, Facility, IRoomList, Room } from "@/interfaces/RoomInterface";
 
-export const useRooms = () => {
+export const useRooms = (page: number, size: number) => {
   return useQuery<IRoomList>({
-    queryKey: ["rooms"],
-    queryFn: () => fetchRooms(),
+    queryKey: ["rooms", page, size],
+    queryFn: () => fetchRooms(page, size),
+    // keepPreviousData: true, // حتى لا توميض البيانات بين التغييرات
   });
 };
 

@@ -14,7 +14,7 @@ export interface Room {
   price: number;
   capacity: number;
   discount: number;
-  facilities: Facility[]; // عدل لتكون قائمة من Facility
+  facilities: Facility[]; 
   createdBy: CreatedBy;
   images: File[];
 }
@@ -24,6 +24,8 @@ export interface IRoomList {
   message: string;
   data: {
     rooms: Room[];
+    totalPages: number;
+    totalItems: number;
   };
 }
 
