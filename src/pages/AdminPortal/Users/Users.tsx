@@ -1,4 +1,4 @@
-import ConfirmDeleteModal from "@/components/DeleteModal";
+
 import Header from "@/components/Header";
 import ReusableModal from "@/components/ReusableModal";
 import ReusableTable from "@/components/ReusableTable"
@@ -8,43 +8,41 @@ import {  useState } from "react";
 const Users = () => {
    const { data, isLoading, isError } = useUsers();
    const [open, setOpen] = useState(false);
-   const [openDelete, setOpenDelete] = useState(false);
-     const handleView = (id: string | number) => {
-     const [selectedUser, setSelectedUser] = useState();
+   const [selectedUser, setSelectedUser] = useState<any>(null);
+   const handleView = (id: string | number) => {
      const User = rows.find((U) => U._id === id);
      if (User) {
-     setSelectedUser(User);
+       setSelectedUser(User);
        setOpen(true);
      }
    };
    const handleClose = () => {
      setOpen(false);
-   setSelectedUser(null);
+     setSelectedUser(null);
    };
      const  columns = [
-     { id: "roomNum", label: "Room Number" },
-      { id: "totalPrice", label: "Total Price" },
-     { id: "startDate", label: "Start Date" },
-     { id: "endDate", label: "End Date" },
-     { id: "status", label: "Status" },
-    { id: "userName", label: "User" },
+     { id: " userName", label: "user Name" },
+      { id: "email", label: "Email" },
+     { id: "phoneNumber", label: "Phone Number" },
+     { id: "country", label: "Country" },
+     { id: "role", label: "Role" },
+    { id: "profileImage", label: "Profile Image" },
    ];
        
-   const handleShowDelete =  () => {
-     setOpenDelete(true);
-   
-   }
+
   
 
- const bookings = data?.data?.booking;
-       const rows = (bookings ?? []).map((booking: Booking, index:number) => ({
-           _id: booking._id,
-       roomNum: booking?.roomNum || index + 1,
-         startDate: new Date(booking?.startDate).toLocaleDateString(),
-         endDate: new Date(booking?.endDate).toLocaleDateString(),
-         status: booking?.status,
-         totalPrice: booking?.totalPrice, 
-         userName: booking?.user?.userName,
+ const users= data;
+ console.log(users);
+ 
+       const rows = (users ?? []).map((user, index:number) => ({
+           _id: user._id,
+          userName: user.userName,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+                country: user.country,
+                role: user.role,
+                profileImage: user.profileImage,
        }));
        
    return (<>
@@ -55,43 +53,37 @@ const Users = () => {
      <ReusableTable
      columns={columns}
      rows={rows}
-      onDelete={handleShowDelete}
       onView={handleView}
       idKey="_id"
      
      />
            <ReusableModal open={open} onClose={handleClose}>
-         {selectedBooking && (
+         {selectedUser && (
            <div className="room-details">
              
  
              <p>
-               <strong>Room Number:</strong> {selectedBooking?.roomNum}
+               <strong>Room Number:</strong> {selectedUser}
              </p>
              <p>
-               <strong>Price:</strong> ${selectedBooking?.totalPrice}
+               <strong>Price:</strong> ${selectedUser}
              </p>
              <p>
-               <strong>Start Date:</strong> {selectedBooking?.startDate}
+               <strong>Start Date:</strong> {selectedUser}
              </p>
              <p>
-               <strong>End Date:</strong> {selectedBooking?.endDate}
+               <strong>End Date:</strong> {selectedUser}
              </p>
              <p>
-               <strong>Status :</strong> {selectedBooking?.status}
+               <strong>Status :</strong> {selectedUser}
              </p>
               <p>
-               <strong>User :</strong> {selectedBooking?.userName}
+               <strong>User :</strong> {selectedUser}
              </p>
            </div>
          )}
        </ReusableModal>
-        <ConfirmDeleteModal
-         open={openDelete}
-         onClose={() => setOpenDelete(false)}  
-         title="Delete This Booking?"
-         description="Are you sure you want to delete this item?"
-       />
+      
        </>
    )
 }
