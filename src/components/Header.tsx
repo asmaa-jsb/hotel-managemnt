@@ -4,9 +4,10 @@ interface HeaderProps {
   title?: string;
   btnTitle?: string;
   description?: string;
+  showBtn ? : boolean;
 }
 
-const Header = ({ title, btnTitle, description }: HeaderProps) => {
+const Header = ({ title, btnTitle, description , showBtn = true}: HeaderProps) => {
   return (
     <Box
       //  px={3}
@@ -31,13 +32,15 @@ const Header = ({ title, btnTitle, description }: HeaderProps) => {
           </Typography>
         </Box>
         <Box>
-          <Button
+         {
+          showBtn? ( <Button
             className="Primary-color"
             variant="contained"
             sx={{ py: 1.5, px: 5, textTransform: "none" }}
           >
             {btnTitle || " Add New Room"}
-          </Button>
+          </Button>): ""
+         }
         </Box>
       </Box>
     </Box>

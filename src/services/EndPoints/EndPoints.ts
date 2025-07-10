@@ -33,7 +33,8 @@ export const USERS_URLS = {
   facebook_auth: `${UserPortal}/auth/facebook`,
   google_auth: `${UserPortal}/auth/google`,
 };
-
+// ****************** Admin Portal **********************
+// rooms
 export const ROOM_URLS = {
   ROOM_LIST: `${AdminPortal}/rooms`,
   
@@ -45,4 +46,10 @@ export const FACILITIES_URLS ={
   DELETE_FACILITIES :(id : string)=> `${AdminPortal}/room-facilities/${id}`,
   UPDATE_FACILITIES :(id :string) => `${AdminPortal}/room-facilities/${id}`,
  
+}
+// booking list
+export const BOOKINGS = {
+ GET_ALL_BOOKINGS: `${AdminPortal}/booking`,
+ GET_BOOKING_BY_ID: (id: string) => `${AdminPortal}/booking/${id}`,
+ DELETE_BOOKING_BY_ID:(id: string)=> `${AdminPortal}/booking/${id}`,
 }

@@ -4,7 +4,6 @@ import {
   Login,
   ResetPassword,
   Register,
-  NotFound,
   ChangePassword,
   RoomList,
   AdsList,
@@ -17,7 +16,13 @@ import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import PortalMainLayout from "./components/AdminPortalLayout";
+
 import FacilitiesList from "./pages/AdminPortal/Facilities/Components/FacilitiesList/FacilitiesList";
+
+import BookingList from "./pages/AdminPortal/BookingList/BookingList";
+import Users from "./pages/AdminPortal/Users/Users";
+import NotFound from "./pages/NotFound/NotFound";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +42,7 @@ function App() {
     {
       path: "/",
       element: <AuthLayout />,
-      errorElement: <NotFound />,
+      errorElement: <NotFound/>,
       children: [
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
@@ -56,6 +61,8 @@ function App() {
             { path: "rooms", element: <RoomList /> },
             { path: "ads", element: <AdsList /> },
             { path: "facilities", element: <FacilitiesList /> },
+            { path: "bookings", element: <BookingList /> },
+            { path: "users", element: <Users /> },
           ],
         },
       ],

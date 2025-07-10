@@ -3,6 +3,8 @@ import { fetchRooms } from "@/services/API/Roomapi";
 import type {IRoomList } from "@/interfaces/RoomInterface";
 import { createFacility, deleteFacility, fetchFacilities, updateFacility } from "@/services/API/Facilities";
 import type { FacilityPayload, IRoomFacilities } from "@/interfaces/FacilityInterface";
+import { fetchBookings } from "@/services/API/Roomapi";
+
 
 export const useRooms = () => {
   return useQuery<IRoomList>({
