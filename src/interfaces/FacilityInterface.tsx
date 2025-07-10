@@ -17,3 +17,8 @@ export interface Facility {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface FacilityPayload 
+{
+  name :string ;
+}

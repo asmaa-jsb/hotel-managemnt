@@ -41,5 +41,8 @@ export const ROOM_URLS = {
 
 export const FACILITIES_URLS ={
   GET_ALL_FACILITIES :`${AdminPortal}/room-facilities`,
+  CREATE_FACILITIES : `${AdminPortal}/room-facilities`,
   DELETE_FACILITIES :(id : string)=> `${AdminPortal}/room-facilities/${id}`,
+  UPDATE_FACILITIES :(id :string) => `${AdminPortal}/room-facilities/${id}`,
+ 
 }

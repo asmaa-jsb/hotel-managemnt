@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchRooms } from "@/services/API/Roomapi";
 import type {IRoomList } from "@/interfaces/RoomInterface";
-import { deleteFacility, fetchFacilities } from "@/services/API/Facilities";
-import type { IRoomFacilities } from "@/interfaces/FacilityInterface";
+import { createFacility, deleteFacility, fetchFacilities, updateFacility } from "@/services/API/Facilities";
+import type { FacilityPayload, IRoomFacilities } from "@/interfaces/FacilityInterface";
 
 export const useRooms = () => {
   return useQuery<IRoomList>({
@@ -33,3 +33,26 @@ export const useDeleteFacility  = ()=>{
 
   })
 }
+
+export const useAddFacility = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: FacilityPayload) => createFacility(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["facilities"] });
+    },
+  });
+};
+
+export const useUpdateFacility = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: FacilityPayload }) =>
+      updateFacility({ id, payload }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["facilities"] });
+    },
+  });
+};
