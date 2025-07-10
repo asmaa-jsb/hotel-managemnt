@@ -147,43 +147,43 @@ const FacilitiesList = () => {
       </ReusableModal>
 
       {/* Add/Edit Modal */}
-<ReusableModal open={openFormModal} onClose={() => setOpenFormModal(false)}>
-  <form
-    onSubmit={(e) => {
-      e.preventDefault();
-      handleSubmit();
-    }}
-  >
-    <Box display="flex" flexDirection="column" gap={3} p={2} minWidth={300}>
-      <Typography variant="h6" fontWeight={600}>
-        {isEditing ? "Edit Facility" : "Add New Facility"}
-      </Typography>
+      <ReusableModal open={openFormModal} onClose={() => setOpenFormModal(false)}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <Box display="flex" flexDirection="column" gap={3} p={2} minWidth={300}>
+            <Typography variant="h6" fontWeight={600}>
+              {isEditing ? "Edit Facility" : "Add New Facility"}
+            </Typography>
 
-      <TextField
-        label="Facility Name"
-        variant="outlined"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        fullWidth
-        required
-      />
+            <TextField
+              label="Facility Name"
+              variant="outlined"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+              required
+            />
 
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        sx={{
-          py: 1.2,
-          fontWeight: 600,
-          textTransform: "none",
-          fontSize: "16px",
-        }}
-      >
-        {isEditing ? "Update" : "Add"}
-      </Button>
-    </Box>
-  </form>
-</ReusableModal>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{
+                py: 1.2,
+                fontWeight: 600,
+                textTransform: "none",
+                fontSize: "16px",
+              }}
+            >
+              {isEditing ? "Update" : "Add"}
+            </Button>
+          </Box>
+        </form>
+      </ReusableModal>
 
       {/* Confirm Delete Modal */}
       <ConfirmDeleteModal
