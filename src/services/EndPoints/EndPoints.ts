@@ -29,9 +29,9 @@ export const USERS_URLS = {
   RESET_PASSWORD: `${UserPortal}/reset-password`,
   REGISTER: `${UserPortal}`,
   CHANGE_PASSWORD: `${UserPortal}/change-password`,
-  GET_USER_PROFILE: (id: string) => `${UserPortal}/${id}`,
   facebook_auth: `${UserPortal}/auth/facebook`,
   google_auth: `${UserPortal}/auth/google`,
+ 
 };
 // ****************** Admin Portal **********************
 // rooms
@@ -39,7 +39,7 @@ export const ROOM_URLS = {
   ROOM_LIST: `${AdminPortal}/rooms`,
   
 };
-
+// FACILITIES
 export const FACILITIES_URLS ={
   GET_ALL_FACILITIES :`${AdminPortal}/room-facilities`,
   CREATE_FACILITIES : `${AdminPortal}/room-facilities`,
@@ -53,3 +53,8 @@ export const BOOKINGS = {
  GET_BOOKING_BY_ID: (id: string) => `${AdminPortal}/booking/${id}`,
  DELETE_BOOKING_BY_ID:(id: string)=> `${AdminPortal}/booking/${id}`,
 }
+// users list
+export const USERS = {
+  GET_ALL_USERS: `${AdminPortal}/users`,
+  GET_USER_PROFILE: (id: string) => `${AdminPortal}/users/${id}`,
+};

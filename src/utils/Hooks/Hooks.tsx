@@ -3,9 +3,10 @@ import { fetchRooms } from "@/services/API/Roomapi";
 import type {IRoomList } from "@/interfaces/RoomInterface";
 import { createFacility, deleteFacility, fetchFacilities, updateFacility } from "@/services/API/Facilities";
 import type { FacilityPayload, IRoomFacilities } from "@/interfaces/FacilityInterface";
-import { fetchBookings } from "@/services/API/Roomapi";
+import { fetchBookings, deleteBooking } from "@/services/API/Bookingapi";
+import { fetchUsers } from "@/services/API/UsersApi";
 
-
+/**********Rooms*************/
 export const useRooms = () => {
   return useQuery<IRoomList>({
     queryKey: ["rooms"],
@@ -13,13 +14,36 @@ export const useRooms = () => {
   });
 };
 
+/************Bookings****************/
+export const useBookings= () => {
+  return useQuery<IRoomFacilities>({
+    queryKey: ["bookings"],
+    queryFn: fetchBookings,
+  });
+};
+export const useDeleteBooking = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string ) =>  deleteBooking(id) ,   
+    onSuccess: () => {
+     queryClient.invalidateQueries({ queryKey: ["bookings"] });
+    },
+  });
+}
+/*******************Users********************/
+export const useUsers = () => {
+  return useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers ,
+  });
+};
+/******************Facilities******************/
 export const useRoomsFacilities = () => {
   return useQuery<IRoomFacilities>({
     queryKey: ["facilities"],
     queryFn: fetchFacilities,
   });
 };
-
 export const useDeleteFacility  = ()=>{
   const queryClient  = useQueryClient();
   return useMutation({

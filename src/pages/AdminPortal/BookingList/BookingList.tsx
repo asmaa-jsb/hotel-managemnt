@@ -3,14 +3,13 @@ import Header from "@/components/Header";
 import ReusableModal from "@/components/ReusableModal";
 import ReusableTable from "@/components/ReusableTable"
 import type { Booking, BookingDetails } from "@/interfaces/Interfaces";
-import { fetchBookings } from "@/services/API/Roomapi";
-import { axiosInstance, BOOKINGS } from "@/services/EndPoints/EndPoints";
-import { useBookings } from "@/utils/Hooks/Hooks";
-import { useEffect, useState } from "react";
+import { useBookings, useDeleteBooking } from "@/utils/Hooks/Hooks";
+import {useState } from "react";
 
 
 const BookingList = () => {
       const { data, isLoading, isError , refetch} = useBookings();
+      const {mutate: deleteBookingMutate}= useDeleteBooking();
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState<BookingDetails| null>();
@@ -42,21 +41,20 @@ const BookingList = () => {
     setBookingId(id);
   }
   const handleConfirmDelete= async ()=>{
-    
-     try {
-   await  axiosInstance.delete(BOOKINGS.DELETE_BOOKING_BY_ID(String(bookingId)))
-     setOpenDelete(false)
-     if (refetch) refetch();
-     
-   } catch (error) {
-        console.log(error);
-    
-   }
+    if(bookingId){
+      deleteBookingMutate(String(bookingId),{
+        onSuccess: () => {
+          setOpenDelete(false);
+          refetch();
+        },
+        onError: (error) => {
+          console.error("Error deleting booking:", error);
+        }
+      })
+    }
+
   }
-useEffect(() => {
-  
-  fetchBookings();
-}, []);
+
 const bookings = data?.data?.booking;
       const rows = (bookings ?? []).map((booking: Booking, index:number) => ({
           _id: booking._id,
