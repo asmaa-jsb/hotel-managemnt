@@ -12,6 +12,7 @@
   overflow: hidden;
   background-color: transparent;
   border: none;
+ 
 }
 
 .custom-table {
@@ -164,9 +165,10 @@
 
 .modal-content img {
   width: 100%;
-  height: 200px;
+  height: 400px;
   object-fit: cover;
   border-radius: 8px;
+
 }
 
 /* Search and filters container */

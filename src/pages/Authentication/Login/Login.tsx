@@ -31,7 +31,7 @@ const Login = () => {
       CookieServices.set("token", response?.data?.data?.token);
      
       toast.success(response?.data?.message || "Logged in successfully!");
-      navigate("/rooms");
+      navigate("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.message || "Login failed:");

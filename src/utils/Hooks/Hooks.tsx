@@ -4,7 +4,7 @@ import type {IRoomList } from "@/interfaces/RoomInterface";
 import { createFacility, deleteFacility, fetchFacilities, updateFacility } from "@/services/API/Facilities";
 import type { FacilityPayload, IRoomFacilities } from "@/interfaces/FacilityInterface";
 import { fetchBookings, deleteBooking } from "@/services/API/Bookingapi";
-import { fetchUsers } from "@/services/API/UsersApi";
+import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 
 /**********Rooms*************/
 export const useRooms = () => {
@@ -35,6 +35,12 @@ export const useUsers = () => {
   return useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers ,
+  });
+};
+export const useUserProfile = (id: string) => {
+  return useQuery({
+    queryKey: ["userProfile", id],
+    queryFn: () => getUserProfile(id),
   });
 };
 /******************Facilities******************/

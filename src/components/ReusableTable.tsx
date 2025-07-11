@@ -75,7 +75,7 @@ const ReusableTable = ({
                 {column.label}
               </TableCell>
             ))}
-            <TableCell align="center" className="table-head-cell">
+            <TableCell align="left" className="table-head-cell">
               Actions
             </TableCell>
           </TableRow>
@@ -95,7 +95,7 @@ const ReusableTable = ({
                     : row[column.id]}
                 </TableCell>
               ))}
-              <TableCell align="right" className="table-cell-no-border">
+              <TableCell align="left" className="table-cell-no-border">
                 <IconButton onClick={(e) => handleMenuOpen(e, row[idKey])}>
                   <MoreVertIcon />
                 </IconButton>
@@ -117,9 +117,7 @@ const ReusableTable = ({
         {onView && (
           <MenuItem
             onClick={() => {
-              if (selectedId) {
-                onView(selectedId);
-              }
+              selectedId && onView(selectedId);
               handleClose();
             }}
             className="action-item"

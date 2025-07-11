@@ -24,7 +24,7 @@ import {
 import { NavLink } from "react-router-dom";
 
 const menuItems = [
-  { label: "Home", icon: <Home />, path: "/home" },
+  { label: "Home", icon: <Home />, path: "/dashboard" },
   { label: "Users", icon: <People />, path: "/users" },
   { label: "Rooms", icon: <MeetingRoom />, path: "/rooms" },
   { label: "Ads", icon: <CalendarToday />, path: "/ads" },

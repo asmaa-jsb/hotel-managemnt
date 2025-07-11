@@ -2,26 +2,42 @@ import ConfirmDeleteModal from "@/components/DeleteModal";
 import Header from "@/components/Header";
 import ReusableModal from "@/components/ReusableModal";
 import ReusableTable from "@/components/ReusableTable"
+import TablePagination from "@/components/TablePagination";
 import type { Booking, BookingDetails } from "@/interfaces/Interfaces";
 import { useBookings, useDeleteBooking } from "@/utils/Hooks/Hooks";
 import {useState } from "react";
 
 
 const BookingList = () => {
+
       const { data, isLoading, isError , refetch} = useBookings();
+      const bookings = data?.data?.booking;
+      console.log(bookings);
+      
       const {mutate: deleteBookingMutate}= useDeleteBooking();
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState<BookingDetails| null>();
     const [bookingId, setBookingId] = useState <string | number>()
+      const [page, setPage] = useState(1);
+const [pageSize, setPageSize] = useState(10);
+
+const totalItems = bookings?.length ?? 0;
+const totalPages = Math.ceil(totalItems / pageSize);
     const handleView = (id: string | number) => {
-    const booking = rows.find((b:Booking) => b._id === id);
+    const booking = bookings.find((b:Booking) => b._id === id);
     if (booking) {
       setSelectedBooking(booking);
       setOpen(true);
     }
   };
-
+  const handlePageChange = (newPage: number) => {
+  setPage(newPage);
+};
+const handlePageSizeChange = (newPageSize: number) => {
+  setPageSize(newPageSize);
+  setPage(1);
+};
 
   const handleClose = () => {
     setOpen(false);
@@ -55,8 +71,7 @@ const BookingList = () => {
 
   }
 
-const bookings = data?.data?.booking;
-      const rows = (bookings ?? []).map((booking: Booking, index:number) => ({
+      const paginatedRows = (bookings ?? []).slice((page - 1) * pageSize, page * pageSize).map((booking: Booking, index:number) => ({
           _id: booking._id,
       roomNum: booking?.roomNum || index + 1,
         startDate: new Date(booking?.startDate).toLocaleDateString(),
@@ -73,7 +88,7 @@ const bookings = data?.data?.booking;
   />
     <ReusableTable
     columns={columns}
-    rows={rows}
+    rows={paginatedRows}
      onDelete={handleShowDelete}
      onView={handleView}
      idKey="_id"
@@ -112,6 +127,14 @@ const bookings = data?.data?.booking;
         title="Delete This Booking?"
         description="Are you sure you want to delete this item?"
       />
+            <TablePagination
+  onPageChange={handlePageChange}
+  onPageSizeChange={handlePageSizeChange}
+  page={page}
+  pageSize={pageSize}
+  totalItems={totalItems}
+  totalPages={totalPages}
+/>
       </>
   )
 }

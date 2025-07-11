@@ -7,6 +7,11 @@ import {
   ChangePassword,
   RoomList,
   AdsList,
+  Dashboard,
+  FacilitiesList,
+  BookingList,
+  Users,
+  NotFound,
 } from "./pages/index";
 import AuthLayout from "./components/AuthLayout";
 import "./styles/global.css";
@@ -14,14 +19,9 @@ import { useDispatch } from "react-redux";
 import { saveLoginData } from "./redux/slices/authSlice";
 import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
-
 import PortalMainLayout from "./components/AdminPortalLayout";
 
-import FacilitiesList from "./pages/AdminPortal/Facilities/Components/FacilitiesList/FacilitiesList";
 
-import BookingList from "./pages/AdminPortal/BookingList/BookingList";
-import Users from "./pages/AdminPortal/Users/Users";
-import NotFound from "./pages/NotFound/NotFound";
 
 
 function App() {
@@ -58,6 +58,8 @@ function App() {
         {
           element: <PortalMainLayout />,
           children: [
+             { index: true, element: <Dashboard /> },
+              { path: "dashboard", element: <Dashboard /> },
             { path: "rooms", element: <RoomList /> },
             { path: "ads", element: <AdsList /> },
             { path: "facilities", element: <FacilitiesList /> },
@@ -68,11 +70,11 @@ function App() {
       ],
     },
 
-    // { path: "/home-page", element: <HomePage /> },
+    
   ]);
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <RouterProvider router={routes} />
     </>
   );

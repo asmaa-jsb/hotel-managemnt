@@ -6,3 +6,7 @@ export { default as NotFound } from "./NotFound/NotFound";
 export { default as HomePage } from "./Authentication/HomePage/HomePage";
 export { default as RoomList } from "./AdminPortal/Room/Components/RoomList/RoomList";
 export { default as AdsList } from "./AdminPortal/Ads/Components/AdsList/AdsList";
+export {default as FacilitiesList } from "./AdminPortal/Facilities/Components/FacilitiesList/FacilitiesList";
+export {default as BookingList } from "./AdminPortal/BookingList/BookingList";
+export {default as Users } from "./AdminPortal/Users/Users";
+export {default as Dashboard } from "./AdminPortal/Dashboard/Dashboard";
