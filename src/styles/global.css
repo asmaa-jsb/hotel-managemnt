@@ -3,7 +3,7 @@
 @import "./Auth.css";
 @import "./AdminPortal.css";
 @import "./NotFound.css";
-
+@import "./dashboard.css";
 
 body {
   margin: 0;
