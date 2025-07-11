@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <Box className="form">
       <Grid sx={{ width: "100%" }}>
-        <Typography component="h1" className="form-title">
+        <Typography component="h1" className="form-title1">
           Sign in
         </Typography>
         <Typography className="form-subtitle" variant="body2">

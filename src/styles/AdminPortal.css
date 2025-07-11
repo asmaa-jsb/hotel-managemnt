@@ -12,7 +12,6 @@
   overflow: hidden;
   background-color: transparent;
   border: none;
- 
 }
 
 .custom-table {
@@ -168,7 +167,6 @@
   height: 400px;
   object-fit: cover;
   border-radius: 8px;
-
 }
 
 /* Search and filters container */
@@ -177,16 +175,15 @@
   gap: 16px;
   margin-bottom: 16px;
   width: 97%;
-   margin-left: auto;
-   margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
-
 
 .search-input {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-  flex: 2; 
+  flex: 2;
   min-width: 0;
 }
 
@@ -198,4 +195,180 @@
   min-width: 0;
 }
 
+.header-container {
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 94%;
+  margin-left: 15px;
+  background-color: #f9f9f9;
+}
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 32px 0;
+  margin-bottom: 24px;
+}
+
+.header-text h5 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: #1976d2;
+}
+
+.header-text p {
+  margin: 4px 0 0 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.header-link-button {
+  background-color: #1976d2;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.header-link-button:hover {
+  background-color: #155fa0;
+}
+
+/* ====== Room Form ====== */
+.room-form-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 40px 30px;
+}
+
+.room-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.row-2 {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.half {
+  width: 48%;
+}
+
+/* Custom Input Fields */
+.custom-input .MuiInputBase-root {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: none;
+}
+
+/* Placeholder */
+.custom-input input::placeholder {
+  opacity: 1;
+  color: #333;
+  font-size: 15px;
+}
+
+/* Remove underline from TextField and Select */
+.custom-input .MuiInput-underline::before,
+.custom-input .MuiInput-underline::after {
+  border-bottom: none !important;
+}
+
+/* Select (Facilities) styling */
+.custom-input .MuiSelect-select {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+}
+
+/* Dropzone */
+.dropzone {
+  border: 2px dashed #90caf9;
+  background-color: #e3fdef;
+  padding: 30px;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #1976d2;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  min-height: 150px;
+}
+
+/* Style for the upload icon in dropzone */
+.dropzone svg {
+  font-size: 48px !important;
+  color: #1976d2;
+}
+
+/* Link style inside dropzone */
+.dropzone .link {
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #1976d2;
+}
+
+/* Position the illustration image inside dropzone */
+.dropzone .illustration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 80px;
+  opacity: 0.3;
+}
+
+/* Action Buttons */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  color: #1976d2 !important;
+  border-color: #1976d2 !important;
+  text-transform: capitalize;
+  padding: 8px 30px;
+}
+
+.save-btn {
+  background-color: #1976d2 !important;
+  color: white !important;
+  text-transform: capitalize;
+  padding: 8px 30px;
+}
+
+.form-title {
+  font-size: 30px !important;
+  font-weight: 700;
+  color: #1976d2;
+  margin-bottom: 24px;
+  text-align: center;
+}

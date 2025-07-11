@@ -72,7 +72,7 @@ const Register = () => {
   return (
     <Box className="form register-section">
       <Grid sx={{ width: "100%" }}>
-        <Typography component="h1" className="form-title">
+        <Typography component="h1" className="form-title1">
           Sign up
         </Typography>
         <Typography className="form-subtitle" variant="body2">

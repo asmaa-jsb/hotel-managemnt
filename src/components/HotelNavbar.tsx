@@ -1,4 +1,3 @@
-// Navbar.tsx
 import React from 'react';
 import {
   AppBar,
@@ -14,15 +13,18 @@ import {
   useMediaQuery,
   Badge,
 } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
+// AppBar مخصص بدون بادينغ عمودي
 const CustomAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#f8f9fb',
   boxShadow: 'none',
-  padding: '8px 24px',
+  paddingLeft: 24,
+  paddingRight: 24,
+  minHeight: 0,
 }));
 
 const SearchContainer = styled(Box)(({ theme }) => ({
@@ -34,7 +36,7 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   paddingLeft: theme.spacing(1),
   width: '100%',
-  maxWidth: 500, 
+  maxWidth: 500,
 }));
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
@@ -60,7 +62,15 @@ const Navbar = () => {
   return (
     <>
       <CustomAppBar position="static">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Toolbar
+          disableGutters
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            minHeight: 0,
+            paddingY: 0,
+          }}
+        >
           {/* Search */}
           {!isMobile && (
             <SearchContainer>

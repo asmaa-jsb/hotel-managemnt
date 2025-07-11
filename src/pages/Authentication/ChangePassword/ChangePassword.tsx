@@ -40,7 +40,7 @@ const ResetPassword = () => {
   return (
     <Box className="form">
       <Grid sx={{ width: "100%" }}>
-        <Typography component="h1" className="form-title">
+        <Typography component="h1" className="form-title1">
           Forgot Password
         </Typography>
         <Typography className="form-subtitle" variant="body2">

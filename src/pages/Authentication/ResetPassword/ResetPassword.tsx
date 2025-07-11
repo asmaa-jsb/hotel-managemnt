@@ -23,7 +23,10 @@ const ResetPassword = () => {
 
   const onSubmit = async (data: IResetPassword) => {
     try {
-      const response = await axiosInstance.post(USERS_URLS.RESET_PASSWORD, data);
+      const response = await axiosInstance.post(
+        USERS_URLS.RESET_PASSWORD,
+        data
+      );
       CookieServices.set("token", response?.data?.data?.token);
       toast.success(response?.data?.message || "Reset successfully!");
       navigate("/login");
@@ -37,16 +40,23 @@ const ResetPassword = () => {
   return (
     <Box className="form">
       <Grid sx={{ width: "100%" }}>
-        <Typography component="h1" className="form-title">
+        <Typography component="h1" className="form-title1">
           Reset Password
         </Typography>
         <Typography className="form-subtitle" variant="body2">
           If you already have an account{" "}
-          <Link href="/login" className="login-link">Login here!</Link>
+          <Link href="/login" className="login-link">
+            Login here!
+          </Link>
         </Typography>
       </Grid>
 
-      <Box onSubmit={handleSubmit(onSubmit)} component="form" noValidate sx={{ mt: 3, display: "flex", flexDirection: "column", gap: 2 }}>
+      <Box
+        onSubmit={handleSubmit(onSubmit)}
+        component="form"
+        noValidate
+        sx={{ mt: 3, display: "flex", flexDirection: "column", gap: 2 }}
+      >
         {/* OTP */}
         <TextField
           required
@@ -65,7 +75,10 @@ const ResetPassword = () => {
           type="password"
           label="Password"
           autoComplete="new-password"
-          {...register("password", { required: "Password is required", minLength: { value: 6, message: "Min 6 characters" } })}
+          {...register("password", {
+            required: "Password is required",
+            minLength: { value: 6, message: "Min 6 characters" },
+          })}
           error={!!errors.password}
           helperText={errors.password?.message}
           className="input-field"

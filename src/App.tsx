@@ -22,6 +22,7 @@ import { useEffect } from "react";
 //  path: "/",
 //       element: <ProtectedRoute />,
 import PortalMainLayout from "./components/AdminPortalLayout";
+import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 
 
 
@@ -62,6 +63,8 @@ function App() {
              { index: true, element: <Dashboard /> },
               { path: "dashboard", element: <Dashboard /> },
             { path: "rooms", element: <RoomList /> },
+            { path: "rooms/new-room", element: <RoomForm /> },
+            { path: "rooms/:roomId", element: <RoomForm /> },
             { path: "ads", element: <AdsList /> },
             { path: "facilities", element: <FacilitiesList /> },
             { path: "bookings", element: <BookingList /> },

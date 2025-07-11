@@ -1,47 +1,30 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   title?: string;
   btnTitle?: string;
   description?: string;
-  showBtn ? : boolean;
+  linkTo?: string;
 }
 
-const Header = ({ title, btnTitle, description , showBtn = true}: HeaderProps) => {
+const Header = ({ title, btnTitle, description, linkTo }: HeaderProps) => {
   return (
-    <Box
-      //  px={3}
-      px={{ xs: 2, sm: 4, md: 3 }}
-      // py={{ xs: 2, sm: 3 }}
-      sx={{ width: "94%", marginLeft: "15px" }}
-      className="Header-bg"
-    >
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        flexWrap="wrap"
-        gap={2}
-        py={4}
-        my={3}
-      >
-        <Box>
-          <Typography variant="h5">{title || "Rooms Table Details"}</Typography>
+    <Box className="header-container">
+      <Box className="header-content">
+        <Box className="header-text">
+          <Typography variant="h5" className="Primary-color">
+            {title }
+          </Typography>
           <Typography variant="body1">
             {description || "You can check all details"}
           </Typography>
         </Box>
-        <Box>
-         {
-          showBtn? ( <Button
-            className="Primary-color"
-            variant="contained"
-            sx={{ py: 1.5, px: 5, textTransform: "none" }}
-          >
-            {btnTitle || " Add New Room"}
-          </Button>): ""
-         }
-        </Box>
+        {linkTo && (
+          <Link to={linkTo} className="header-link-button">
+            {btnTitle }
+          </Link>
+        )}
       </Box>
     </Box>
   );

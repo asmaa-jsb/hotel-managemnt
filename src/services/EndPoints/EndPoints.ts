@@ -37,7 +37,11 @@ export const USERS_URLS = {
 // rooms
 export const ROOM_URLS = {
   ROOM_LIST: `${AdminPortal}/rooms`,
-  
+  DELETE_ROOM: (id: string) => `${AdminPortal}/rooms/${id}`,
+  UPDATE_ROOM: (id: string) => `${AdminPortal}/rooms/${id}`,
+  CREATE_ROOM: `${AdminPortal}/rooms`,
+  GET_FACILITIES:`${AdminPortal}/room-facilities`,
+   GET_ROOM_DETAILS: (id: string) => `/api/v0/admin/rooms/${id}`
 };
 // FACILITIES
 export const FACILITIES_URLS ={
