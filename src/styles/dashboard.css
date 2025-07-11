@@ -29,3 +29,35 @@
     max-width: 76rem;
     margin: 0 auto;
 }
+.user-container{
+ box-shadow: 0px 2px 48px 0px #0000000F;
+ border-radius: 5x;
+ -webkit-border-radius: 5x;
+ -moz-border-radius: 5x;
+ -ms-border-radius: 5x;
+ -o-border-radius: 5x;
+ padding: 14px;
+}
+.chart-container {
+justify-content: space-between;
+  display: flex;
+align-items: center;
+  margin-top: 8.875rem;
+  flex-wrap: wrap;
+}
+
+.user-icon{
+  width:10px ;
+  height: 10px;
+  background-color: #54D14D;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+margin-right: 10px;
+}
+
+.admin-icon{
+  background-color: #35C2FD;
+}

@@ -18,7 +18,9 @@ import "./styles/global.css";
 import { useDispatch } from "react-redux";
 import { saveLoginData } from "./redux/slices/authSlice";
 import { useEffect } from "react";
-import ProtectedRoute from "./components/ProtectedRoute";
+// import ProtectedRoute from "./components/ProtectedRoute";
+//  path: "/",
+//       element: <ProtectedRoute />,
 import PortalMainLayout from "./components/AdminPortalLayout";
 
 
@@ -52,8 +54,7 @@ function App() {
       ],
     },
     {
-      path: "/",
-      element: <ProtectedRoute />,
+     
       children: [
         {
           element: <PortalMainLayout />,

@@ -58,3 +58,7 @@ export const USERS = {
   GET_ALL_USERS: `${AdminPortal}/users`,
   GET_USER_PROFILE: (id: string) => `${AdminPortal}/users/${id}`,
 };
+//Chart
+export const CHART = {
+  GET_CHART: `${AdminPortal}/dashboard`,
+};

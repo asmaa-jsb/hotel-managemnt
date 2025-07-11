@@ -5,6 +5,7 @@ import { createFacility, deleteFacility, fetchFacilities, updateFacility } from 
 import type { FacilityPayload, IRoomFacilities } from "@/interfaces/FacilityInterface";
 import { fetchBookings, deleteBooking } from "@/services/API/Bookingapi";
 import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
+import { fetchChart } from "@/services/API/ChartApi";
 
 /**********Rooms*************/
 export const useRooms = () => {
@@ -41,6 +42,13 @@ export const useUserProfile = (id: string) => {
   return useQuery({
     queryKey: ["userProfile", id],
     queryFn: () => getUserProfile(id),
+  });
+};
+/****************Charts******************/
+export const useChart = () => {
+  return useQuery({
+    queryKey: ["chart"],
+    queryFn: fetchChart,
   });
 };
 /******************Facilities******************/
