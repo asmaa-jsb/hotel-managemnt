@@ -38,3 +38,7 @@ export const ROOM_URLS = {
   ROOM_LIST: `${AdminPortal}/rooms`,
   ROOM_FACILITIES: `/room-facilities`,
 };
+
+export const ADS_URLS = {
+  ADS_LIST: `${AdminPortal}/`,
+};
