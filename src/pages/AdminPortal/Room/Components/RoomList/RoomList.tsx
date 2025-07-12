@@ -95,7 +95,6 @@ const RoomList = () => {
     return () => clearTimeout(timeout);
   }, [searchTerm, selectedPrice, selectedCapacity, selectedCategory]);
 
-  // ✅ تحديد نوع التحميل المناسب للـ Loader
   const loaderMode: "search" | "filter" | "initial" = searchLoading
     ? "search"
     : selectedPrice || selectedCapacity || selectedCategory
@@ -108,6 +107,7 @@ const RoomList = () => {
         title="Room Management"
         btnTitle="Add New Room"
         linkTo="/rooms/new-room"
+        showBtn={true}
       />
 
       <ReusableSearchFilters

@@ -4,8 +4,8 @@ import ReusableTable from "@/components/AdminSharedModual/ReusableTable/Reusable
 import TablePagination from "@/components/AdminSharedModual/TablePagination/TablePagination";
 import { useUsers } from "@/utils/Hooks/Hooks";
 import { Avatar } from "@mui/material";
-
 import { useState } from "react";
+
 type UserProfile = {
   _id: string;
   userName: string;
@@ -18,14 +18,13 @@ type UserProfile = {
 
 const Users = () => {
   const { data: usersData, isLoading, isError } = useUsers();
-  const users = usersData?.data?.users;
-  //  const userProfile = userProfileData?.data?.user as UserProfile | undefined;
-  //   //  const { data: userProfileData } = useUserProfile(userId);
+  const users = usersData?.data?.users ?? [];
+
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const totalItems = users?.length ?? 0;
+  const totalItems = users.length;
   const totalPages = Math.ceil(totalItems / pageSize);
 
   const [selectedUserProfile, setSelectedUserProfile] =
@@ -34,6 +33,7 @@ const Users = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleView = (id: string | number) => {
     const user = users.find((U: UserProfile) => U._id === id);
     if (user) {
@@ -41,8 +41,9 @@ const Users = () => {
       setOpen(true);
     }
   };
+
   const columns = [
-    { id: "userName", label: "user Name" },
+    { id: "userName", label: "User Name" },
     { id: "email", label: "Email" },
     { id: "phoneNumber", label: "Phone Number" },
     { id: "country", label: "Country" },
@@ -55,7 +56,7 @@ const Users = () => {
     },
   ];
 
-  const paginatedRows = (users ?? [])
+  const paginatedRows = users
     .slice((page - 1) * pageSize, page * pageSize)
     .map((user: UserProfile) => ({
       _id: user._id,
@@ -66,9 +67,11 @@ const Users = () => {
       role: user.role,
       profileImage: user.profileImage,
     }));
+
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
+
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
     setPage(1);
@@ -77,18 +80,23 @@ const Users = () => {
   return (
     <>
       <Header title="Users Table Details" showBtn={false} />
+
       <ReusableTable
         columns={columns}
         rows={paginatedRows}
-        onView={(id: string | number) => handleView(id)}
+        onView={handleView}
         idKey="_id"
+        loading={isLoading} 
+        model="users"       
+        mode="initial"  
       />
+
       <ReusableModal open={open} onClose={handleClose}>
-        {selectedUserProfile ? (
+        {selectedUserProfile && (
           <div className="room-details">
             <img src={selectedUserProfile.profileImage} alt="profile image" />
             <p>
-              <strong>user Name:</strong> {selectedUserProfile.userName}
+              <strong>User Name:</strong> {selectedUserProfile.userName}
             </p>
             <p>
               <strong>Email:</strong> {selectedUserProfile.email}
@@ -103,8 +111,9 @@ const Users = () => {
               <strong>Country:</strong> {selectedUserProfile.country}
             </p>
           </div>
-        ) : null}
+        )}
       </ReusableModal>
+
       <TablePagination
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}

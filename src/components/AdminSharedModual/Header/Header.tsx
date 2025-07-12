@@ -6,9 +6,10 @@ interface HeaderProps {
   btnTitle?: string;
   description?: string;
   linkTo?: string;
+  showBtn:boolean
 }
 
-const Header = ({ title, btnTitle, description, linkTo }: HeaderProps) => {
+const Header = ({ title, btnTitle, description, linkTo,showBtn }: HeaderProps) => {
   return (
     <Box className="header-container">
       <Box className="header-content">

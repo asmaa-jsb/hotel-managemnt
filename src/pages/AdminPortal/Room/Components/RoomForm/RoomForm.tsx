@@ -109,7 +109,12 @@ const RoomForm: React.FC = () => {
 
   return (
     <>
-      <Header title="Room Mangment" btnTitle="Room List" linkTo="/rooms" />
+      <Header
+        title="Room Mangment"
+        btnTitle="Room List"
+        linkTo="/rooms"
+        showBtn={true}
+      />
       <Box className="room-form-container">
         <Typography className="form-title" variant="h6" gutterBottom>
           {isEditMode ? "Edit Room" : "Add New Room"}
