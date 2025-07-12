@@ -1,6 +1,5 @@
-import React from "react";
-import { TextField, MenuItem, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { InputAdornment, MenuItem, TextField } from "@mui/material";
 
 type DropdownOption = {
   label: string;
