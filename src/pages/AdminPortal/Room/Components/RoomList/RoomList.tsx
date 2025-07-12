@@ -1,14 +1,18 @@
-import Header from "@/components/Header";
-import ReusableTable from "@/components/ReusableTable";
-import type { Column, TableRowData } from "@/components/ReusableTable";
+import Header from "@/components/AdminSharedModual/Header/Header";
+import ReusableTable from "@/components/AdminSharedModual/ReusableTable/ReusableTable";
+import type {
+  Column,
+  TableRowData,
+} from "@/components/AdminSharedModual/ReusableTable/ReusableTable";
 import { Avatar } from "@mui/material";
 import { useEffect, useState } from "react";
-import ReusableModal from "@/components/ReusableModal";
-import ReusableSearchFilters from "@/components/ReusableSearchFilters";
-import ConfirmDeleteModal from "@/components/DeleteModal";
-import TablePagination from "@/components/TablePagination";
+import ReusableModal from "@/components/AdminSharedModual/ReusableModal/ReusableModal";
+import ReusableSearchFilters from "@/components/AdminSharedModual/ReusableSearchFilter/ReusableSearchFilters";
+import ConfirmDeleteModal from "@/components/AdminSharedModual/DeletModal/DeleteModal";
+import TablePagination from "@/components/AdminSharedModual/TablePagination/TablePagination";
 import { useRooms, useDeleteRoom } from "@/utils/Hooks/Hooks";
 import { useNavigate } from "react-router-dom";
+import NoData from "@/components/AdminSharedModual/NoData/NoData";
 
 const RoomList = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,6 +33,8 @@ const RoomList = () => {
   const [roomIdToDelete, setRoomIdToDelete] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
+  const [searchLoading, setSearchLoading] = useState(false);
+
   const rooms = data?.data?.rooms ?? [];
   const totalPages = data?.data?.totalPages ?? 1;
   const totalItems = data?.data?.totalItems ?? 0;
@@ -38,7 +44,8 @@ const RoomList = () => {
     {
       id: "image",
       label: "Image",
-      render: (value) => (value ? <Avatar src={value} variant="rounded" /> : "—"),
+      render: (value) =>
+        value ? <Avatar src={value} variant="rounded" /> : "—",
     },
     { id: "price", label: "Price" },
     { id: "discount", label: "Discount" },
@@ -57,23 +64,51 @@ const RoomList = () => {
   }));
 
   const filteredRows = rows.filter((row) => {
-    const matchesSearch = row.roomNumber.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = row.roomNumber
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const matchesPrice = !selectedPrice || row.price === selectedPrice;
-    const matchesCapacity = !selectedCapacity || row.capacity.toLowerCase() === selectedCapacity.toLowerCase();
-    const matchesCategory = !selectedCategory || row.category.toLowerCase() === selectedCategory.toLowerCase();
+    const matchesCapacity =
+      !selectedCapacity ||
+      row.capacity.toLowerCase() === selectedCapacity.toLowerCase();
+    const matchesCategory =
+      !selectedCategory ||
+      row.category.toLowerCase() === selectedCategory.toLowerCase();
 
-    return row.id !== deletingId && matchesSearch && matchesPrice && matchesCapacity && matchesCategory;
+    return (
+      row.id !== deletingId &&
+      matchesSearch &&
+      matchesPrice &&
+      matchesCapacity &&
+      matchesCategory
+    );
   });
 
   const unique = (arr: string[]) => [...new Set(arr)];
 
   useEffect(() => {
     setPage(1);
+    setSearchLoading(true);
+    const timeout = setTimeout(() => {
+      setSearchLoading(false);
+    }, 400);
+    return () => clearTimeout(timeout);
   }, [searchTerm, selectedPrice, selectedCapacity, selectedCategory]);
+
+  // ✅ تحديد نوع التحميل المناسب للـ Loader
+  const loaderMode: "search" | "filter" | "initial" = searchLoading
+    ? "search"
+    : selectedPrice || selectedCapacity || selectedCategory
+    ? "filter"
+    : "initial";
 
   return (
     <>
-      <Header title="Room Management" btnTitle="Add New Room" linkTo="/rooms/new-room" />
+      <Header
+        title="Room Management"
+        btnTitle="Add New Room"
+        linkTo="/rooms/new-room"
+      />
 
       <ReusableSearchFilters
         searchValue={searchTerm}
@@ -100,15 +135,16 @@ const RoomList = () => {
         ]}
       />
 
-      {isLoading ? (
-        <p>Loading rooms...</p>
-      ) : isError ? (
-        <p>Failed to fetch rooms</p>
+      {isError ? (
+        <NoData />
       ) : (
         <div className="roomlist-container">
           <ReusableTable
             columns={columns}
             rows={filteredRows}
+            loading={isLoading || searchLoading}
+            model="rooms"
+            mode={loaderMode} // ✅ تمرير نوع التحميل للـ Loader
             onView={(id) => {
               const room = rows.find((r) => r.id === id);
               if (room) {
@@ -147,11 +183,21 @@ const RoomList = () => {
         >
           <div className="room-details">
             <img src={selectedRoom?.image} alt="Room" className="room-image" />
-            <p><strong>Room #:</strong> {selectedRoom?.roomNumber}</p>
-            <p><strong>Price:</strong> ${selectedRoom?.price}</p>
-            <p><strong>Capacity:</strong> {selectedRoom?.capacity}</p>
-            <p><strong>Discount:</strong> {selectedRoom?.discount}</p>
-            <p><strong>Category:</strong> {selectedRoom?.category}</p>
+            <p>
+              <strong>Room #:</strong> {selectedRoom?.roomNumber}
+            </p>
+            <p>
+              <strong>Price:</strong> ${selectedRoom?.price}
+            </p>
+            <p>
+              <strong>Capacity:</strong> {selectedRoom?.capacity}
+            </p>
+            <p>
+              <strong>Discount:</strong> {selectedRoom?.discount}
+            </p>
+            <p>
+              <strong>Category:</strong> {selectedRoom?.category}
+            </p>
           </div>
         </ReusableModal>
       )}
@@ -161,7 +207,9 @@ const RoomList = () => {
         onClose={() => setOpenDelete(false)}
         onConfirm={() => {
           if (roomIdToDelete) {
-            const audio = new Audio("../../../../../assets/Sound/fast-swipe-48158.mp3");
+            const audio = new Audio(
+              "../../../../../assets/Sound/fast-swipe-48158.mp3"
+            );
             audio.play();
             setDeletingId(roomIdToDelete);
             setTimeout(() => {

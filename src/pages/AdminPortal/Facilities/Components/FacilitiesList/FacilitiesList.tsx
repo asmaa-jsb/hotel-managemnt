@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import Header from "@/components/Header";
-import ReusableTable, { type Column, type TableRowData } from "@/components/ReusableTable";
-import ReusableModal from "@/components/ReusableModal";
-import ConfirmDeleteModal from "@/components/DeleteModal";
-import { useDeleteFacility, useRoomsFacilities, useAddFacility, useUpdateFacility } from "@/utils/Hooks/Hooks";
+import Header from "@/components/AdminSharedModual/Header/Header";
+import ReusableTable, {
+  type Column,
+  type TableRowData,
+} from "@/components/AdminSharedModual/ReusableTable/ReusableTable";
+import ReusableModal from "@/components/AdminSharedModual/ReusableModal/ReusableModal";
+import ConfirmDeleteModal from "@/components/AdminSharedModual/DeletModal/DeleteModal";
+import {
+  useDeleteFacility,
+  useRoomsFacilities,
+  useAddFacility,
+  useUpdateFacility,
+} from "@/utils/Hooks/Hooks";
 import { Box, Button, TextField, Typography } from "@mui/material";
 
 const FacilitiesList = () => {
@@ -17,7 +25,9 @@ const FacilitiesList = () => {
   const [openFormModal, setOpenFormModal] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
 
-  const [selectedFacility, setSelectedFacility] = useState<TableRowData | null>(null);
+  const [selectedFacility, setSelectedFacility] = useState<TableRowData | null>(
+    null
+  );
   const [name, setName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
@@ -136,25 +146,41 @@ const FacilitiesList = () => {
       />
 
       {/* View Modal */}
-      <ReusableModal open={openViewModal} onClose={() => setOpenViewModal(false)}>
+      <ReusableModal
+        open={openViewModal}
+        onClose={() => setOpenViewModal(false)}
+      >
         {selectedFacility && (
           <div className="facility-details">
             <h4>{selectedFacility.name}</h4>
-            <p><strong>Created By:</strong> {selectedFacility.createdBy}</p>
-            <p><strong>Created At:</strong> {selectedFacility.createdAt}</p>
+            <p>
+              <strong>Created By:</strong> {selectedFacility.createdBy}
+            </p>
+            <p>
+              <strong>Created At:</strong> {selectedFacility.createdAt}
+            </p>
           </div>
         )}
       </ReusableModal>
 
       {/* Add/Edit Modal */}
-      <ReusableModal open={openFormModal} onClose={() => setOpenFormModal(false)}>
+      <ReusableModal
+        open={openFormModal}
+        onClose={() => setOpenFormModal(false)}
+      >
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
           }}
         >
-          <Box display="flex" flexDirection="column" gap={3} p={2} minWidth={300}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap={3}
+            p={2}
+            minWidth={300}
+          >
             <Typography variant="h6" fontWeight={600}>
               {isEditing ? "Edit Facility" : "Add New Facility"}
             </Typography>

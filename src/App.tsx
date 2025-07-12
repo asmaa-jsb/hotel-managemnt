@@ -13,7 +13,7 @@ import {
   Users,
   NotFound,
 } from "./pages/index";
-import AuthLayout from "./components/AuthLayout";
+import AuthLayout from "./components/AdminSharedModual/AuthLayout/AuthLayout";
 import "./styles/global.css";
 import { useDispatch } from "react-redux";
 import { saveLoginData } from "./redux/slices/authSlice";
@@ -21,11 +21,9 @@ import { useEffect } from "react";
 // import ProtectedRoute from "./components/ProtectedRoute";
 //  path: "/",
 //       element: <ProtectedRoute />,
-import PortalMainLayout from "./components/AdminPortalLayout";
+import PortalMainLayout from "./components/AdminSharedModual/AdminPortalLayout/AdminPortalLayout";
 import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
-
-
-
+import { Loader } from "./components/AdminSharedModual/Loader/Loader";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,7 +43,7 @@ function App() {
     {
       path: "/",
       element: <AuthLayout />,
-      errorElement: <NotFound/>,
+      errorElement: <NotFound />,
       children: [
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
@@ -55,13 +53,12 @@ function App() {
       ],
     },
     {
-     
       children: [
         {
           element: <PortalMainLayout />,
           children: [
-             { index: true, element: <Dashboard /> },
-              { path: "dashboard", element: <Dashboard /> },
+            { index: true, element: <Dashboard /> },
+            { path: "dashboard", element: <Dashboard /> },
             { path: "rooms", element: <RoomList /> },
             { path: "rooms/new-room", element: <RoomForm /> },
             { path: "rooms/:roomId", element: <RoomForm /> },
@@ -73,8 +70,10 @@ function App() {
         },
       ],
     },
-
-    
+    {
+      path: "loader",
+      element: <Loader />,
+    },
   ]);
   return (
     <>

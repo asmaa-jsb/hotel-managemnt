@@ -372,3 +372,82 @@
   margin-bottom: 24px;
   text-align: center;
 }
+
+@import url("https://fonts.googleapis.com/css?family=Lato:700");
+
+@keyframes flicker {
+  0% {
+    background: transparent;
+  }
+  50% {
+    background: white;
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+@keyframes neon {
+  0%,
+  100% {
+    text-shadow: none;
+  }
+  50% {
+    text-shadow: rgba(255, 255, 255, 0.8) 0 0 8px;
+  }
+}
+
+.loader {
+  padding: 0.5em;
+  width: 5.5em;
+  height: 9.5em;
+  margin: 0px auto;
+  background: rgba(32, 63, 199, 1);
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 0 20px inset;
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.window {
+  background: white;
+  width: 0.5em;
+  height: 1em;
+  margin: 0 0.5em 0.5em 0;
+  border-radius: 2px;
+  animation: flicker 1s infinite ease;
+}
+
+.window:nth-child(5n) {
+  margin-right: 0;
+}
+
+.door {
+  background: white;
+  position: absolute;
+  bottom: 0;
+  width: 1em;
+  height: 1.5em;
+  left: 50%;
+  margin-left: -0.5em;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.hotel-sign {
+  position: absolute;
+  right: -1.5em;
+  width: 1.3em;
+  background: rgba(32, 63, 199, 1);
+  text-align: center;
+  border-radius: 4px;
+  padding: 0.25em 0;
+  animation: neon 3s infinite ease;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  font-family: "Lato", sans-serif;
+}

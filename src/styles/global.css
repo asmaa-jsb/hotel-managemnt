@@ -14,7 +14,7 @@ a {
   text-decoration: none !important;
 }
 :root {
-  --primary-color: #rgba(50, 82, 223, 0.3);
+  --primary-color: rgba(50, 82, 223, 0.3);
   --secondary-color :#203FC7;
 }
 

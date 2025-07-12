@@ -8,11 +8,15 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TableRow,
+  Box,
 } from "@mui/material";
 import type { MouseEvent } from "react";
 import { useState } from "react";
 import { FaEye, FaRegEdit, FaTrash } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { Loader } from "../Loader/Loader";
+import NoData from "@/components/AdminSharedModual/NoData/NoData"; // ✅ تأكد من وجوده
 
 export interface TableRowData {
   [key: string]: any;
@@ -32,6 +36,9 @@ interface Props {
   onEdit?: (id: string | number) => void;
   onDelete?: (id: string | number) => void;
   idKey?: string;
+  loading?: boolean;
+  model?: string;
+  mode?: "search" | "filter" | "initial";
 }
 
 const ReusableTable = ({
@@ -41,6 +48,9 @@ const ReusableTable = ({
   onEdit,
   onDelete,
   idKey = "id",
+  loading = false,
+  model = "data",
+  mode = "initial",
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedId, setSelectedId] = useState<string | number | null>(null);
@@ -58,11 +68,13 @@ const ReusableTable = ({
     setSelectedId(null);
   };
 
+  const showNoData = !loading && rows.length === 0;
+
   return (
     <TableContainer className="table-container">
       <Table>
         <TableHead>
-          <tr className="table-head-row">
+          <TableRow className="table-head-row">
             {columns.map((column) => (
               <TableCell
                 key={column.id}
@@ -75,38 +87,52 @@ const ReusableTable = ({
             <TableCell align="left" className="table-head-cell">
               Actions
             </TableCell>
-          </tr>
+          </TableRow>
         </TableHead>
 
         <TableBody>
-          <AnimatePresence>
-            {rows.map((row) => (
-              <motion.tr
-                key={row[idKey]}
-                className="table-body-row"
-                initial={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align || "left"}
-                    className="table-cell-no-border"
-                  >
-                    {column.render
-                      ? column.render(row[column.id], row)
-                      : row[column.id]}
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={columns.length + 1} align="center">
+                <Loader mode={mode} model={model} />
+              </TableCell>
+            </TableRow>
+          ) : showNoData ? (
+            <TableRow>
+              <TableCell colSpan={columns.length + 1} align="center">
+                <NoData />
+              </TableCell>
+            </TableRow>
+          ) : (
+            <AnimatePresence>
+              {rows.map((row) => (
+                <motion.tr
+                  key={row[idKey]}
+                  className="table-body-row"
+                  initial={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align || "left"}
+                      className="table-cell-no-border"
+                    >
+                      {column.render
+                        ? column.render(row[column.id], row)
+                        : row[column.id]}
+                    </TableCell>
+                  ))}
+                  <TableCell align="right" className="table-cell-no-border">
+                    <IconButton onClick={(e) => handleMenuOpen(e, row[idKey])}>
+                      <MoreVertIcon />
+                    </IconButton>
                   </TableCell>
-                ))}
-                <TableCell align="right" className="table-cell-no-border">
-                  <IconButton onClick={(e) => handleMenuOpen(e, row[idKey])}>
-                    <MoreVertIcon />
-                  </IconButton>
-                </TableCell>
-              </motion.tr>
-            ))}
-          </AnimatePresence>
+                </motion.tr>
+              ))}
+            </AnimatePresence>
+          )}
         </TableBody>
       </Table>
 

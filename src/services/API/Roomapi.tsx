@@ -10,9 +10,10 @@ export const fetchRooms = async (page = 1, size = 10): Promise<IRoomList> => {
   const response = await axiosInstance.get(ROOM_URLS.ROOM_LIST, {
     params: { page, size },
   });
+  console.log(response.data);
+
   return response.data;
 };
-
 
 export const fetchRoomDetails = async (id: string): Promise<Room> => {
   const response = await axiosInstance.get(ROOM_URLS.GET_ROOM_DETAILS(id));
@@ -26,7 +27,6 @@ export const DeleteRoom = async (id: string): Promise<IRoomList> => {
 
 export const createRoom = async (data: CreateRoomInput) => {
   const formData = new FormData();
-
   formData.append("roomNumber", data.roomNumber);
   formData.append("price", data.price.toString());
   formData.append("capacity", data.capacity.toString());

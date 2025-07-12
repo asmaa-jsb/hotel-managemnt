@@ -1,6 +1,6 @@
 import defultImg from "@/assets/Images/default-avatar.png";
-import AuthInput from "@/components/AuthInput";
-import AuthSubmitButton from "@/components/AuthSubmitButton";
+import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";
+import AuthSubmitButton from "@/components/AdminSharedModual/AuthSubmitButton/AuthSubmitButton";
 import type { IRegisterFormInputs } from "@/interfaces/AuthInterface";
 import { registerUser } from "@/services/API/Authapi";
 import {

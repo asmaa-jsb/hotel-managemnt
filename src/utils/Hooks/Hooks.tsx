@@ -17,10 +17,18 @@ import { fetchChart } from "@/services/API/ChartApi";
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
   return useQuery<IRoomList>({
-    queryKey: ["rooms", page, size],
+    queryKey: ["rooms", page, size],  //كل مفتاح يمثل نسخة مختلفة من البيانات.حسب اذا البيانات اتجددت او سار فلتريشن
     queryFn: () => fetchRooms(page, size),
   });
 };
+// لأن React Query:
+
+// يخزّن (caches) 
+// البيانات بناءً على (queryKey()
+
+// ولما تطلبي نفس المفتاح مرة ثانية → يعرض البيانات فورًا بدون ما يعيد الطلب
+
+// ولو غيرتي المفتاح → يعرف إن لازم يجلب بيانات جديدة
 
 export const useRoomDetails = (id?: string) => {
   return useQuery<Room>({
@@ -46,8 +54,10 @@ export const useDeleteRoom = () => {
 export const useCreateRoom = () => {
   const queryClient = useQueryClient();
   return useMutation({
+    // هي الدالة اللي فعليًا ترسل البيانات للسيرفر. (mutationFn)
     mutationFn: (data: CreateRoomInput) => createRoom(data),
     onSuccess: () => {
+      //"أبطل صلاحية البيانات الموجودة بالكاش، وارجع جيبها من جديد من السيرفر.(invalidateQueries)"
       queryClient.invalidateQueries({ queryKey: ["rooms"] });
     },
     onError: (error) => {

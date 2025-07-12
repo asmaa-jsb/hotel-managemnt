@@ -1,9 +1,9 @@
 import { Box, Toolbar } from "@mui/material";
 
 import { Outlet } from "react-router-dom";
-import Sidebar from "./sideBar";
+import Sidebar from "../SideBar/sideBar";
 import { useState } from "react";
-import HotelNavbar from "../components/HotelNavbar";
+import HotelNavbar from "../HotalNavbar/HotelNavbar";
 
 // const drawerWidth = 240;
 // const collapsedWidth = 70;
