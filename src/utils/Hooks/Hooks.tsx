@@ -25,11 +25,14 @@ import type {
 import { fetchBookings, deleteBooking } from "@/services/API/Bookingapi";
 import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 import { fetchChart } from "@/services/API/ChartApi";
+import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
+import { createADS, fetchAds } from "@/services/API/Adsapi";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
   return useQuery<IRoomList>({
-    queryKey: ["rooms", page, size], //كل مفتاح يمثل نسخة مختلفة من البيانات.حسب اذا البيانات اتجددت او سار فلتريشن
+    queryKey: ["rooms", page, size],
+
     queryFn: () => fetchRooms(page, size),
   });
 };
@@ -180,3 +183,38 @@ export const useFacilities = () =>
     queryKey: ["facilities"],
     queryFn: fetchFacilities,
   });
+
+export const useAds = (page: number, size: number) => {
+  return useQuery<IAdsList>({
+    queryKey: ["ads", page, size],
+
+    queryFn: () => fetchAds(page, size),
+  });
+};
+
+export const useCreateAd = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: CreateAdsInput) => createADS(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+    },
+    onError: (error) => {
+      console.error("Error creating room:", error);
+    },
+  });
+};
+
+export const useUpdateAd = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: CreateRoomInput }) =>
+      updateRoom(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+    },
+    onError: (error) => {
+      console.error("Error updating room:", error);
+    },
+  });
+};

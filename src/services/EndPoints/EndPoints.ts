@@ -62,7 +62,7 @@ export const USERS = {
 };
 
 export const ADS_URLS = {
-  ADS_LIST: `${AdminPortal}/`,
+  ADS_LIST: `${AdminPortal}/ads`,
 };
 //Chart
 export const CHART = {

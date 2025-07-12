@@ -1,6 +1,15 @@
-import { axiosInstance } from "../EndPoints/EndPoints"
+import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
+import { ADS_URLS, axiosInstance } from "../EndPoints/EndPoints";
 
+export const fetchAds = async (page = 1, size = 10): Promise<IAdsList> => {
+  const response = await axiosInstance.get(ADS_URLS.ADS_LIST, {
+    params: { page, size },
+  });
 
-export function getAdsList = () =>{
-  const response = axiosInstance.get()
-}
+  return response.data;
+};
+
+export const createADS = async (payload: CreateAdsInput) => {
+  const response = await axiosInstance.post(ADS_URLS.ADS_LIST, payload);
+  return response.data;
+};

@@ -14,7 +14,7 @@ export interface Room {
   price: number;
   capacity: number;
   discount: number;
-  facilities: Facility[]; 
+  facilities: Facility[];
   createdBy: CreatedBy;
   images: File[];
 }

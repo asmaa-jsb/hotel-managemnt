@@ -6,16 +6,22 @@ interface HeaderProps {
   btnTitle?: string;
   description?: string;
   linkTo?: string;
-  showBtn:boolean
+  showBtn: boolean;
 }
 
-const Header = ({ title, btnTitle, description, linkTo,showBtn }: HeaderProps) => {
+const Header = ({
+  title,
+  btnTitle,
+  description,
+  linkTo,
+  showBtn,
+}: HeaderProps) => {
   return (
     <Box className="header-container">
       <Box className="header-content">
         <Box className="header-text">
           <Typography variant="h5" className="Primary-color">
-            {title }
+            {title}
           </Typography>
           <Typography variant="body1">
             {description || "You can check all details"}
@@ -23,7 +29,7 @@ const Header = ({ title, btnTitle, description, linkTo,showBtn }: HeaderProps) =
         </Box>
         {linkTo && (
           <Link to={linkTo} className="header-link-button">
-            {btnTitle }
+            {btnTitle}
           </Link>
         )}
       </Box>

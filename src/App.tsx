@@ -24,6 +24,7 @@ import { useEffect } from "react";
 import PortalMainLayout from "./components/AdminSharedModual/AdminPortalLayout/AdminPortalLayout";
 import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 import { Loader } from "./components/AdminSharedModual/Loader/Loader";
+import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +64,8 @@ function App() {
             { path: "rooms/new-room", element: <RoomForm /> },
             { path: "rooms/:roomId", element: <RoomForm /> },
             { path: "ads", element: <AdsList /> },
+            { path: "ads/add", element: <AdsForm /> },
+            { path: "ads/edit/:id", element: <AdsForm /> },
             { path: "facilities", element: <FacilitiesList /> },
             { path: "bookings", element: <BookingList /> },
             { path: "users", element: <Users /> },
