@@ -9,8 +9,8 @@ import {
   PassValidation,
 } from "@/utils/Validations/Validations";
 
-import AuthInput from "@/components/AuthInput";
-import AuthSubmitButton from "@/components/AuthSubmitButton";
+import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";
+import AuthSubmitButton from "@/components/AdminSharedModual/AuthSubmitButton/AuthSubmitButton";
 import { useState } from "react";
 import type { LoginFormInputs } from "@/interfaces/AuthInterface";
 
@@ -28,13 +28,10 @@ const Login = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
-      CookieServices.set("token", response?.data?.data?.token, {
-        path: "/",
-        maxAge: 86400,
-      });
-      console.log("Login Response:", response.data);
+      CookieServices.set("token", response?.data?.data?.token);
+
       toast.success(response?.data?.message || "Logged in successfully!");
-      navigate("/rooms");
+      navigate("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.message || "Login failed:");
@@ -46,7 +43,7 @@ const Login = () => {
   return (
     <Box className="form">
       <Grid sx={{ width: "100%" }}>
-        <Typography component="h1" className="form-title">
+        <Typography component="h1" className="form-title1">
           Sign in
         </Typography>
         <Typography className="form-subtitle" variant="body2">

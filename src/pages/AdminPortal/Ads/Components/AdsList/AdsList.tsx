@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/AdminSharedModual/Header/Header";
 
 const AdsList = () => {
   return (

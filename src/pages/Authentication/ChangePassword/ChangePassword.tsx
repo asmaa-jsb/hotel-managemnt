@@ -7,8 +7,8 @@ import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
 // Reusable components
-import AuthInput from "@/components/AuthInput";
-import AuthSubmitButton from "@/components/AuthSubmitButton";
+import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";
+import AuthSubmitButton from "@/components/AdminSharedModual/AuthSubmitButton/AuthSubmitButton";
 
 import type ChangePasswordFormInputs from "@/interfaces/AuthInterface";
 
@@ -40,7 +40,7 @@ const ResetPassword = () => {
   return (
     <Box className="form">
       <Grid sx={{ width: "100%" }}>
-        <Typography component="h1" className="form-title">
+        <Typography component="h1" className="form-title1">
           Forgot Password
         </Typography>
         <Typography className="form-subtitle" variant="body2">

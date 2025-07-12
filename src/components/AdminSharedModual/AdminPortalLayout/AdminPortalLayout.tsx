@@ -1,8 +1,9 @@
 import { Box, Toolbar } from "@mui/material";
 
 import { Outlet } from "react-router-dom";
-import Sidebar from "./sideBar";
+import Sidebar from "../SideBar/sideBar";
 import { useState } from "react";
+import HotelNavbar from "../HotalNavbar/HotelNavbar";
 
 // const drawerWidth = 240;
 // const collapsedWidth = 70;
@@ -22,10 +23,11 @@ const PortalMainLayout = () => {
           // minHeight: "100vh",
         }}
       >
-        <Box bgcolor="#f9f9f9">
+        <HotelNavbar />
+        <Box>
           <Toolbar />
         </Box>
-        <Box px={3} py={2}>
+        <Box px={3}>
           <Outlet />
         </Box>
       </Box>

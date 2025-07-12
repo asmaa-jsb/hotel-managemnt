@@ -2,6 +2,8 @@
 @import "./variables.css";
 @import "./Auth.css";
 @import "./AdminPortal.css";
+@import "./NotFound.css";
+@import "./dashboard.css";
 
 body {
   margin: 0;
@@ -12,7 +14,8 @@ a {
   text-decoration: none !important;
 }
 :root {
-  --primary-color: #rgba(50, 82, 223, 0.3);
+  --primary-color: rgba(50, 82, 223, 0.3);
+  --secondary-color :#203FC7;
 }
 
 .Primary-color {
