@@ -37,6 +37,7 @@
  -ms-border-radius: 5x;
  -o-border-radius: 5x;
  padding: 14px;
+ margin-bottom: 20px;
 }
 .chart-container {
 justify-content: space-between;

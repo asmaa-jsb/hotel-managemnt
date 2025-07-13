@@ -2,19 +2,11 @@ import Header from "@/components/AdminSharedModual/Header/Header";
 import ReusableModal from "@/components/AdminSharedModual/ReusableModal/ReusableModal";
 import ReusableTable from "@/components/AdminSharedModual/ReusableTable/ReusableTable";
 import TablePagination from "@/components/AdminSharedModual/TablePagination/TablePagination";
+import type { UserProfile } from "@/interfaces/Interfaces";
 import { useUsers } from "@/utils/Hooks/Hooks";
 import { Avatar } from "@mui/material";
 import { useState } from "react";
 
-type UserProfile = {
-  _id: string;
-  userName: string;
-  email: string;
-  phoneNumber: string;
-  country: string;
-  role: string;
-  profileImage: string;
-};
 
 const Users = () => {
   const { data: usersData, isLoading, isError } = useUsers();
@@ -80,7 +72,6 @@ const Users = () => {
   return (
     <>
       <Header title="Users Table Details" showBtn={false} />
-
       <ReusableTable
         columns={columns}
         rows={paginatedRows}

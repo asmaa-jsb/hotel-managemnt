@@ -125,8 +125,8 @@ const FacilitiesList = () => {
     setIsEditing(false);
   };
 
-  if (isLoading) return <p>Loading facilities...</p>;
-  if (isError) return <p>Failed to load facilities.</p>;
+
+ 
 
   return (
     <>
@@ -143,6 +143,9 @@ const FacilitiesList = () => {
         onView={handleView}
         onEdit={handleEdit}
         onDelete={handleDelete}
+         loading={isLoading} 
+        model="facilities"       
+        mode="initial" 
       />
 
       {/* View Modal */}

@@ -4,6 +4,7 @@
 @import "./AdminPortal.css";
 @import "./NotFound.css";
 @import "./dashboard.css";
+@import "./profile.css";
 
 body {
   margin: 0;

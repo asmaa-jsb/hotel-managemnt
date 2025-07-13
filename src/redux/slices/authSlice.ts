@@ -4,11 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 interface DecodedToken {
-  userId: number;
-  roles: string[];
-  userName: string;
-  userEmail: string;
-  userGroup: string;
+  _id: string;
+  role: string;
 }
 
 interface AuthState {
@@ -30,6 +27,7 @@ const authSlice = createSlice({
         try {
           const decoded = jwtDecode<DecodedToken>(token);
           state.loginData = decoded;
+          
         } catch (error) {
           console.error("Invalid token:", error);
           state.loginData = null;

@@ -3,23 +3,30 @@ import DashboardCard from "./DashboardCard";
 import BookingChart from "./BookingChart";
 import { useChart } from "@/utils/Hooks/Hooks";
 import UsersChart from "./UsersChart";
+import { Loader } from "@/components/AdminSharedModual/Loader/Loader";
+import Header from "@/components/AdminSharedModual/Header/Header";
 
 const Dashboard = () => {
-  const { data } = useChart();
+  const {isLoading,isError , data } = useChart();
   const charts = data?.data;
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); 
 
+  if(isLoading) return <Loader/> 
+
   return (
+    <>
+  <Header title="Dashboard"  showBtn={false}/>
     <Box component="div" className="dashboard-container">
+      
    
       <Grid
         container
      
         spacing={isExtraSmallScreen ? 2 : isSmallScreen ? 4 : 0}
-        justifyContent="space-between" 
+        justifyContent={{sm:"center", lg:"space-between"}}
         alignItems="stretch" 
       
       >
@@ -42,6 +49,7 @@ const Dashboard = () => {
       >
         {/* Booking Chart */}
         <Grid size={{ xs:12 , md:6}}>
+          
           <BookingChart
             completedValue={charts?.bookings?.completed}
             pendingValue={charts?.bookings?.pending}
@@ -78,6 +86,7 @@ const Dashboard = () => {
         </Grid>
       </Grid>
     </Box>
+    </>
   );
 };
 

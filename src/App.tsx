@@ -12,6 +12,7 @@ import {
   BookingList,
   Users,
   NotFound,
+  Profile,
 } from "./pages/index";
 import AuthLayout from "./components/AdminSharedModual/AuthLayout/AuthLayout";
 import "./styles/global.css";
@@ -66,6 +67,8 @@ function App() {
             { path: "facilities", element: <FacilitiesList /> },
             { path: "bookings", element: <BookingList /> },
             { path: "users", element: <Users /> },
+            { path: "my-profile", element: <Profile /> },
+
           ],
         },
       ],

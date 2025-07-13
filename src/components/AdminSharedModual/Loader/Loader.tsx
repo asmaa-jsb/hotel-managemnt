@@ -41,6 +41,7 @@ export const Loader: React.FC<HotelLoaderProps> = ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent:"center",
         my: 2,
       }}
     >

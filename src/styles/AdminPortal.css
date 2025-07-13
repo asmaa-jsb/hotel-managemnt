@@ -140,12 +140,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 420px;
-  max-width: 90%;
+  max-width: 75%;
   background-color: #ffffff;
   border-radius: 16px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   padding: 24px;
   outline: none;
+ 
 }
 
 .modal-header {
@@ -167,6 +168,10 @@
   height: 400px;
   object-fit: cover;
   border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
 }
 
 /* Search and filters container */
@@ -198,9 +203,9 @@
 .header-container {
   padding-left: 16px;
   padding-right: 16px;
-  width: 94%;
   margin-left: 15px;
   background-color: #f9f9f9;
+  margin: 0 auto;
 }
 
 .header-content {
@@ -212,6 +217,7 @@
   padding: 32px 0;
   margin-bottom: 24px;
 }
+
 
 .header-text h5 {
   font-size: 24px;
@@ -241,6 +247,14 @@
   background-color: #155fa0;
 }
 
+@media screen and (max-width: 768px)  {
+   .header-text h5{
+    font-size: 18px;
+   }
+   .header-content{
+    justify-content: center;
+   }
+}
 /* ====== Room Form ====== */
 .room-form-container {
   max-width: 700px;

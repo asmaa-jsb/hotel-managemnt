@@ -29,14 +29,15 @@ const TablePagination = ({
   return (
     <Box
       display="flex"
-      justifyContent="flex-end"
+      justifyContent={{md:"flex-end", sm:'center'}}
       alignItems="center"
       flexWrap="wrap"
       gap={4}
       my={3}
+     
     >
       {/* Page Size Selector */}
-      <Box display="flex" alignItems="center" gap={1}>
+      <Box display="flex" alignItems="center" justifyContent={{sm:"center"}}  gap={1}>
         <Typography variant="body2">Showing</Typography>
         <FormControl size="small" sx={{ minWidth: 80 }}>
           <Select

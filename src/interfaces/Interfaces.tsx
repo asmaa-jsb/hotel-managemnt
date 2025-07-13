@@ -26,6 +26,7 @@ export interface IRoomList {
     rooms: Room[];
   };
 }
+/***********Booking**********/
  export interface Booking {
     
        _id: string;
@@ -51,4 +52,15 @@ export interface IRoomList {
           userName: string;
        
       }
+      /*************user profile************ */
+    export type UserProfile = {
+      _id: string;
+      userName: string;
+      email: string;
+      phoneNumber: string;
+      country: string;
+      role: string;
+      profileImage: string;
+    };
+    
 
