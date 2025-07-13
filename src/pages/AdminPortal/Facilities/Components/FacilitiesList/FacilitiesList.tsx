@@ -130,12 +130,30 @@ const FacilitiesList = () => {
 
   return (
     <>
-      <Header
-        title="Facilities List"
-        btnTitle="Add Facility"
-        description="Manage all available facilities"
-        onClickButton={handleAdd}
-      />
+
+    <Header
+  title="Facilities List"
+  description="Manage all available facilities"
+  btnTitle="Add Facility"
+  showBtn={true}
+  onClickBtn={handleAdd}
+/>
+
+{/* <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+  <Box>
+    <Typography variant="h5" fontWeight="bold" className="Primary-color">
+      Facilities List
+    </Typography>
+    <Typography variant="body2" color="text.secondary">
+      Manage all available facilities
+    </Typography>
+  </Box>
+
+  <Button variant="contained" color="primary" onClick={handleAdd}>
+    Add Facility
+  </Button>
+</Box> */}
+
 
       <ReusableTable
         columns={columns}

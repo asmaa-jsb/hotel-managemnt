@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 interface HeaderProps {
@@ -7,9 +7,10 @@ interface HeaderProps {
   description?: string;
   linkTo?: string;
   showBtn: boolean;
+  onClickBtn?: () => void;
 }
 
-const Header = ({ title, btnTitle, description, linkTo,showBtn }: HeaderProps) => {
+const Header = ({ title, btnTitle, description, linkTo,showBtn ,onClickBtn }: HeaderProps) => {
  
   return (
     <Box className="header-container">
@@ -22,11 +23,19 @@ const Header = ({ title, btnTitle, description, linkTo,showBtn }: HeaderProps) =
             {description || "You can check all details"}
           </Typography>
         </Box>
-        {linkTo && (
+          {linkTo ? (
           <Link to={linkTo} className="header-link-button">
             {btnTitle}
           </Link>
-        )}
+        ) : onClickBtn ? (
+          <Button
+            onClick={onClickBtn}
+            variant="contained"
+            className="header-link-button"
+          >
+            {btnTitle}
+          </Button>
+        ) : null}
       </Box>
     </Box>
   );
