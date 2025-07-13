@@ -73,7 +73,7 @@ function App() {
             { path: "facilities", element: <FacilitiesList /> },
             { path: "bookings", element: <BookingList /> },
             { path: "users", element: <Users /> },
-            { path: "my-profile", element: <Profile /> },
+            { path: "my-profile/:id", element: <Profile /> },
 
           ],
         },

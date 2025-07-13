@@ -1,15 +1,15 @@
 import { Box, Divider, Grid, Typography } from "@mui/material"
-import {  useSelector } from 'react-redux';
 import { useUserProfile } from '@/utils/Hooks/Hooks';
-import type { RootState } from "@/redux/store";
 import type { UserProfile } from "@/interfaces/Interfaces";
 import { Loader } from "@/components/AdminSharedModual/Loader/Loader";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {  
-      const loginData = useSelector((state: RootState) => state.auth.loginData);
-   const userId: string |undefined = loginData?._id;
-      const { data, isLoading, isError } = useUserProfile<UserProfile>(userId);
+  const { id } = useParams<{ id?: string }>();
+      const { data, isLoading, isError } = useUserProfile<UserProfile>(id);
      const user = data?.data?.user;
+     console.log(user);
+     
        if(isLoading) return <Loader/> 
      
      

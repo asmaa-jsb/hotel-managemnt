@@ -56,9 +56,10 @@ const Sidebar = ({
       setOpen(true);
     }
   }, [isMobile]);
-
+ 
   return (
     <Drawer
+       
       variant={isMobile ? "persistent" : "permanent"}
       open={open}
       sx={{

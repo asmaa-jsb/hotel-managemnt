@@ -12,6 +12,7 @@ import {
   useTheme,
   useMediaQuery,
   Badge,
+  CircularProgress, 
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
@@ -75,8 +76,9 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
   const loginData = useSelector((state: RootState) => state.auth.loginData);
   const userId = loginData?._id;
 
-  const { data } = useUserProfile(userId ?? "");
-  const user = data?.data?.user; // ✅ التعديل الأساسي هنا
+  
+  const { data, isLoading } = useUserProfile(userId || ""); 
+  const user = data?.data?.user;
 
   const displayName = user?.userName || "Guest";
   const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
@@ -97,7 +99,7 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box display="flex" alignItems="center" gap={2} flex={1}>
             {isMobileOrTablet && (
-              <IconButton onClick={() => setOpen(!open)}>
+              <IconButton onClick={() => setOpen(!open)} sx={{ color: theme.palette.text.primary }}>
                 {open ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             )}
@@ -108,34 +110,53 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
           </Box>
 
           <Box display="flex" alignItems="center" gap={2}>
-            <IconButton onClick={handleNotifOpen}>
+            <IconButton onClick={handleNotifOpen} sx={{ color: theme.palette.text.primary }}>
               <Badge color="error" variant="dot">
-                <NotificationsNoneIcon sx={{ color: theme.palette.text.primary }} />
+                <NotificationsNoneIcon />
               </Badge>
             </IconButton>
 
-            <Box
-              onClick={handleUserMenuOpen}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-                bgcolor: theme.palette.mode === "dark" ? "#2c2c2c" : "#fff",
-                p: 1,
-                borderRadius: "12px",
-                border: `1px solid ${theme.palette.divider}`,
-              }}
-            >
-              <Avatar
-                alt="User"
-                src={avatarSrc}
-                sx={{ width: 32, height: 32, mr: 1 }}
-              />
-              <Typography variant="body2" color={theme.palette.text.primary}>
-                {displayName}
-              </Typography>
-              <ArrowDropDownIcon sx={{ color: theme.palette.text.primary }} />
-            </Box>
+            {/* Corrected CircularProgress size */}
+            {isLoading ? (
+              <Box sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 32, // Match avatar width
+                  height: 32, // Match avatar height
+                  p: 1, // Match padding of the avatar box
+                  borderRadius: '12px',
+                  border: `1px solid ${theme.palette.divider}`,
+                  bgcolor: theme.palette.mode === "dark" ? "#2c2c2c" : "#fff",
+              }}>
+                <CircularProgress size={24} sx={{ color: theme.palette.primary.main }} /> 
+              </Box>
+            ) : (
+              <Box
+                onClick={handleUserMenuOpen}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  bgcolor: theme.palette.mode === "dark" ? "#2c2c2c" : "#fff",
+                  p: 1,
+                  borderRadius: "12px",
+                  border: `1px solid ${theme.palette.divider}`,
+                }}
+              >
+                <Avatar
+                  alt="User"
+                  src={avatarSrc}
+                  sx={{ width: 32, height: 32, mr: 1 }}
+                />
+                <Typography variant="body2" color={theme.palette.text.primary}
+                  sx={{ [theme.breakpoints.down("sm")]: { display: 'none' } }} 
+                >
+                  {displayName}
+                </Typography>
+                <ArrowDropDownIcon sx={{ color: theme.palette.text.primary }} />
+              </Box>
+            )}
           </Box>
         </Toolbar>
       </CustomAppBar>
@@ -144,12 +165,16 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
         anchorEl={userMenuAnchor}
         open={Boolean(userMenuAnchor)}
         onClose={handleUserMenuClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem onClick={() => navigate("/my-profile")}>Profile</MenuItem>
+      
+        <MenuItem onClick={() => { navigate(`/my-profile/${userId}`); handleUserMenuClose(); }}>Profile</MenuItem>
         <MenuItem
           onClick={() => {
             dispatch(clearLoginData());
             CookieServices.remove("token");
+            handleUserMenuClose(); 
             navigate("/login");
           }}
         >
@@ -161,10 +186,12 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
         anchorEl={notifAnchor}
         open={Boolean(notifAnchor)}
         onClose={handleNotifClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem>New comment on your post</MenuItem>
-        <MenuItem>New user registered</MenuItem>
-        <MenuItem>Server backup completed</MenuItem>
+        <MenuItem onClick={handleNotifClose}>New comment on your post</MenuItem>
+        <MenuItem onClick={handleNotifClose}>New user registered</MenuItem>
+        <MenuItem onClick={handleNotifClose}>Server backup completed</MenuItem>
       </Menu>
     </>
   );
