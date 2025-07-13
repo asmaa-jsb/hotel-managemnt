@@ -14,6 +14,8 @@ const AuthLayout: React.FC = (): JSX.Element => {
     ? "ChangePassword"
     : path.includes("reset-password")
     ? "ResetPassword"
+    : path.includes("forget-password")
+    ? "ForgetPassword"
     : "";
   return (
     <Grid container component="main" className="AuthContainer">
@@ -40,10 +42,12 @@ const AuthLayout: React.FC = (): JSX.Element => {
           <Typography component="h1">
             {pathName === "Register"
               ? "Sign up to Roamhome"
-              : pathName === "ChangePassword"
+              : pathName === "ForgetPassword"
               ? "Forgot password"
               : pathName === "ResetPassword"
               ? "Reset Password"
+              :pathName === "ChangePassword"
+              ? "Change Password"
               : "Sign in to Roamhome"}
           </Typography>
           <Typography component="p">Homes as unique as you.</Typography>
