@@ -13,6 +13,7 @@ interface HeaderProps {
   description?: string;
   linkTo?: string;
   showBtn: boolean;
+  onClickBtn?: () => void;
 }
 
 const Header = ({
@@ -21,6 +22,7 @@ const Header = ({
   description,
   linkTo,
   showBtn,
+  onClickBtn
 }: HeaderProps) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -54,14 +56,19 @@ const Header = ({
             {description || "You can check all details"}
           </Typography>
         </Box>
-
-        {showBtn && linkTo && (
-          <Link to={linkTo} style={{ textDecoration: "none" }}>
-            <Button variant="contained" color="primary">
-              {btnTitle}
-            </Button>
+          {linkTo ? (
+          <Link to={linkTo} className="header-link-button">
+            {btnTitle}
           </Link>
-        )}
+        ) : onClickBtn ? (
+          <Button
+            onClick={onClickBtn}
+            variant="contained"
+            className="header-link-button"
+          >
+            {btnTitle}
+          </Button>
+        ) : null}
       </Box>
     </Box>
   );

@@ -10,6 +10,7 @@ import {
 import {
   createFacility,
   deleteFacility,
+  fetchRoomFacilities,
   updateFacility,
 } from "@/services/API/Facilities";
 import type {
@@ -141,7 +142,7 @@ export const useChart = () => {
 export const useRoomsFacilities = () => {
   return useQuery<IRoomFacilities>({
     queryKey: ["facilities"],
-    queryFn: fetchFacilities,
+    queryFn: fetchRoomFacilities,
   });
 };
 

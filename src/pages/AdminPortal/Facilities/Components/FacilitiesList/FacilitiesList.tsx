@@ -14,6 +14,7 @@ import {
   useUpdateFacility,
 } from "@/utils/Hooks/Hooks";
 import { Box, Button, TextField, Typography } from "@mui/material";
+import TablePagination from "@/components/AdminSharedModual/TablePagination/TablePagination";
 
 const FacilitiesList = () => {
   const { data, isLoading, isError } = useRoomsFacilities();
@@ -25,15 +26,22 @@ const FacilitiesList = () => {
   const [openFormModal, setOpenFormModal] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
 
-  const [selectedFacility, setSelectedFacility] = useState<TableRowData | null>(
-    null
-  );
+  const [selectedFacility, setSelectedFacility] = useState<TableRowData | null>(null);
   const [name, setName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
+  // Pagination states
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
   const facilities = data?.data?.facilities ?? [];
 
-  const rows: TableRowData[] = facilities.map((facility) => ({
+  // Calculate pagination data
+  const totalItems = facilities.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const paginatedFacilities = facilities.slice((page - 1) * pageSize, page * pageSize);
+
+  const rows: TableRowData[] = paginatedFacilities.map((facility) => ({
     id: facility._id,
     name: facility.name,
     createdBy: facility.createdBy?.userName || "—",
@@ -125,16 +133,14 @@ const FacilitiesList = () => {
     setIsEditing(false);
   };
 
-
- 
-
   return (
     <>
       <Header
         title="Facilities List"
-        btnTitle="Add Facility"
         description="Manage all available facilities"
-        onClickButton={handleAdd}
+        btnTitle="Add Facility"
+        showBtn={true}
+        onClickBtn={handleAdd}
       />
 
       <ReusableTable
@@ -143,16 +149,13 @@ const FacilitiesList = () => {
         onView={handleView}
         onEdit={handleEdit}
         onDelete={handleDelete}
-         loading={isLoading} 
-        model="facilities"       
-        mode="initial" 
+        loading={isLoading}
+        model="facilities"
+        mode="initial"
       />
 
       {/* View Modal */}
-      <ReusableModal
-        open={openViewModal}
-        onClose={() => setOpenViewModal(false)}
-      >
+      <ReusableModal open={openViewModal} onClose={() => setOpenViewModal(false)}>
         {selectedFacility && (
           <div className="facility-details">
             <h4>{selectedFacility.name}</h4>
@@ -167,23 +170,14 @@ const FacilitiesList = () => {
       </ReusableModal>
 
       {/* Add/Edit Modal */}
-      <ReusableModal
-        open={openFormModal}
-        onClose={() => setOpenFormModal(false)}
-      >
+      <ReusableModal open={openFormModal} onClose={() => setOpenFormModal(false)}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
           }}
         >
-          <Box
-            display="flex"
-            flexDirection="column"
-            gap={3}
-            p={2}
-            minWidth={300}
-          >
+          <Box display="flex" flexDirection="column" gap={3} p={2} minWidth={300}>
             <Typography variant="h6" fontWeight={600}>
               {isEditing ? "Edit Facility" : "Add New Facility"}
             </Typography>
@@ -213,6 +207,19 @@ const FacilitiesList = () => {
           </Box>
         </form>
       </ReusableModal>
+
+      {/* Pagination */}
+      <TablePagination
+        page={page}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        totalItems={totalItems}
+        onPageChange={(newPage) => setPage(newPage)}
+        onPageSizeChange={(newSize) => {
+          setPageSize(newSize);
+          setPage(1);
+        }}
+      />
 
       {/* Confirm Delete Modal */}
       <ConfirmDeleteModal

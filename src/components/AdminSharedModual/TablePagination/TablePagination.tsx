@@ -5,39 +5,39 @@ import {
   MenuItem,
   IconButton,
   FormControl,
-  InputLabel,
 } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 type Props = {
-  page?: number;
-  totalPages?: number;
-  pageSize?: number;
-  totalItems?: number;
+  page: number;
+  totalPages: number;
+  pageSize: number;
+  totalItems: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
 };
 
 const TablePagination = ({
-  page = 1,
-  totalPages = 10,
-  pageSize = 10,
-  totalItems = 102,
+  page,
+  totalPages,
+  pageSize,
+  totalItems,
   onPageChange,
   onPageSizeChange,
 }: Props) => {
+  const pageSizes = [5,10, 25, 50, 100];
+
   return (
     <Box
       display="flex"
-      justifyContent={{md:"flex-end", sm:'center'}}
+      justifyContent={{ md: "space-between", xs: "center" }}
       alignItems="center"
       flexWrap="wrap"
-      gap={4}
+      gap={2}
       my={3}
-     
     >
       {/* Page Size Selector */}
-      <Box display="flex" alignItems="center" justifyContent={{sm:"center"}}  gap={1}>
+      <Box display="flex" alignItems="center" gap={1}>
         <Typography variant="body2">Showing</Typography>
         <FormControl size="small" sx={{ minWidth: 80 }}>
           <Select
@@ -45,7 +45,7 @@ const TablePagination = ({
             onChange={(e) => onPageSizeChange(Number(e.target.value))}
             sx={{ borderRadius: "20px", fontSize: "0.875rem", px: 1 }}
           >
-            {[10, 25, 50, 100].map((size) => (
+            {pageSizes.map((size) => (
               <MenuItem key={size} value={size}>
                 {size}
               </MenuItem>
@@ -63,7 +63,7 @@ const TablePagination = ({
 
         <IconButton
           onClick={() => onPageChange(page - 1)}
-          disabled={page === 1}
+          disabled={page <= 1}
           sx={{ border: "1px solid #ccc", borderRadius: "50%" }}
         >
           <ChevronLeft />
@@ -71,7 +71,7 @@ const TablePagination = ({
 
         <IconButton
           onClick={() => onPageChange(page + 1)}
-          disabled={page === totalPages}
+          disabled={page >= totalPages}
           sx={{ border: "1px solid #ccc", borderRadius: "50%" }}
         >
           <ChevronRight />

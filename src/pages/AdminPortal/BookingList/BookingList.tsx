@@ -19,7 +19,7 @@ const BookingList = () => {
     useState<BookingDetails | null>();
   const [bookingId, setBookingId] = useState<string | number>();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
 
   const totalItems = bookings?.length ?? 0;
   const totalPages = Math.ceil(totalItems / pageSize);

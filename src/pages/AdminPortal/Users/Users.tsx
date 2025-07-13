@@ -14,7 +14,7 @@ const Users = () => {
 
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
 
   const totalItems = users.length;
   const totalPages = Math.ceil(totalItems / pageSize);
