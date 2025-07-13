@@ -1,4 +1,4 @@
-export default interface ChangePasswordFormInputs {
+export default interface  ForgetPasswordFormInputs {
   email: string;
 }
 

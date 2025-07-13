@@ -4,7 +4,6 @@ import {
   Login,
   ResetPassword,
   Register,
-  ChangePassword,
   RoomList,
   AdsList,
   Dashboard,
@@ -13,6 +12,7 @@ import {
   Users,
   NotFound,
   Profile,
+  ForgetPassword,
 } from "./pages/index";
 import AuthLayout from "./components/AdminSharedModual/AuthLayout/AuthLayout";
 import "./styles/global.css";
@@ -25,6 +25,7 @@ import { useEffect } from "react";
 import PortalMainLayout from "./components/AdminSharedModual/AdminPortalLayout/AdminPortalLayout";
 import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 import { Loader } from "./components/AdminSharedModual/Loader/Loader";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -49,8 +50,9 @@ function App() {
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
+        { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
-        { path: "change-password", element: <ChangePassword /> },
+        // { path: "change-password", element: <ChangePassword /> },
       ],
     },
     {

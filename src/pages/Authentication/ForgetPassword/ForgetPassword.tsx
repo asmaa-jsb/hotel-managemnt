@@ -2,7 +2,7 @@ import { Box, Grid, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -10,28 +10,29 @@ import CircularProgress from "@mui/material/CircularProgress";
 import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";
 import AuthSubmitButton from "@/components/AdminSharedModual/AuthSubmitButton/AuthSubmitButton";
 
-import type ChangePasswordFormInputs from "@/interfaces/AuthInterface";
+import type ForgetPasswordFormInputs from "@/interfaces/AuthInterface";
+import { EmailValidation } from "@/utils/Validations/Validations";
 
-const ResetPassword = () => {
-  const { register, handleSubmit } = useForm<ChangePasswordFormInputs>();
+const ForgetPassword = () => {
+  const { register, handleSubmit } = useForm< ForgetPasswordFormInputs>({mode: "onChange"});
   const navigate = useNavigate();
-  const location = useLocation();
-  const { email } = location.state || "";
 
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data: ChangePasswordFormInputs) => {
+  const onSubmit = async (data:  ForgetPasswordFormInputs) => {
     setLoading(true);
     try {
       const response = await axiosInstance.post(
         USERS_URLS.FORGET_PASSWORD,
         data
       );
+      console.log(response);
+      
       toast.success(response?.data?.message || "Email sent successfully!");
-      navigate("/login");
+      navigate("/reset-password", {state:{ email : data.email}});
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || "Error in reset password");
-      console.error("Reset failed:", error);
+      toast.error(error?.response?.data?.message || "email sending failed");
+   
     } finally {
       setLoading(false);
     }
@@ -52,16 +53,13 @@ const ResetPassword = () => {
       </Grid>
 
       <Box onSubmit={handleSubmit(onSubmit)} component="form" noValidate>
-        {/* Email Field (disabled) */}
         <AuthInput
           label="Email Address"
           name="email"
           type="email"
           placeholder="Please type here ..."
           required
-          defaultValue={email}
-          disabled
-          register={register("email")}
+          register={register("email", EmailValidation)}
         />
 
         {/* Submit Button */}
@@ -71,4 +69,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ForgetPassword;
