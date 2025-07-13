@@ -1,12 +1,15 @@
 import React from "react";
 import { Box, Grid, Typography, TextField, Button, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
 import CookieServices from "@/services/CookieServices/CookieServices";
 import toast from "react-hot-toast";
+import { EmailValidation } from "@/utils/Validations/Validations";
+import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";
 
 interface IResetPassword {
+  email:string;
   otp: string;
   password: string;
   confirmPassword: string;
@@ -14,6 +17,10 @@ interface IResetPassword {
 
 const ResetPassword = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const {state} = location;
+ 
+  
   const {
     register,
     handleSubmit,
@@ -57,53 +64,63 @@ const ResetPassword = () => {
         noValidate
         sx={{ mt: 3, display: "flex", flexDirection: "column", gap: 2 }}
       >
-        {/* OTP */}
-        <TextField
+        {/*Email*/}
+              <AuthInput
+          label="Email Address"
+          name="email"
+          type="email"
+          placeholder="Please type here ..."
           required
-          fullWidth
+          defaultValue={state.email}
+          disabled
+          register={register("email", EmailValidation)}
+        />
+        {/* OTP */}
+          <AuthInput
+          required
+           name="OTP"
           label="OTP"
-          {...register("otp", { required: "OTP is required" })}
+        register={register("otp", { required: "OTP is required" })}
           error={!!errors.otp}
           helperText={errors.otp?.message}
-          className="input-field"
+           placeholder="Please type here ..."
+          
         />
 
         {/* Password */}
-        <TextField
+       <AuthInput
           required
-          fullWidth
+         name="password"
           type="password"
           label="Password"
-          autoComplete="new-password"
-          {...register("password", {
+         register= {register("password", {
             required: "Password is required",
             minLength: { value: 6, message: "Min 6 characters" },
           })}
           error={!!errors.password}
           helperText={errors.password?.message}
-          className="input-field"
+           placeholder="Please type here ..."
         />
 
         {/* Confirm Password */}
-        <TextField
+       <AuthInput
           required
-          fullWidth
+         name="confirmPassword"
           type="password"
           label="Confirm Password"
-          autoComplete="new-password"
-          {...register("confirmPassword", {
+         register={register("confirmPassword", {
             required: "Confirm password is required",
             validate: (value) => value === password || "Passwords do not match",
           })}
           error={!!errors.confirmPassword}
           helperText={errors.confirmPassword?.message}
-          className="input-field"
+           placeholder="Please type here ..."
         />
 
         <Button
           type="submit"
           className="submit-btn"
-          fullWidth
+         
           variant="outlined"
         >
           Reset Password

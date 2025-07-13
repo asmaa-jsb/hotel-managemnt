@@ -17,14 +17,22 @@ import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import type { RootState } from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useUserProfile } from '@/utils/Hooks/Hooks';
+import { clearLoginData } from '@/redux/slices/authSlice';
+import CookieServices from '@/services/CookieServices/CookieServices';
+import { useNavigate } from 'react-router-dom';
+import type { UserProfile } from '@/interfaces/Interfaces';
 
 // AppBar مخصص بدون بادينغ عمودي
 const CustomAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#f8f9fb',
   boxShadow: 'none',
-  paddingLeft: 24,
-  paddingRight: 24,
+    paddingLeft: theme.spacing(3), 
+  paddingRight: theme.spacing(3), 
   minHeight: 0,
+   borderBottom: `1px solid ${theme.palette.divider}`,
 }));
 
 const SearchContainer = styled(Box)(({ theme }) => ({
@@ -45,10 +53,30 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
+
+  
 const Navbar = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));  
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
+   const loginData = useSelector((state: RootState) => state.auth.loginData);
+   const userId: string |undefined = loginData?._id;
+  
+  const { data, isLoading, isError } = useUserProfile<UserProfile>(userId);
+ const user = data?.data?.user;
+    
+    // Handle Logout
+  const handleLogout = () => {
+    dispatch(clearLoginData()); 
+    CookieServices.remove('token'); 
+    handleUserMenuClose(); 
+    navigate("/login")
+  };
+   
+   
 
+ 
   // User menu
   const [userMenuAnchor, setUserMenuAnchor] = React.useState<null | HTMLElement>(null);
   const handleUserMenuOpen = (e: React.MouseEvent<HTMLElement>) => setUserMenuAnchor(e.currentTarget);
@@ -59,14 +87,17 @@ const Navbar = () => {
   const handleNotifOpen = (e: React.MouseEvent<HTMLElement>) => setNotifAnchor(e.currentTarget);
   const handleNotifClose = () => setNotifAnchor(null);
 
+ const displayName = user?.userName || 'Guest';
+  const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
+
   return (
     <>
-      <CustomAppBar position="static">
+      <CustomAppBar position="static" >
         <Toolbar
           disableGutters
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent : {xs:'end',md: "space-between", lg:'space-between'},
             minHeight: 0,
             paddingY: 0,
           }}
@@ -103,11 +134,11 @@ const Navbar = () => {
             >
               <Avatar
                 alt="User"
-                src="https://i.pravatar.cc/40"
+                src={avatarSrc}
                 sx={{ width: 32, height: 32, mr: 1 }}
               />
               <Typography variant="body2" color={theme.palette.text.primary}>
-                Upskilling
+               {displayName}
               </Typography>
               <ArrowDropDownIcon sx={{ color: theme.palette.text.primary }} />
             </Box>
@@ -123,9 +154,8 @@ const Navbar = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>Settings</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={()=>navigate("/my-profile")}>Profile</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
 
       {/* Notifications dropdown menu */}

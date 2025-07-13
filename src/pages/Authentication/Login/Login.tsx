@@ -18,7 +18,6 @@ const Login = () => {
   const {
     register,
     formState: { errors },
-    watch,
     handleSubmit,
   } = useForm<LoginFormInputs>({ mode: "onChange" });
 
@@ -84,7 +83,7 @@ const Login = () => {
           variant="body2"
           className="link-text"
           onClick={() =>
-            navigate("/change-password", { state: { email: watch("email") } })
+            navigate("/forget-password")
           }
         >
           Forgot Password ?

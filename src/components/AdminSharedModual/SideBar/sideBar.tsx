@@ -40,9 +40,11 @@ const collapsedWidth = 50;
 const Sidebar = ({
   open,
   setOpen,
+  onLogout,
 }: {
   open: boolean;
   setOpen: (val: boolean) => void;
+  onLogout: ()=>void;
 }) => {
   return (
     <Drawer
@@ -65,39 +67,66 @@ const Sidebar = ({
         </IconButton>
       </Box>
       <List>
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.label}
-            to={item.path}
-            className={({ isActive }) =>
-              `nav-link ${isActive ? "active-link" : ""}`
-            }
-          >
-            <Tooltip title={!open ? item.label : ""} placement="right">
-              <ListItem disablePadding>
-                <ListItemButton
+        {menuItems.map((item) => {
+  return item.label === "Logout" ? (
+    
+    <ListItem disablePadding key={item.label}>
+      <ListItemButton
+        onClick={onLogout}
+        sx={{
+          px: open ? 3 : 2,
+          py: 1.5,
+          transition: "padding 0.2s ease",
+        }}
+      >
+        <ListItemIcon
+          sx={{
+            color: "#fff",
+            minWidth: 0,
+            mr: open ? 2 : "auto",
+            justifyContent: "center",
+          }}
+        >
+          {item.icon}
+        </ListItemIcon>
+        {open && <ListItemText primary={item.label} />}
+      </ListItemButton>
+    </ListItem>
+  ) : (
+   <NavLink
+          key={item.label}
+          to={item.path}
+          className={({ isActive }) =>
+            `nav-link ${isActive ? "active-link" : ""}`
+          }
+        >
+          <Tooltip title={!open ? item.label : ""} placement="right">
+            <ListItem disablePadding>
+              <ListItemButton
+                sx={{
+                  px: open ? 2 : 1,
+                  py: 1.5,
+                  transition: "padding 0.2s ease",
+                }}
+              >
+                <ListItemIcon
                   sx={{
-                    px: open ? 2 : 1,
-                    py: 1.5,
-                    transition: "padding 0.2s ease",
+                    color: "#fff",
+                    minWidth: 0,
+                    mr: open ? 2 : "auto",
+                    justifyContent: "center",
                   }}
                 >
-                  <ListItemIcon
-                    sx={{
-                      color: "#fff",
-                      minWidth: 0,
-                      mr: open ? 2 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
-                  {open && <ListItemText primary={item.label} />}
-                </ListItemButton>
-              </ListItem>
-            </Tooltip>
-          </NavLink>
-        ))}
+                  {item.icon}
+                </ListItemIcon>
+                {open && <ListItemText primary={item.label} />}
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
+        </NavLink>
+  );
+})}
+  
       </List>
     </Drawer>
   );

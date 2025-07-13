@@ -89,6 +89,9 @@ const BookingList = () => {
         rows={paginatedRows}
         onDelete={handleShowDelete}
         onView={handleView}
+         loading={isLoading} 
+          model="bookings"       
+        mode="initial"  
         idKey="_id"
       />
       <ReusableModal open={open} onClose={handleClose}>
