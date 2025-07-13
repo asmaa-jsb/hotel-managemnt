@@ -17,3 +17,10 @@ export interface IRegisterFormInputs {
   role: string;
   profileImage: FileList;
 }
+
+export interface IChangePass
+{
+  oldPassword :string, 
+  newPassword :string,
+  confirmPassword :string
+}
