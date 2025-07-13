@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,43 +12,41 @@ import {
   useTheme,
   useMediaQuery,
   Badge,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import SearchIcon from "@mui/icons-material/Search";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useUserProfile } from '@/utils/Hooks/Hooks';
-import { clearLoginData } from '@/redux/slices/authSlice';
-import CookieServices from '@/services/CookieServices/CookieServices';
-import { useNavigate } from 'react-router-dom';
-import type { RootState } from '@/redux/store';
-import type { UserProfile } from '@/interfaces/Interfaces';
+import { useDispatch, useSelector } from "react-redux";
+import { useUserProfile } from "@/utils/Hooks/Hooks";
+import { clearLoginData } from "@/redux/slices/authSlice";
+import CookieServices from "@/services/CookieServices/CookieServices";
+import { useNavigate } from "react-router-dom";
+import type { RootState } from "@/redux/store";
 
 const CustomAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#f8f9fb',
-  boxShadow: 'none',
+  backgroundColor: theme.palette.mode === "dark" ? "#1e1e1e" : "#f8f9fb",
+  boxShadow: "none",
   borderBottom: `1px solid ${theme.palette.divider}`,
   zIndex: 1201,
 }));
 
 const SearchContainer = styled(Box)(({ theme }) => ({
-  position: 'relative',
+  position: "relative",
   borderRadius: 12,
-  backgroundColor: theme.palette.mode === 'dark' ? '#2b2b2b' : '#fff',
+  backgroundColor: theme.palette.mode === "dark" ? "#2b2b2b" : "#fff",
   border: `1px solid ${theme.palette.divider}`,
-  display: 'flex',
-  alignItems: 'center',
+  display: "flex",
+  alignItems: "center",
   paddingLeft: theme.spacing(1),
   paddingRight: theme.spacing(1),
   height: 44,
   flexGrow: 1,
   minWidth: 200,
   maxWidth: 800,
-
   [theme.breakpoints.down("lg")]: {
     maxWidth: 400,
   },
@@ -59,7 +57,7 @@ const SearchContainer = styled(Box)(({ theme }) => ({
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
   flex: 1,
-  padding: '6px 0',
+  padding: "6px 0",
   color: theme.palette.text.primary,
 }));
 
@@ -76,24 +74,27 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
 
   const loginData = useSelector((state: RootState) => state.auth.loginData);
   const userId = loginData?._id;
-  const { data } = useUserProfile<UserProfile>(userId);
-  const user = data?.data?.user;
+
+  const { data } = useUserProfile(userId ?? "");
+  const user = data?.data?.user; // ✅ التعديل الأساسي هنا
+
+  const displayName = user?.userName || "Guest";
+  const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
 
   const [userMenuAnchor, setUserMenuAnchor] = React.useState<null | HTMLElement>(null);
-  const handleUserMenuOpen = (e: React.MouseEvent<HTMLElement>) => setUserMenuAnchor(e.currentTarget);
+  const handleUserMenuOpen = (e: React.MouseEvent<HTMLElement>) =>
+    setUserMenuAnchor(e.currentTarget);
   const handleUserMenuClose = () => setUserMenuAnchor(null);
 
   const [notifAnchor, setNotifAnchor] = React.useState<null | HTMLElement>(null);
-  const handleNotifOpen = (e: React.MouseEvent<HTMLElement>) => setNotifAnchor(e.currentTarget);
+  const handleNotifOpen = (e: React.MouseEvent<HTMLElement>) =>
+    setNotifAnchor(e.currentTarget);
   const handleNotifClose = () => setNotifAnchor(null);
-
-  const displayName = user?.userName || 'Guest';
-  const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
 
   return (
     <>
       <CustomAppBar position="sticky">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box display="flex" alignItems="center" gap={2} flex={1}>
             {isMobileOrTablet && (
               <IconButton onClick={() => setOpen(!open)}>
@@ -106,7 +107,6 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
             </SearchContainer>
           </Box>
 
-          {/* Right: Notifications + User */}
           <Box display="flex" alignItems="center" gap={2}>
             <IconButton onClick={handleNotifOpen}>
               <Badge color="error" variant="dot">
@@ -117,16 +117,20 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
             <Box
               onClick={handleUserMenuOpen}
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                cursor: 'pointer',
-                bgcolor: theme.palette.mode === 'dark' ? '#2c2c2c' : '#fff',
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                bgcolor: theme.palette.mode === "dark" ? "#2c2c2c" : "#fff",
                 p: 1,
-                borderRadius: '12px',
+                borderRadius: "12px",
                 border: `1px solid ${theme.palette.divider}`,
               }}
             >
-              <Avatar alt="User" src={avatarSrc} sx={{ width: 32, height: 32, mr: 1 }} />
+              <Avatar
+                alt="User"
+                src={avatarSrc}
+                sx={{ width: 32, height: 32, mr: 1 }}
+              />
               <Typography variant="body2" color={theme.palette.text.primary}>
                 {displayName}
               </Typography>
@@ -136,16 +140,28 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
         </Toolbar>
       </CustomAppBar>
 
-      <Menu anchorEl={userMenuAnchor} open={Boolean(userMenuAnchor)} onClose={handleUserMenuClose}>
+      <Menu
+        anchorEl={userMenuAnchor}
+        open={Boolean(userMenuAnchor)}
+        onClose={handleUserMenuClose}
+      >
         <MenuItem onClick={() => navigate("/my-profile")}>Profile</MenuItem>
-        <MenuItem onClick={() => {
-          dispatch(clearLoginData());
-          CookieServices.remove("token");
-          navigate("/login");
-        }}>Logout</MenuItem>
+        <MenuItem
+          onClick={() => {
+            dispatch(clearLoginData());
+            CookieServices.remove("token");
+            navigate("/login");
+          }}
+        >
+          Logout
+        </MenuItem>
       </Menu>
 
-      <Menu anchorEl={notifAnchor} open={Boolean(notifAnchor)} onClose={handleNotifClose}>
+      <Menu
+        anchorEl={notifAnchor}
+        open={Boolean(notifAnchor)}
+        onClose={handleNotifClose}
+      >
         <MenuItem>New comment on your post</MenuItem>
         <MenuItem>New user registered</MenuItem>
         <MenuItem>Server backup completed</MenuItem>
