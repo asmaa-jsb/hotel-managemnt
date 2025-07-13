@@ -34,7 +34,7 @@ const Header = ({
         px: { xs: 2, sm: 4, md: 6 },
         py: { xs: 3, sm: 4 },
         mb: 4,
-        width: "89%",
+        width:{ md:"89%", xs:"82%"},
         ml: 2,
       }}
     >
