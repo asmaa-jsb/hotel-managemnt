@@ -103,9 +103,9 @@ const RoomForm: React.FC = () => {
     }
   };
 
-  if (isEditMode && isLoadingDetails) {
-    return <Typography>Loading room details...</Typography>;
-  }
+  // if (isEditMode && isLoadingDetails) {
+  //   return <Typography>Loading room details...</Typography>;
+  // }
 
   return (
     <>

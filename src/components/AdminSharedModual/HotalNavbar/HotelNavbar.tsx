@@ -17,22 +17,22 @@ import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import type { RootState } from '@/redux/store';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useUserProfile } from '@/utils/Hooks/Hooks';
 import { clearLoginData } from '@/redux/slices/authSlice';
 import CookieServices from '@/services/CookieServices/CookieServices';
 import { useNavigate } from 'react-router-dom';
+import type { RootState } from '@/redux/store';
 import type { UserProfile } from '@/interfaces/Interfaces';
 
-// AppBar مخصص بدون بادينغ عمودي
 const CustomAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#f8f9fb',
   boxShadow: 'none',
-    paddingLeft: theme.spacing(3), 
-  paddingRight: theme.spacing(3), 
-  minHeight: 0,
-   borderBottom: `1px solid ${theme.palette.divider}`,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  zIndex: 1201,
 }));
 
 const SearchContainer = styled(Box)(({ theme }) => ({
@@ -43,83 +43,77 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   paddingLeft: theme.spacing(1),
-  width: '100%',
-  maxWidth: 500,
+  paddingRight: theme.spacing(1),
+  height: 44,
+  flexGrow: 1,
+  minWidth: 200,
+  maxWidth: 800,
+
+  [theme.breakpoints.down("lg")]: {
+    maxWidth: 400,
+  },
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: 250,
+  },
 }));
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
   flex: 1,
-  padding: '10px',
+  padding: '6px 0',
   color: theme.palette.text.primary,
 }));
 
+interface NavbarProps {
+  setOpen: (val: boolean) => void;
+  open: boolean;
+}
 
-  
-const Navbar = () => {
+const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));  
-   const navigate = useNavigate();
-   const dispatch = useDispatch();
-   const loginData = useSelector((state: RootState) => state.auth.loginData);
-   const userId: string |undefined = loginData?._id;
-  
-  const { data, isLoading, isError } = useUserProfile<UserProfile>(userId);
- const user = data?.data?.user;
-    
-    // Handle Logout
-  const handleLogout = () => {
-    dispatch(clearLoginData()); 
-    CookieServices.remove('token'); 
-    handleUserMenuClose(); 
-    navigate("/login")
-  };
-   
-   
+  const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
- 
-  // User menu
+  const loginData = useSelector((state: RootState) => state.auth.loginData);
+  const userId = loginData?._id;
+  const { data } = useUserProfile<UserProfile>(userId);
+  const user = data?.data?.user;
+
   const [userMenuAnchor, setUserMenuAnchor] = React.useState<null | HTMLElement>(null);
   const handleUserMenuOpen = (e: React.MouseEvent<HTMLElement>) => setUserMenuAnchor(e.currentTarget);
   const handleUserMenuClose = () => setUserMenuAnchor(null);
 
-  // Notifications menu
   const [notifAnchor, setNotifAnchor] = React.useState<null | HTMLElement>(null);
   const handleNotifOpen = (e: React.MouseEvent<HTMLElement>) => setNotifAnchor(e.currentTarget);
   const handleNotifClose = () => setNotifAnchor(null);
 
- const displayName = user?.userName || 'Guest';
+  const displayName = user?.userName || 'Guest';
   const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
 
   return (
     <>
-      <CustomAppBar position="static" >
-        <Toolbar
-          disableGutters
-          sx={{
-            display: 'flex',
-            justifyContent : {xs:'end',md: "space-between", lg:'space-between'},
-            minHeight: 0,
-            paddingY: 0,
-          }}
-        >
-          {/* Search */}
-          {!isMobile && (
+      <CustomAppBar position="sticky">
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box display="flex" alignItems="center" gap={2} flex={1}>
+            {isMobileOrTablet && (
+              <IconButton onClick={() => setOpen(!open)}>
+                {open ? <CloseIcon /> : <MenuIcon />}
+              </IconButton>
+            )}
             <SearchContainer>
               <SearchIcon sx={{ color: theme.palette.text.secondary, mr: 1 }} />
               <StyledInput placeholder="Search Here" />
             </SearchContainer>
-          )}
+          </Box>
 
-          {/* Right section */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            {/* Notifications */}
+          {/* Right: Notifications + User */}
+          <Box display="flex" alignItems="center" gap={2}>
             <IconButton onClick={handleNotifOpen}>
               <Badge color="error" variant="dot">
                 <NotificationsNoneIcon sx={{ color: theme.palette.text.primary }} />
               </Badge>
             </IconButton>
 
-            {/* Avatar + Username */}
             <Box
               onClick={handleUserMenuOpen}
               sx={{
@@ -132,13 +126,9 @@ const Navbar = () => {
                 border: `1px solid ${theme.palette.divider}`,
               }}
             >
-              <Avatar
-                alt="User"
-                src={avatarSrc}
-                sx={{ width: 32, height: 32, mr: 1 }}
-              />
+              <Avatar alt="User" src={avatarSrc} sx={{ width: 32, height: 32, mr: 1 }} />
               <Typography variant="body2" color={theme.palette.text.primary}>
-               {displayName}
+                {displayName}
               </Typography>
               <ArrowDropDownIcon sx={{ color: theme.palette.text.primary }} />
             </Box>
@@ -146,26 +136,16 @@ const Navbar = () => {
         </Toolbar>
       </CustomAppBar>
 
-      {/* User dropdown menu */}
-      <Menu
-        anchorEl={userMenuAnchor}
-        open={Boolean(userMenuAnchor)}
-        onClose={handleUserMenuClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <MenuItem onClick={()=>navigate("/my-profile")}>Profile</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      <Menu anchorEl={userMenuAnchor} open={Boolean(userMenuAnchor)} onClose={handleUserMenuClose}>
+        <MenuItem onClick={() => navigate("/my-profile")}>Profile</MenuItem>
+        <MenuItem onClick={() => {
+          dispatch(clearLoginData());
+          CookieServices.remove("token");
+          navigate("/login");
+        }}>Logout</MenuItem>
       </Menu>
 
-      {/* Notifications dropdown menu */}
-      <Menu
-        anchorEl={notifAnchor}
-        open={Boolean(notifAnchor)}
-        onClose={handleNotifClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
+      <Menu anchorEl={notifAnchor} open={Boolean(notifAnchor)} onClose={handleNotifClose}>
         <MenuItem>New comment on your post</MenuItem>
         <MenuItem>New user registered</MenuItem>
         <MenuItem>Server backup completed</MenuItem>
@@ -174,4 +154,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default HotelNavbar;
