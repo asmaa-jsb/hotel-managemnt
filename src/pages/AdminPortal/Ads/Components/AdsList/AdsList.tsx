@@ -27,6 +27,7 @@ const RoomList = () => {
   const [selectedRoom, setSelectedRoom] = useState<TableRowData | null>(null);
   const [roomIdToDelete, setRoomIdToDelete] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+console.log(selectedRoom);
 
   const [searchLoading, setSearchLoading] = useState(false);
   const rooms = data?.data?.ads ?? [];
@@ -130,7 +131,7 @@ const RoomList = () => {
           }}
         >
           <div className="room-details">
-            <img src={selectedRoom?.image} alt="Room" className="room-image" />
+          
             <p>
               <strong>Room #:</strong> {selectedRoom?.roomNumber}
             </p>
@@ -142,9 +143,6 @@ const RoomList = () => {
             </p>
             <p>
               <strong>Discount:</strong> {selectedRoom?.discount}
-            </p>
-            <p>
-              <strong>Category:</strong> {selectedRoom?.category}
             </p>
           </div>
         </ReusableModal>

@@ -20,6 +20,7 @@ import {
 import type { CreateRoomInput } from "@/interfaces/RoomInterface";
 import { toast } from "react-hot-toast";
 import Header from "@/components/AdminSharedModual/Header/Header";
+import { Loader } from "@/components/AdminSharedModual/Loader/Loader";
 
 const RoomForm: React.FC = () => {
   const { roomId } = useParams<{ roomId?: string }>();
@@ -106,7 +107,7 @@ const RoomForm: React.FC = () => {
   // if (isEditMode && isLoadingDetails) {
   //   return <Typography>Loading room details...</Typography>;
   // }
-
+  if(isLoadingFacilities && isLoadingDetails) return <Loader/> 
   return (
     <>
       <Header
