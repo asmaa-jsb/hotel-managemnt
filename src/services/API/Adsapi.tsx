@@ -13,3 +13,14 @@ export const createADS = async (payload: CreateAdsInput) => {
   const response = await axiosInstance.post(ADS_URLS.ADS_LIST, payload);
   return response.data;
 };
+
+export const updateAds = async ({
+  id,
+  payload,
+}: {
+  id: string;
+  payload: CreateAdsInput;
+}) => {
+  const response = await axiosInstance.put(ADS_URLS.ADS_Edit(id), payload);
+  return response.data;
+};

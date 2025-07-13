@@ -27,7 +27,7 @@ import { fetchBookings, deleteBooking } from "@/services/API/Bookingapi";
 import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 import { fetchChart } from "@/services/API/ChartApi";
 import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
-import { createADS, fetchAds } from "@/services/API/Adsapi";
+import { createADS, fetchAds, updateAds } from "@/services/API/Adsapi";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -126,7 +126,7 @@ export const useUserProfile = (id: string) => {
   return useQuery({
     queryKey: ["userProfile", id],
     queryFn: () => getUserProfile(id),
-     enabled: id !== undefined && id !== null && id !== '',
+    enabled: id !== undefined && id !== null && id !== "",
   });
 };
 
@@ -199,7 +199,7 @@ export const useCreateAd = () => {
   return useMutation({
     mutationFn: (data: CreateAdsInput) => createADS(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+      queryClient.invalidateQueries({ queryKey: ["ads"] });
     },
     onError: (error) => {
       console.error("Error creating room:", error);
@@ -210,10 +210,10 @@ export const useCreateAd = () => {
 export const useUpdateAd = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: CreateRoomInput }) =>
-      updateRoom(id, data),
+    mutationFn: ({ id, data }: { id: string; data: CreateAdsInput }) =>
+      updateAds({ id, payload: data }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+      queryClient.invalidateQueries({ queryKey: ["ads"] });
     },
     onError: (error) => {
       console.error("Error updating room:", error);

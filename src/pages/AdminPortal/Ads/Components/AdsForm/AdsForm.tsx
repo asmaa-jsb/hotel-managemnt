@@ -6,29 +6,32 @@ import {
   Box,
   Typography,
   InputLabel,
+  FormControl,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   useCreateAd,
-  useCreateRoom,
-  useRoomDetails,
+  useRooms,
+  useUpdateAd,
   useUpdateRoom,
 } from "@/utils/Hooks/Hooks";
 import { toast } from "react-hot-toast";
 import Header from "@/components/AdminSharedModual/Header/Header";
 import type { CreateAdsInput } from "@/interfaces/AdsInterface";
-import { createADS } from "@/services/API/Adsapi";
+import { updateAds } from "@/services/API/Adsapi";
+// import { createADS } from "@/services/API/Adsapi";
 
 const AdsForm: React.FC = () => {
-  const { roomId } = useParams<{ roomId?: string }>();
-  const isEditMode = Boolean(roomId);
+  const { id } = useParams<{ id?: string }>();
+
+  const isEditMode = Boolean(id);
   const navigate = useNavigate();
+
+  const { data, isLoading, isError } = useRooms(1, 1000);
   const { mutate: createAd, isPending: isCreating } = useCreateAd();
-  const { mutate: updateRoom, isPending: isUpdating } = useUpdateRoom();
-  const { data: roomDetails, isLoading: isLoadingDetails } =
-    useRoomDetails(roomId);
+  const { mutate: updateAds, isPending: isUpdating } = useUpdateAd();
 
   const [status, setStatus] = useState<boolean>(true);
 
@@ -40,18 +43,27 @@ const AdsForm: React.FC = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { isSubmitting, errors },
   } = useForm({ mode: "onChange" });
 
+  const location = useLocation();
+  const state = location.state as {
+    room: string;
+    discount: number;
+    roomNumber: string;
+    isActive: boolean;
+  };
+
   useEffect(() => {
-    if (isEditMode && roomDetails) {
+    if (isEditMode && state) {
       reset({
-        room: roomDetails.room,
-        discount: roomDetails.discount,
+        discount: state.discount,
       });
-      setStatus(roomDetails.isActive ?? true);
+      setValue("room", state.room);
+      setStatus(state.isActive);
     }
-  }, [isEditMode, roomDetails, reset]);
+  }, [isEditMode, reset, setValue, state]);
 
   const onSubmit = (data: any) => {
     const adsData: CreateAdsInput = {
@@ -60,9 +72,13 @@ const AdsForm: React.FC = () => {
       isActive: status,
     };
 
+    const adsEditData: CreateAdsInput = {
+      discount: Number(data.discount),
+      isActive: status,
+    };
     if (isEditMode) {
-      updateRoom(
-        { id: roomId!, data: adsData },
+      updateAds(
+        { id: id!, data: adsEditData },
         {
           onSuccess: () => {
             toast.success("Ad updated successfully!");
@@ -72,7 +88,7 @@ const AdsForm: React.FC = () => {
         }
       );
     } else {
-      createADS(adsData, {
+      createAd(adsData, {
         onSuccess: () => {
           toast.success("Ad created successfully!");
           reset();
@@ -83,9 +99,9 @@ const AdsForm: React.FC = () => {
     }
   };
 
-  if (isEditMode && isLoadingDetails) {
-    return <Typography>Loading ad details...</Typography>;
-  }
+  // if (isEditMode && isLoadingDetails) {
+  //   return <Typography>Loading ad details...</Typography>;
+  // }
 
   return (
     <>
@@ -101,19 +117,29 @@ const AdsForm: React.FC = () => {
         </Typography>
 
         <form className="room-form" onSubmit={handleSubmit(onSubmit)}>
-          <Box className="form-row">
-            <TextField
-              placeholder="Room ID"
-              fullWidth
-              variant="standard"
-              className="custom-input"
-              {...register("room", {
-                required: "Room is required",
-              })}
-              error={!!errors.room}
-              helperText={errors.room?.message as string}
-            />
-          </Box>
+          {!isEditMode && (
+            <Box className="form-row">
+              <>
+                <InputLabel id="room-label">Select Room</InputLabel>
+                <Select
+                  labelId="room-label"
+                  id="room-select"
+                  {...register("room", { required: "Room is required" })}
+                  error={!!errors.room}
+                >
+                  {data?.data?.rooms?.map((room) => (
+                    <MenuItem key={room._id} value={room._id}>
+                      {room.roomNumber}
+                    </MenuItem>
+                  ))}
+                </Select>
+
+                <Typography variant="caption" color="error">
+                  {errors.room?.message as string}
+                </Typography>
+              </>
+            </Box>
+          )}
 
           <Box className="form-row">
             <TextField
@@ -157,7 +183,7 @@ const AdsForm: React.FC = () => {
               className="save-btn"
               type="submit"
               disabled={isSubmitting || isCreating || isUpdating}
-              sx={{ ml: 2 }}
+              // sx={{ ml: 2 }}
             >
               {isCreating || isUpdating ? "Saving..." : "Save"}
             </Button>

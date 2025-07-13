@@ -76,7 +76,6 @@ const RoomList = () => {
           <ReusableTable
             rows={rows}
             columns={columns}
-            // rows={filteredRows}
             loading={isLoading || searchLoading}
             model="rooms"
             // mode={loaderMode}
@@ -87,7 +86,21 @@ const RoomList = () => {
                 setOpen(true);
               }
             }}
-            onEdit={(id) => navigate(`/ads/edit/${id}`)}
+            onEdit={(id) => {
+              const ad = rooms.find((r) => r._id === id);
+
+              if (ad) {
+                navigate(`/ads/edit/${id}`, {
+                  state: {
+                    room: ad?.room?._id,
+                    roomNumber: ad?.room?.roomNumber,
+                    discount: ad?.room?.discount,
+                    isActive: ad?.isActive,
+                  },
+                });
+              }
+            }}
+
             // onDelete={(id) => {
             //   setRoomIdToDelete(id.toString());
             //   setOpenDelete(true);
