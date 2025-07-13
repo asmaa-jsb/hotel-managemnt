@@ -16,7 +16,7 @@ import NoData from "@/components/AdminSharedModual/NoData/NoData";
 
 const RoomList = () => {
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
 
   const { data, isLoading, isError } = useAds(page, pageSize);
   const { mutate: deleteRoom } = useDeleteRoom();
