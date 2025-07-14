@@ -23,10 +23,9 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useUserProfile } from "@/utils/Hooks/Hooks";
-import { clearLoginData } from "@/redux/slices/authSlice";
-import CookieServices from "@/services/CookieServices/CookieServices";
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "@/redux/store";
+import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
 
 const CustomAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1e1e1e" : "#f8f9fb",
@@ -171,12 +170,7 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
       
         <MenuItem onClick={() => { navigate(`/my-profile/${userId}`); handleUserMenuClose(); }}>Profile</MenuItem>
         <MenuItem
-          onClick={() => {
-            dispatch(clearLoginData());
-            CookieServices.remove("token");
-            handleUserMenuClose(); 
-            navigate("/login");
-          }}
+          onClick={HandleLogout}
         >
           Logout
         </MenuItem>
