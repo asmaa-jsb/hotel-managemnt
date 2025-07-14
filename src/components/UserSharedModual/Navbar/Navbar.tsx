@@ -208,11 +208,12 @@ const Navbar = () => {
 
             {!LoginData && (
               <>
-                <ReusableButton label="Register" />
-                <ReusableButton label="Login Now" />
+                <ReusableButton label="Register" to="/auth/login" />
+                <ReusableButton label="Login Now" to="/auth/register" />
               </>
             )}
           </Box>
+
           {LoginData && (
             <Box sx={{ flexGrow: 0 }}>
               <Menu

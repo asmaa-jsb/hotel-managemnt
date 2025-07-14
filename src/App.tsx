@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { saveLoginData } from "./redux/slices/authSlice";
 import { Toaster } from "react-hot-toast";
+
 import {
   Login,
-  ResetPassword,
   Register,
+  ForgetPassword,
+  ResetPassword,
   RoomList,
   AdsList,
   Dashboard,
@@ -12,23 +17,16 @@ import {
   Users,
   NotFound,
   Profile,
-  ForgetPassword,
 } from "./pages/index";
-import AuthLayout from "./components/AdminSharedModual/AuthLayout/AuthLayout";
-import "./styles/global.css";
-import { useDispatch } from "react-redux";
-import { saveLoginData } from "./redux/slices/authSlice";
-import { useEffect } from "react";
-// import ProtectedRoute from "./components/ProtectedRoute";
-//  path: "/",
-//       element: <ProtectedRoute />,
+
 import PortalMainLayout from "./components/AdminSharedModual/AdminPortalLayout/AdminPortalLayout";
-import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
-import { Loader } from "./components/AdminSharedModual/Loader/Loader";
-import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
-import ChangePassword from "./pages/Authentication/ChangePassword/ChangePassword";
+import AuthLayout from "./components/AdminSharedModual/AuthLayout/AuthLayout";
 import UserLayout from "./components/UserSharedModual/UserPortalLayout/UserLayout";
 
+import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
+import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
+
+import "./styles/global.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +45,13 @@ function App() {
   const routes = createBrowserRouter([
     {
       path: "/",
+      element: <UserLayout />,
+      errorElement: <NotFound />,
+      children: [],
+    },
+
+    {
+      path: "/auth",
       element: <AuthLayout />,
       errorElement: <NotFound />,
       children: [
@@ -55,39 +60,32 @@ function App() {
         { path: "register", element: <Register /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
-        { path: "change-password", element: <ChangePassword /> },
+        // { path: "change-password", element: <ChangePassword /> },
       ],
     },
-    {
-      children: [
-        {
-          element: <PortalMainLayout />,
-          children: [
-            { index: true, element: <Dashboard /> },
-            { path: "dashboard", element: <Dashboard /> },
-            { path: "rooms", element: <RoomList /> },
-            { path: "rooms/new-room", element: <RoomForm /> },
-            { path: "rooms/:roomId", element: <RoomForm /> },
-            { path: "ads", element: <AdsList /> },
-            { path: "ads/add", element: <AdsForm /> },
-            { path: "ads/edit/:id", element: <AdsForm /> },
-            { path: "facilities", element: <FacilitiesList /> },
-            { path: "bookings", element: <BookingList /> },
-            { path: "users", element: <Users /> },
-            { path: "my-profile/:id", element: <Profile /> },
 
-          ],
-        },
+    // ✅ Admin portal after login
+    {
+      path: "/admin",
+      element: <PortalMainLayout />,
+      errorElement: <NotFound />,
+      children: [
+        { index: true, element: <Dashboard /> },
+        { path: "dashboard", element: <Dashboard /> },
+        { path: "rooms", element: <RoomList /> },
+        { path: "rooms/new-room", element: <RoomForm /> },
+        { path: "rooms/:roomId", element: <RoomForm /> },
+        { path: "ads", element: <AdsList /> },
+        { path: "ads/add", element: <AdsForm /> },
+        { path: "ads/edit/:id", element: <AdsForm /> },
+        { path: "facilities", element: <FacilitiesList /> },
+        { path: "bookings", element: <BookingList /> },
+        { path: "users", element: <Users /> },
+        { path: "my-profile/:id", element: <Profile /> },
       ],
     },
-    {
-      path:"userLayout",
-      element:<UserLayout/>,
-      children:[
-        {}
-      ]
-    }
   ]);
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />

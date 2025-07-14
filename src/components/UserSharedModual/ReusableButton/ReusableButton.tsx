@@ -1,28 +1,27 @@
 import React from "react";
 import { Button } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 interface ReusableButtonProps {
   label: string;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
+  to: string; // 📌 مطلوب لأنه لازم يكون لينك دائمًا
   fullWidth?: boolean;
   disabled?: boolean;
 }
 
 const ReusableButton: React.FC<ReusableButtonProps> = ({
   label,
-  onClick,
-  type = "button",
+  to,
   fullWidth = false,
   disabled = false,
 }) => {
   return (
     <Button
-      variant="contained"
-      type={type}
-      onClick={onClick}
+      component={RouterLink}
+      to={to}
       fullWidth={fullWidth}
       disabled={disabled}
+      variant="contained"
       sx={{
         background: "rgba(50, 82, 223, 1)",
         color: "#fff",
@@ -36,6 +35,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
           backgroundColor: "#1a34a0",
         },
         letterSpacing: ".1rem",
+        textDecoration: "none",
       }}
     >
       {label}
