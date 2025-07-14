@@ -26,14 +26,14 @@ import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 
 const menuItems = [
-  { label: "Home", icon: <Home />, path: "/dashboard" },
-  { label: "Users", icon: <People />, path: "/users" },
-  { label: "Rooms", icon: <MeetingRoom />, path: "/rooms" },
-  { label: "Ads", icon: <CalendarToday />, path: "/ads" },
-  { label: "Facilities", icon: <Build />, path: "/facilities" },
-  { label: "Bookings", icon: <People />, path: "/bookings" },
-  { label: "Change password", icon: <Lock />, path: "/change-password" },
-  { label: "Logout", icon: <Logout />, path: "/logout" },
+  { label: "Home", icon: <Home />, path: "/admin/dashboard" },
+  { label: "Users", icon: <People />, path: "/admin/users" },
+  { label: "Rooms", icon: <MeetingRoom />, path: "/admin/rooms" },
+  { label: "Ads", icon: <CalendarToday />, path: "/admin/ads" },
+  { label: "Facilities", icon: <Build />, path: "/admin/facilities" },
+  { label: "Bookings", icon: <People />, path: "/admin/bookings" },
+  { label: "Change password", icon: <Lock />, path: "/admin/change-password" },
+  { label: "Logout", icon: <Logout />, path: "/admin/logout" },
 ];
 
 const drawerWidth = 240;
@@ -56,10 +56,9 @@ const Sidebar = ({
       setOpen(true);
     }
   }, [isMobile]);
- 
+
   return (
     <Drawer
-       
       variant={isMobile ? "persistent" : "permanent"}
       open={open}
       sx={{
@@ -85,7 +84,10 @@ const Sidebar = ({
         {menuItems.map((item) =>
           item.label === "Logout" ? (
             <ListItem disablePadding key={item.label}>
-              <ListItemButton onClick={onLogout} sx={{ px: open ? 3 : 2, py: 1.5 }}>
+              <ListItemButton
+                onClick={onLogout}
+                sx={{ px: open ? 3 : 2, py: 1.5 }}
+              >
                 <ListItemIcon
                   sx={{
                     color: "#fff",
@@ -103,7 +105,9 @@ const Sidebar = ({
             <NavLink
               key={item.label}
               to={item.path}
-              className={({ isActive }) => `nav-link ${isActive ? "active-link" : ""}`}
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active-link" : ""}`
+              }
             >
               <Tooltip title={!open ? item.label : ""} placement="right">
                 <ListItem disablePadding>

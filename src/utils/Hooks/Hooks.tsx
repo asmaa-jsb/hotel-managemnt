@@ -27,7 +27,8 @@ import { fetchBookings, deleteBooking } from "@/services/API/Bookingapi";
 import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 import { fetchChart } from "@/services/API/ChartApi";
 import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
-import { createADS, fetchAds, updateAds } from "@/services/API/Adsapi";
+import { createADS, fetchAds, FetchAdsLanding, updateAds } from "@/services/API/Adsapi";
+import type { IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -218,5 +219,12 @@ export const useUpdateAd = () => {
     onError: (error) => {
       console.error("Error updating room:", error);
     },
+  });
+};
+
+export const useAdsLanding = () => {
+  return useQuery<IAdsListLanding>({
+    queryKey: ["ads"],
+    queryFn: FetchAdsLanding,
   });
 };

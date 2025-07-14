@@ -19,7 +19,6 @@ export interface IAdsList {
 
 export interface CreateAdsInput {
   room?: string;
-
   discount: number;
   isActive: boolean;
 }

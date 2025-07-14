@@ -2,6 +2,7 @@ import axios from "axios";
 import CookieServices from "../CookieServices/CookieServices";
 const baseURL = "https://upskilling-egypt.com:3000";
 export const UserPortal = "api/v0/portal/users";
+export const BasePortal = "api/v0/portal";
 export const AdminPortal = "/api/v0/admin";
 export const imgURL = "https://upskilling-egypt.com:3003";
 export const axiosInstance = axios.create({
@@ -48,6 +49,7 @@ export const FACILITIES_URLS = {
   CREATE_FACILITIES: `${AdminPortal}/room-facilities`,
   DELETE_FACILITIES: (id: string) => `${AdminPortal}/room-facilities/${id}`,
   UPDATE_FACILITIES: (id: string) => `${AdminPortal}/room-facilities/${id}`,
+  GET_ALL_FACILITIESLANDING:`${BasePortal}/ads`
 };
 // booking list
 export const BOOKINGS = {
