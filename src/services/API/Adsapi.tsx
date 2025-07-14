@@ -1,5 +1,11 @@
 import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
-import { ADS_URLS, axiosInstance } from "../EndPoints/EndPoints";
+
+import {
+  ADS_URLS,
+  axiosInstance,
+  FACILITIES_URLS,
+} from "../EndPoints/EndPoints";
+import type { AdsLanding, IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 
 export const fetchAds = async (page = 1, size = 10): Promise<IAdsList> => {
   const response = await axiosInstance.get(ADS_URLS.ADS_LIST, {
@@ -22,5 +28,12 @@ export const updateAds = async ({
   payload: CreateAdsInput;
 }) => {
   const response = await axiosInstance.put(ADS_URLS.ADS_Edit(id), payload);
+  return response.data;
+};
+
+export const FetchAdsLanding = async (): Promise<IAdsListLanding> => {
+  const response = await axiosInstance.get(
+    FACILITIES_URLS.GET_ALL_FACILITIESLANDING
+  );
   return response.data;
 };

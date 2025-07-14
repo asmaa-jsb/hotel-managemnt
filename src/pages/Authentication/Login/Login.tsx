@@ -30,7 +30,7 @@ const Login = () => {
       CookieServices.set("token", response?.data?.data?.token);
 
       toast.success(response?.data?.message || "Logged in successfully!");
-      navigate("/dashboard");
+      navigate("/admin");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.message || "Login failed:");
@@ -82,9 +82,7 @@ const Login = () => {
         <Typography
           variant="body2"
           className="link-text"
-          onClick={() =>
-            navigate("/forget-password")
-          }
+          onClick={() => navigate("/forget-password")}
         >
           Forgot Password ?
         </Typography>

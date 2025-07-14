@@ -54,23 +54,22 @@ const Navbar = () => {
       sx={{
         borderBottom: "2px solid rgba(229, 229, 229, 1)",
         backgroundColor: "#fff",
+        py: 1,
       }}
     >
-      <Container maxWidth="xl">
-        <Toolbar>
+     <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography
             variant="h6"
             noWrap
             component="a"
             href="#"
             sx={{
-              mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".1rem",
               textDecoration: "none",
-              flexGrow: 8,
               color: "black",
               fontSize: "25px",
             }}
@@ -82,7 +81,7 @@ const Navbar = () => {
           </Typography>
 
           {/* Burger Menu - Small Screens */}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="menu"
@@ -122,8 +121,6 @@ const Navbar = () => {
                   </Typography>
                 </MenuItem>
               ))}
-
-              {/* Buttons for Anonymous User (Mobile) */}
               {!LoginData && (
                 <>
                   <MenuItem onClick={handleCloseNavMenu}>
@@ -163,9 +160,7 @@ const Navbar = () => {
             component="a"
             href="#"
             sx={{
-              mr: 2,
               display: { xs: "flex", md: "none" },
-              flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
@@ -182,7 +177,6 @@ const Navbar = () => {
           {/* Nav Links + Buttons - Large Screens */}
           <Box
             sx={{
-              flexGrow: 1,
               display: { xs: "none", md: "flex" },
               alignItems: "center",
               gap: 2,
@@ -193,9 +187,7 @@ const Navbar = () => {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{
-                  my: 2,
                   color: "black",
-                  display: "block",
                   textTransform: "none",
                   fontSize: "17px",
                   "&:hover": { color: "#203FC7", background: "transparent" },
@@ -205,17 +197,17 @@ const Navbar = () => {
                 {page}
               </Button>
             ))}
-
             {!LoginData && (
               <>
-                <ReusableButton label="Register" to="/auth/login" />
-                <ReusableButton label="Login Now" to="/auth/register" />
+                <ReusableButton label="Register" to="/auth/register" />
+                <ReusableButton label="Login Now" to="/auth/login" />
               </>
             )}
           </Box>
 
+          {/* User Menu */}
           {LoginData && (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box>
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"

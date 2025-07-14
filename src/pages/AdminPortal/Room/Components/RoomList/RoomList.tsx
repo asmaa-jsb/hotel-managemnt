@@ -106,7 +106,7 @@ const RoomList = () => {
       <Header
         title="Room Management"
         btnTitle="Add New Room"
-        linkTo="/rooms/new-room"
+        linkTo="/admin/rooms/new-room"
         showBtn={true}
       />
 
@@ -152,7 +152,7 @@ const RoomList = () => {
                 setOpen(true);
               }
             }}
-            onEdit={(id) => navigate(`/rooms/${id}`)}
+            onEdit={(id) => navigate(`/admin/rooms/${id}`)}
             onDelete={(id) => {
               setRoomIdToDelete(id.toString());
               setOpenDelete(true);

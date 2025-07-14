@@ -27,6 +27,7 @@ import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 
 import "./styles/global.css";
+import ChangePassword from "./pages/Authentication/ChangePassword/ChangePassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ function App() {
         { path: "register", element: <Register /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
-        // { path: "change-password", element: <ChangePassword /> },
+        { path: "change-password", element: <ChangePassword /> },
       ],
     },
 

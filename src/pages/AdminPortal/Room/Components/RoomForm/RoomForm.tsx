@@ -82,7 +82,7 @@ const RoomForm: React.FC = () => {
           onError: () => toast.error("Failed to update room."),
         }
       );
-      navigate("/rooms");
+      navigate("/admin/rooms");
     } else {
       createRoom(roomData, {
         onSuccess: () => {
@@ -92,7 +92,7 @@ const RoomForm: React.FC = () => {
         },
         onError: () => toast.error("Failed to create room."),
       });
-      navigate("/rooms");
+      navigate("/admin/rooms");
     }
   };
 
@@ -107,13 +107,13 @@ const RoomForm: React.FC = () => {
   // if (isEditMode && isLoadingDetails) {
   //   return <Typography>Loading room details...</Typography>;
   // }
-  if(isLoadingFacilities && isLoadingDetails) return <Loader/> 
+  if (isLoadingFacilities && isLoadingDetails) return <Loader />;
   return (
     <>
       <Header
         title="Room Mangment"
         btnTitle="Room List"
-        linkTo="/rooms"
+        linkTo="/admin/rooms"
         showBtn={true}
       />
       <Box className="room-form-container">

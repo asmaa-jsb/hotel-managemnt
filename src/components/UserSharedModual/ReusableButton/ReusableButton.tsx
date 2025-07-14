@@ -4,9 +4,10 @@ import { Link as RouterLink } from "react-router-dom";
 
 interface ReusableButtonProps {
   label: string;
-  to: string; // 📌 مطلوب لأنه لازم يكون لينك دائمًا
+  to: string;
   fullWidth?: boolean;
   disabled?: boolean;
+  padding?: string; 
 }
 
 const ReusableButton: React.FC<ReusableButtonProps> = ({
@@ -14,6 +15,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
   to,
   fullWidth = false,
   disabled = false,
+  padding = "8px 35px",
 }) => {
   return (
     <Button
@@ -29,7 +31,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
         fontWeight: "bold",
         borderRadius: "6px",
         boxShadow: "0px 4px 10px rgba(50, 82, 223, 0.3)",
-        padding: "8px 35px",
+        padding: padding,
         fontSize: "14px",
         "&:hover": {
           backgroundColor: "#1a34a0",

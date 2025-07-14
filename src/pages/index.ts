@@ -9,5 +9,5 @@ export {default as FacilitiesList } from "./AdminPortal/Facilities/Components/Fa
 export {default as BookingList } from "./AdminPortal/BookingList/BookingList";
 export {default as Users } from "./AdminPortal/Users/Users";
 export {default as Dashboard } from "./AdminPortal/Dashboard/Dashboard";
-export {default as Profile } from "./Profile/Profile";
+export {default as Profile } from "./AdminPortal/Profile/Profile";
 
