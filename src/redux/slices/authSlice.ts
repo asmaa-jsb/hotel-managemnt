@@ -26,8 +26,8 @@ const authSlice = createSlice({
       if (token) {
         try {
           const decoded = jwtDecode<DecodedToken>(token);
+          console.log(decoded);
           state.loginData = decoded;
-          
         } catch (error) {
           console.error("Invalid token:", error);
           state.loginData = null;

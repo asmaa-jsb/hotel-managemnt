@@ -27,6 +27,7 @@ import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 import { Loader } from "./components/AdminSharedModual/Loader/Loader";
 import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 import ChangePassword from "./pages/Authentication/ChangePassword/ChangePassword";
+import UserLayout from "./components/UserSharedModual/UserPortalLayout/UserLayout";
 
 
 function App() {
@@ -80,9 +81,12 @@ function App() {
       ],
     },
     {
-      path: "loader",
-      element: <Loader />,
-    },
+      path:"userLayout",
+      element:<UserLayout/>,
+      children:[
+        {}
+      ]
+    }
   ]);
   return (
     <>
