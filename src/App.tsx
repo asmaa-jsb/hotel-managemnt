@@ -65,7 +65,7 @@ function App() {
       ],
     },
 
-    // ✅ Admin portal after login
+    // Admin portal after login
     {
       path: "/admin",
       element: <PortalMainLayout />,
