@@ -176,6 +176,9 @@ const PopularAds = () => {
                   />
                   <VisibilityOutlinedIcon
                     sx={{ color: "#fff", fontSize: 30 }}
+                     onClick={()=>{
+                              navigate(`/ad-details/${ads[0]?._id}`)
+                            }}
                   />
                 </Box>
               </Box>
@@ -271,6 +274,9 @@ const PopularAds = () => {
                           />
                           <VisibilityOutlinedIcon
                             sx={{ color: "#fff", fontSize: 28 }}
+                            onClick={()=>{
+                              navigate(`/ad-details/${ad?._id}`)
+                            }}
                           />
                         </Box>
                       </Box>
