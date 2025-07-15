@@ -1,14 +1,13 @@
 
 import Navbar from "../Navbar/Navbar";
-import Hero from "../../../pages/UserPortal/Hero/Hero";
-import LandingPage from "@/pages/UserPortal/LandingPage/LandingPage";
 import Footer from "@/components/UserSharedModual/Footer/Footer";
+import { Outlet } from "react-router-dom";
 
 const UserLayout = () => {
   return (
     <>
       <Navbar />
-      <LandingPage />
+      <Outlet/>
       <Footer />
     </>
   );

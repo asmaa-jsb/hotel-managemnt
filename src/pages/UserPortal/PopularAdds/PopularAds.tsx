@@ -5,11 +5,12 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { useNavigate } from "react-router-dom";
 
 const PopularAds = () => {
+  const navigate = useNavigate();
   const { data } = useAdsLanding();
   const ads = data?.data.ads || [];
 
@@ -99,7 +100,9 @@ const PopularAds = () => {
               }}
             >
               <FavoriteBorderIcon sx={{ color: "#fff", fontSize: 30 }} />
-              <VisibilityOutlinedIcon sx={{ color: "#fff", fontSize: 30 }} />
+              <VisibilityOutlinedIcon sx={{ color: "#fff", fontSize: 30 }}  onClick={()=>{
+                        navigate(`/ad-details/${ads[0]?._id}`)
+                      }}/>
             </Box>
           </Box>
         </Grid>
@@ -183,6 +186,9 @@ const PopularAds = () => {
                     <FavoriteBorderIcon sx={{ color: "#fff", fontSize: 28 }} />
                     <VisibilityOutlinedIcon
                       sx={{ color: "#fff", fontSize: 28 }}
+                      onClick={()=>{
+                        navigate(`/ad-details/${ad?._id}`)
+                      }}
                     />
                   </Box>
                 </Box>
