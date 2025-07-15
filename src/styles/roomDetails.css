@@ -1,0 +1,21 @@
+.details-container{
+    max-width: 1236px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.roomImage{
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    object-fit: cover;
+ 
+}
+.imgs-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
