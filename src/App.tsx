@@ -17,6 +17,9 @@ import {
   Users,
   NotFound,
   Profile,
+  RoomDetails,
+  ChangePassword,
+  LandingPage,
 } from "./pages/index";
 
 import PortalMainLayout from "./components/AdminSharedModual/AdminPortalLayout/AdminPortalLayout";
@@ -27,7 +30,9 @@ import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 
 import "./styles/global.css";
-import ChangePassword from "./pages/Authentication/ChangePassword/ChangePassword";
+
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +53,16 @@ function App() {
       path: "/",
       element: <UserLayout />,
       errorElement: <NotFound />,
-      children: [],
+      children: [
+        // { path: "adsDetails/:id", element:  },
+        { path: "home", element:  <LandingPage/>},
+        { path: "room-details/:id", element: <RoomDetails /> },
+        { path: "ad-details/:id", element: <RoomDetails /> },
+
+        
+
+      
+      ],
     },
 
     {

@@ -1,10 +1,9 @@
-@import "./responsive.css";
-@import "./variables.css";
 @import "./Auth.css";
 @import "./AdminPortal.css";
 @import "./NotFound.css";
 @import "./dashboard.css";
 @import "./profile.css";
+@import "./roomDetails.css";
 
 body {
   margin: 0;
@@ -31,6 +30,12 @@ a {
   text-decoration: none;
   color: white;
   display: block;
+}
+img{
+      height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .nav-link .MuiListItem-root {
