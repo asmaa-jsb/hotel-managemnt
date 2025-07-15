@@ -9,6 +9,7 @@ import type { RootState } from "@/redux/store";
 import { useNavigate } from "react-router-dom";
 
 const PopularAds = () => {
+
   const { data } = useAdsLanding();
   const ads = data?.data.ads || [];
   const isLoading = ads.length === 0;

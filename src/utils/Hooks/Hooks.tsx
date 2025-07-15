@@ -28,7 +28,8 @@ import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 import { fetchChart } from "@/services/API/ChartApi";
 import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
 import { createADS, fetchAds, FetchAdsLanding, updateAds } from "@/services/API/Adsapi";
-import type { IAdsListLanding } from "@/interfaces/AdsLandingInterface";
+import type { AdsLanding, IAdsListLanding } from "@/interfaces/AdsLandingInterface";
+import { getAdDetails, getRoomDetails } from "@/services/API/DetailsApi";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -186,7 +187,7 @@ export const useFacilities = () =>
     queryKey: ["facilities"],
     queryFn: fetchFacilities,
   });
-
+/*************Ads****************** */
 export const useAds = (page: number, size: number) => {
   return useQuery<IAdsList>({
     queryKey: ["ads", page, size],
@@ -221,10 +222,33 @@ export const useUpdateAd = () => {
     },
   });
 };
-
+/***************Users ads***************** */
 export const useAdsLanding = () => {
   return useQuery<IAdsListLanding>({
     queryKey: ["ads"],
     queryFn: FetchAdsLanding,
   });
 };
+
+export const useGetAdDetails=(id:string)=>{
+   return useQuery({
+    queryKey: ["ad-details", id],
+    queryFn: ()=> getAdDetails(id),
+    enabled: id != null && id !== "",
+  });
+}
+/****************users rooms********************** */
+export const useUsersRooms = () => {
+  return useQuery({
+    queryKey: ["usersRooms"],
+    queryFn: FetchAdsLanding,
+  });
+};
+
+export const useGetRoomDetails=(id:string)=>{
+   return useQuery({
+    queryKey: ["room-details", id],
+    queryFn: ()=> getRoomDetails(id),
+    enabled: id != null && id !== "",
+  });
+}

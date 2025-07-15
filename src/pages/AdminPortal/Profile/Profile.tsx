@@ -8,7 +8,7 @@ const Profile = () => {
   const { id } = useParams<{ id?: string }>();
       const { data, isLoading, isError } = useUserProfile<UserProfile>(id);
      const user = data?.data?.user;
-     console.log(user);
+   
      
        if(isLoading) return <Loader/> 
      

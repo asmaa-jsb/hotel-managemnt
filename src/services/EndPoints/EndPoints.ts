@@ -49,7 +49,6 @@ export const FACILITIES_URLS = {
   CREATE_FACILITIES: `${AdminPortal}/room-facilities`,
   DELETE_FACILITIES: (id: string) => `${AdminPortal}/room-facilities/${id}`,
   UPDATE_FACILITIES: (id: string) => `${AdminPortal}/room-facilities/${id}`,
-  GET_ALL_FACILITIESLANDING:`${BasePortal}/ads`
 };
 // booking list
 export const BOOKINGS = {
@@ -71,3 +70,18 @@ export const ADS_URLS = {
 export const CHART = {
   GET_CHART: `${AdminPortal}/dashboard`,
 };
+/**********user portal************ */
+/**************Users Rooms******************* */
+export const USER_ROOMS_URLS ={
+  GET_ALL_USERS_ADS:`${BasePortal}rooms/available`,
+  GET_ROOM_BY_ID:(id: string)=>`${BasePortal}/rooms/${id}`
+
+}
+/**************Users ADS******************* */
+
+export const USER_ADS_URLS ={
+  GET_ALL_USERS_ADS:`${BasePortal}/ads`,
+  GET_AD_BY_ID:(id: string)=>`${BasePortal}/ads/${id}`
+
+
+}

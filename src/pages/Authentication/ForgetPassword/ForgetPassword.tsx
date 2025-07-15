@@ -14,12 +14,14 @@ import type ForgetPasswordFormInputs from "@/interfaces/AuthInterface";
 import { EmailValidation } from "@/utils/Validations/Validations";
 
 const ForgetPassword = () => {
-  const { register, handleSubmit } = useForm< ForgetPasswordFormInputs>({mode: "onChange"});
+  const { register, handleSubmit } = useForm<ForgetPasswordFormInputs>({
+    mode: "onChange",
+  });
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data:  ForgetPasswordFormInputs) => {
+  const onSubmit = async (data: ForgetPasswordFormInputs) => {
     setLoading(true);
     try {
       const response = await axiosInstance.post(
@@ -27,12 +29,11 @@ const ForgetPassword = () => {
         data
       );
       console.log(response);
-      
+
       toast.success(response?.data?.message || "Email sent successfully!");
-      navigate("/reset-password", {state:{ email : data.email}});
+      navigate("/reset-password", { state: { email: data.email } });
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "email sending failed");
-   
     } finally {
       setLoading(false);
     }
@@ -46,7 +47,7 @@ const ForgetPassword = () => {
         </Typography>
         <Typography className="form-subtitle" variant="body2">
           If you already have an account register{" "}
-          <Link className="error-reset" onClick={() => navigate("/login")}>
+          <Link className="error-reset" onClick={() => navigate("/auth/login")}>
             Login here!
           </Link>
         </Typography>
