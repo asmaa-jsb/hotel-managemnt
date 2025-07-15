@@ -14,7 +14,7 @@ const PopularAds = () => {
   const ads = data?.data.ads || [];
 
   return (
-    <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto", mt: 10 }}>
+    <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto", mt: {lg:10,xs:4}, }}>
       <Typography
         variant="h6"
         fontWeight="bold"

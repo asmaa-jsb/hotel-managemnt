@@ -8,7 +8,6 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import {
   Box,
   Typography,
-  Button,
   IconButton,
   Container,
   ClickAwayListener,
@@ -43,30 +42,41 @@ const Hero = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
+          flexDirection: { xs: "column", sm: "row" },
+          alignItems: "stretch",
           justifyContent: "space-between",
-          mt: 10,
+          mt: { xs: 4, sm: 6, md: 10 },
           gap: 6,
         }}
       >
+        {/* Left Section */}
         <Box sx={{ flex: 1 }}>
-          <Box sx={{ maxWidth: 500, mb: 4 }}>
+          <Box sx={{ maxWidth: 500, mb: { xs: 2, md: 3 } }}>
             <Typography
-              variant="h3"
+              sx={{
+                fontWeight: "bold",
+                mb: 1,
+                fontSize: {
+                  xs: "1.9rem",
+                  md: "2.5rem",
+                },
+              }}
               className="Secondary-color"
-              sx={{ fontWeight: "bold", mb: 2 }}
             >
               Forget Busy Work, <br />
               Start Next Vacation
             </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              sx={{ fontSize: { xs: "1rem", sm: "1rem" } }}
+            >
               We provide what you need to enjoy your holiday with family. Time
               to make another memorable moments.
             </Typography>
           </Box>
 
-          {/* Booking Card */}
+          {/* Form */}
           <Box
             component="form"
             onSubmit={(e) => {
@@ -78,6 +88,7 @@ const Hero = () => {
               borderRadius: 2,
               maxWidth: 450,
               position: "relative",
+              boxSizing: "border-box",
             }}
             className="Secondary-color"
           >
@@ -85,8 +96,7 @@ const Hero = () => {
               Start Booking
             </Typography>
 
-            {/* Date Picker */}
-            <Typography variant="body2" mb={1}>
+            <Typography variant="body2" mb={0.5}>
               Pick a Date
             </Typography>
 
@@ -175,8 +185,8 @@ const Hero = () => {
             />
             <input type="hidden" name="capacity" value={capacity} />
 
-            {/* Capacity */}
-            <Typography variant="body2" fontWeight="bold" mt={2} mb={1}>
+            {/* Capacity Section */}
+            <Typography variant="body2" fontWeight="bold" mt={1} mb={0.5}>
               Capacity
             </Typography>
 
@@ -188,7 +198,7 @@ const Hero = () => {
                 borderRadius: "12px",
                 overflow: "hidden",
                 height: "48px",
-                mb: 3,
+                mb: 1.5,
               }}
             >
               <IconButton
@@ -226,45 +236,55 @@ const Hero = () => {
               </IconButton>
             </Box>
 
-            <Box pt={4}>
+            <Box pt={{ md: 4, xs: 2 }}>
               <ReusableButton label="Explore" to="/" padding="8px 85px" />
             </Box>
           </Box>
         </Box>
 
-        {/* Right Image with background */}
+        {/* Right Image Section */}
         <Box
           sx={{
             flex: 1,
             display: "flex",
             justifyContent: "center",
+            alignItems: "stretch",
             position: "relative",
           }}
         >
           <Box
             sx={{
               width: "80%",
-              height: "100%",
+              height: {
+                xs: "100%",
+                sm: "100%",
+              },
               borderRadius: "28px",
               backgroundColor: "#fff",
               position: "absolute",
-              top: 20,
-              right: -5,
-              zIndex: 0,
+              top: 23,
+              right: -3,
+
               boxShadow: "0 0 10px rgba(0,0,0,0.1)",
             }}
           />
+
           <Box
             component="img"
             src={heroImg}
             alt="Hero"
             sx={{
               width: "100%",
+              height: {
+                xs: "100%",
+                sm: "100%",
+                md: "auto",
+              },
               maxWidth: 500,
-              borderRadius: "32px",
-              objectFit: "cover",
+
               position: "relative",
               zIndex: 1,
+              display: { xs: "none", sm: "block" },
             }}
           />
         </Box>
