@@ -45,13 +45,14 @@ const Hero = () => {
           flexDirection: { xs: "column", sm: "row" },
           alignItems: "stretch",
           justifyContent: "space-between",
-          mt: { xs: 4, sm: 6, md: 10 },
+          mt: { xs: 7, sm: 10, md: 20 },
           gap: 6,
         }}
       >
         {/* Left Section */}
+
         <Box sx={{ flex: 1 }}>
-          <Box sx={{ maxWidth: 500, mb: { xs: 2, md: 3 } }}>
+          <Box sx={{ maxWidth: 800, mb: { xs: 2, md: 3 } }}>
             <Typography
               sx={{
                 fontWeight: "bold",
@@ -263,8 +264,8 @@ const Hero = () => {
               backgroundColor: "#fff",
               position: "absolute",
               top: 23,
-              right: -3,
-
+              right: {md:20,sm:-10},
+              border: "1px solid #203FC7",
               boxShadow: "0 0 10px rgba(0,0,0,0.1)",
             }}
           />

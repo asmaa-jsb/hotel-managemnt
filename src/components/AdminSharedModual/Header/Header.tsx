@@ -21,7 +21,7 @@ const Header = ({
   btnTitle,
   description,
   linkTo,
-  showBtn,
+ 
   onClickBtn
 }: HeaderProps) => {
   const theme = useTheme();

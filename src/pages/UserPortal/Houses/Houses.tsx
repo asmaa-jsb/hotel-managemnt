@@ -14,7 +14,10 @@ const houseData = [
 
 const Houses = () => {
   return (
-    <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto", my: {lg:10,xs:4}}}>
+    <Container
+      maxWidth="xl"
+      sx={{ maxWidth: "1400px", mx: "auto", my: { lg: 10, sm: 4, xs: 2 } }}
+    >
       <Typography
         variant="h6"
         fontWeight="bold"

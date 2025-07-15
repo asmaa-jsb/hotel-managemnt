@@ -4,7 +4,6 @@ import type {
   Column,
   TableRowData,
 } from "@/components/AdminSharedModual/ReusableTable/ReusableTable";
-import { Avatar } from "@mui/material";
 import { useEffect, useState } from "react";
 import ReusableModal from "@/components/AdminSharedModual/ReusableModal/ReusableModal";
 
@@ -27,7 +26,7 @@ const RoomList = () => {
   const [selectedRoom, setSelectedRoom] = useState<TableRowData | null>(null);
   const [roomIdToDelete, setRoomIdToDelete] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-console.log(selectedRoom);
+
 
   const [searchLoading, setSearchLoading] = useState(false);
   const rooms = data?.data?.ads ?? [];

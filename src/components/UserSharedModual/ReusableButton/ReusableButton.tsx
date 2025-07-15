@@ -1,13 +1,15 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import type { SxProps } from "@mui/system";
 
 interface ReusableButtonProps {
   label: string;
   to: string;
   fullWidth?: boolean;
   disabled?: boolean;
-  padding?: string; 
+  padding?: string;
+  sx?: SxProps; // ✅ دعم sx مخصص
 }
 
 const ReusableButton: React.FC<ReusableButtonProps> = ({
@@ -16,6 +18,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
   fullWidth = false,
   disabled = false,
   padding = "8px 35px",
+  sx = {}, 
 }) => {
   return (
     <Button
@@ -38,6 +41,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
         },
         letterSpacing: ".1rem",
         textDecoration: "none",
+        ...sx, 
       }}
     >
       {label}

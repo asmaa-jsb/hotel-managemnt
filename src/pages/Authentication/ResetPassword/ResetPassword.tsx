@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Grid, Typography, TextField, Button, Link } from "@mui/material";
+
+import { Box, Grid, Typography,  Button, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
@@ -10,7 +10,7 @@ import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";
 
 interface IResetPassword {
   email:string;
-  otp: string;
+  seed: string;
   password: string;
   confirmPassword: string;
 }
@@ -75,14 +75,14 @@ const ResetPassword = () => {
           disabled
           register={register("email", EmailValidation)}
         />
-        {/* OTP */}
+        {/* seed */}
           <AuthInput
           required
-           name="OTP"
-          label="OTP"
-        register={register("otp", { required: "OTP is required" })}
-          error={!!errors.otp}
-          helperText={errors.otp?.message}
+           name="seed"
+          label="seed"
+        register={register("seed", { required: "seed is required" })}
+          error={!!errors.seed}
+          helperText={errors.seed?.message}
            placeholder="Please type here ..."
           
         />

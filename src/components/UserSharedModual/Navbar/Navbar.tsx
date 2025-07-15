@@ -13,17 +13,24 @@ import {
   Divider,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import ReusableButton from "../ReusableButton/ReusableButton";
 import { useUserProfile } from "@/utils/Hooks/Hooks";
+import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
+import { Profile } from "@/pages";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const pagesForUser = ["Home", "Explore", "Reviews", "Favorites"];
 const pagesForUserForAnonymous = ["Home", "Explore"];
 
 const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
   const LoginData = useSelector((state: RootState) => state.auth.loginData);
   const pages = LoginData ? pagesForUser : pagesForUserForAnonymous;
@@ -43,13 +50,15 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleMenuClick = (option: string) => {
     handleCloseUserMenu();
     if (option === "Logout") {
-        
+      HandleLogout(dispatch, navigate);
     } else {
-      // navigate to profile/settings etc.
+      navigate(`/admin/my-profile/${userId}`);
     }
   };
 
@@ -62,7 +71,7 @@ const Navbar = () => {
 
   return (
     <AppBar
-      position="static"
+       position="fixed"
       color="transparent"
       elevation={0}
       sx={{ borderBottom: "2px solid #e5e5e5", backgroundColor: "#fff", py: 1 }}
@@ -70,7 +79,9 @@ const Navbar = () => {
       <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto" }}>
         <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
           {/* Left Burger Menu */}
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
+          <Box
+            sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}
+          >
             <IconButton onClick={handleOpenNavMenu} color="inherit">
               <MenuIcon />
             </IconButton>
@@ -104,7 +115,10 @@ const Navbar = () => {
                 pointerEvents: "auto",
               }}
             >
-              <Box component="span" className="Primary-color">Sta</Box>ycation
+              <Box component="span" className="Primary-color">
+                Sta
+              </Box>
+              ycation
             </Typography>
           </Box>
 
@@ -125,17 +139,29 @@ const Navbar = () => {
             {!LoginData && (
               <>
                 <MenuItem>
-                  <Button fullWidth sx={{ color: "#203FC7", border: "1px solid #203FC7" }}>Login</Button>
+                  <Button
+                    fullWidth
+                    sx={{ color: "#203FC7", border: "1px solid #203FC7" }}
+                  >
+                    Login
+                  </Button>
                 </MenuItem>
                 <MenuItem>
-                  <Button fullWidth sx={{ backgroundColor: "#203FC7", color: "white" }}>Register</Button>
+                  <Button
+                    fullWidth
+                    sx={{ backgroundColor: "#203FC7", color: "white" }}
+                  >
+                    Register
+                  </Button>
                 </MenuItem>
               </>
             )}
           </Menu>
 
           {/* Right section for md+ */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2, ml: "auto" }}>
+          <Box
+            sx={{ display: "flex", alignItems: "center", gap: 2, ml: "auto" }}
+          >
             {pages.map((page) => (
               <Button
                 key={page}
@@ -152,9 +178,29 @@ const Navbar = () => {
             ))}
 
             {!LoginData && (
-              <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
-                <ReusableButton label="Register" to="/auth/register" />
-                <ReusableButton label="Login Now" to="/auth/login" />
+             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+
+                <ReusableButton
+                  label="Register"
+                  to="/auth/register"
+                  sx={{
+                    px: { xs: 0.2,sm:2, md: 3 },
+                    py: { xs: 0.5,sm:0.8, md: 1 },
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    display: { sm: "block", xs: "none" },
+                  }}
+                />
+
+                <ReusableButton
+                  label="Login Now"
+                  to="/auth/login"
+                  sx={{
+                    px: { xs: 0.7,sm:2, md: 3 },
+                    py: { xs: 0.7,sm:0.8, md: 1 },
+                    fontSize: { xs: "9px", sm: "14px", md: "16px" },
+                    
+                  }}
+                />
               </Box>
             )}
 
@@ -175,8 +221,18 @@ const Navbar = () => {
                     "&:hover": { backgroundColor: "#f0f0f0" },
                   }}
                 >
-                  <Avatar alt={displayName} src={avatarSrc} sx={{ width: 30, height: 30 }} />
-                  <Typography fontSize={13} fontWeight={600} sx={{ display: { xs: "none", sm: "block" } }}>{displayName}</Typography>
+                  <Avatar
+                    alt={displayName}
+                    src={avatarSrc}
+                    sx={{ width: 30, height: 30 }}
+                  />
+                  <Typography
+                    fontSize={13}
+                    fontWeight={600}
+                    sx={{ display: { xs: "none", sm: "block" } }}
+                  >
+                    {displayName}
+                  </Typography>
                 </Box>
 
                 <Menu
@@ -197,20 +253,44 @@ const Navbar = () => {
                     },
                   }}
                 >
-                  <Box display="flex" alignItems="center" gap={1} px={1} py={0.8}>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap={1}
+                    px={1}
+                    py={0.8}
+                  >
                     <Avatar
                       alt={displayName}
                       src={avatarSrc}
-                      sx={{ width: 28, height: 28, border: "2px solid #203FC7" }}
+                      sx={{
+                        width: 28,
+                        height: 28,
+                        border: "2px solid #203FC7",
+                      }}
                     />
                     <Box>
-                      <Typography fontWeight={600} fontSize={13}>{displayName}</Typography>
-                      <Typography variant="caption" color="text.secondary">@{user?.userName || "username"}</Typography>
+                      <Typography fontWeight={600} fontSize={13}>
+                        {displayName}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        @{user?.userName || "username"}
+                      </Typography>
                     </Box>
                   </Box>
                   <Divider sx={{ my: 1 }} />
-                  <MenuItem onClick={() => handleMenuClick("Profile")} sx={{ fontSize: 13, py: 0.8 }}>My Profile</MenuItem>
-                  <MenuItem onClick={() => handleMenuClick("Logout")} sx={{ fontSize: 13, py: 0.8, color: "#F44336" }}>Logout</MenuItem>
+                  <MenuItem
+                    onClick={() => handleMenuClick("Profile")}
+                    sx={{ fontSize: 13, py: 0.8 }}
+                  >
+                    My Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => handleMenuClick("Logout")}
+                    sx={{ fontSize: 13, py: 0.8, color: "#F44336" }}
+                  >
+                    Logout
+                  </MenuItem>
                 </Menu>
               </Box>
             )}

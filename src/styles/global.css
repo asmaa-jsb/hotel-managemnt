@@ -5,7 +5,7 @@
 @import "./NotFound.css";
 @import "./dashboard.css";
 @import "./profile.css";
-
+@import "./UserPortal.css";
 body {
   margin: 0;
   font-family: "Poppins", sans-serif !important;
@@ -15,15 +15,15 @@ a {
   text-decoration: none !important;
 }
 :root {
-  --primary-color: #203FC7;
-  --secondary-color :rgba(21, 44, 91, 1);
+  --primary-color: #203fc7;
+  --secondary-color: rgba(21, 44, 91, 1);
 }
 
 .Primary-color {
   color: var(--primary-color);
 }
 
-.Secondary-color{
+.Secondary-color {
   color: var(--secondary-color);
 }
 
