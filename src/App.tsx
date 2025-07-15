@@ -51,7 +51,6 @@ function App() {
       element: <UserLayout />,
       errorElement: <NotFound />,
       children: [
-        // { path: "adsDetails/:id", element:  },
         { index: true, element: <LandingPage /> },
         { path: "home", element: <LandingPage /> },
         { path: "room-details/:id", element: <RoomDetails /> },

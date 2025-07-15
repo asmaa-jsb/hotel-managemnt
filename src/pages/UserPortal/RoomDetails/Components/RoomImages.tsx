@@ -7,7 +7,7 @@ interface RoomImgsProps {
   imgThree: string;
 }
 const RoomImages: React.FC<RoomImgsProps> = ({ imgOne, imgTwo, imgThree }) => {
-     const imageHeight = 500;
+   
   return (
    <Box>
        <Grid
@@ -16,13 +16,13 @@ const RoomImages: React.FC<RoomImgsProps> = ({ imgOne, imgTwo, imgThree }) => {
       spacing={1}
       justifyContent={"center"}
     >
-      <Grid size={{ md: 6, xs: 12 }} height={imageHeight} overflow = {"hidden"}>
-        <img className="roomImage"  src={imgOne} alt="room image" />
+      <Grid size={{ md: 6, xs: 12 }}  >
+        <Box sx={{ height: { xs: 300, md: 500 }}}><img className="roomImage"  src={imgOne} alt="room image" /></Box>
       </Grid>
-      <Grid size={{ md: 6, xs: 12 }} height={imageHeight} overflow = {"hidden"}>
+      <Grid size={{ md: 6, xs: 12 }} >
         <Box className="imgs-container" sx={{ gap: { xs: "8px", md: "10px" }}}>
-          <img className="roomImage" src={imgTwo} alt="room image" />
-          <img className="roomImage" src={imgThree} alt="room image" />
+          <Box sx={{ height: {md: 240 }}}>  <img className="roomImage" src={imgTwo} alt="room image" /></Box>
+        <Box sx={{ height: {md: 240 }}}>  <img className="roomImage" src={imgThree} alt="room image" /></Box>
         </Box>
       </Grid>
     </Grid>

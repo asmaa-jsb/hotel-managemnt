@@ -5,6 +5,7 @@ import { useGetAdDetails} from "@/utils/Hooks/Hooks"
 import { useParams } from "react-router-dom"
 import { mainImage, sideImage1, sideImage2 } from "@/assets/Images"
 import { Loader } from "@/components/AdminSharedModual/Loader/Loader"
+import RoomBooking from "./RoomBooking"
 
 
 const RoomDetails = () => {
@@ -36,6 +37,7 @@ const sideImg2= ad?.images[2] || sideImage2
     <Box className="details-container">
       <UserHeader title={ad?.roomNumber} description="Bogor, Indonesia" page="Room Details"/>
       <RoomImages imgOne={mainImg} imgTwo={sideImg1} imgThree={sideImg2}/>
+      <RoomBooking/>
     </Box>
   )
 }
