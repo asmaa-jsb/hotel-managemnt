@@ -9,9 +9,9 @@ import type { RootState } from "@/redux/store";
 import { useNavigate } from "react-router-dom";
 
 const PopularAds = () => {
-
   const { data } = useAdsLanding();
   const ads = data?.data.ads || [];
+  console.log("frrr", ads);
   const isLoading = ads.length === 0;
 
   const [alertOpen, setAlertOpen] = React.useState(false);
@@ -176,9 +176,9 @@ const PopularAds = () => {
                   />
                   <VisibilityOutlinedIcon
                     sx={{ color: "#fff", fontSize: 30 }}
-                     onClick={()=>{
-                              navigate(`/ad-details/${ads[0]?._id}`)
-                            }}
+                    onClick={() => {
+                      navigate(`/ad-details/${ads[0]?._id}`);
+                    }}
                   />
                 </Box>
               </Box>
@@ -274,8 +274,8 @@ const PopularAds = () => {
                           />
                           <VisibilityOutlinedIcon
                             sx={{ color: "#fff", fontSize: 28 }}
-                            onClick={()=>{
-                              navigate(`/ad-details/${ad?._id}`)
+                            onClick={() => {
+                              navigate(`/ad-details/${ad?._id}`);
                             }}
                           />
                         </Box>
@@ -289,7 +289,6 @@ const PopularAds = () => {
         </Grid>
       </Container>
 
-      {/* ✅ مودال التنبيه */}
       <ReusableAlertModal
         open={alertOpen}
         onClose={() => setAlertOpen(false)}
