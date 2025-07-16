@@ -21,7 +21,16 @@ const AuthLayout: React.FC = (): JSX.Element => {
     <Grid container component="main" className="AuthContainer">
       {/* Right Form Section */}
       <Grid size={{ md: 6, sm: 12, xs: 12 }} sx={{ order: { xs: 2, md: 1 } }}>
-        <img src={logo} alt="logo" style={{ padding: "20px 16px 0px 20px" }} />
+        <Box
+          component="img"
+          src={logo}
+          alt="logo"
+          sx={{
+            padding: "20px 16px 0px 20px",
+            width: "150px",
+            height: "auto",
+          }}
+        ></Box>
         <Outlet />
       </Grid>
       {/* Left Image Section */}
@@ -46,7 +55,7 @@ const AuthLayout: React.FC = (): JSX.Element => {
               ? "Forgot password"
               : pathName === "ResetPassword"
               ? "Reset Password"
-              :pathName === "ChangePassword"
+              : pathName === "ChangePassword"
               ? "Change Password"
               : "Sign in to Roamhome"}
           </Typography>

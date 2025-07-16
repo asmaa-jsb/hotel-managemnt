@@ -1,11 +1,9 @@
- import CookieServices from "@/services/CookieServices/CookieServices";
-import { useDispatch } from "react-redux";
+// src/utils/HelperFunctions/HelperFunctions.tsx
+import CookieServices from "@/services/CookieServices/CookieServices";
 import { clearLoginData } from "@/redux/slices/authSlice";
-import { useNavigate } from "react-router-dom";
-export const HandleLogout = () => {
-     const navigate = useNavigate();
-      const dispatch = useDispatch();
-    dispatch(clearLoginData());
-    CookieServices.remove("token");
-    navigate("/login");
-  };
+
+export const HandleLogout = (dispatch: any, navigate: any) => {
+  dispatch(clearLoginData());
+  CookieServices.remove("token");
+  navigate("/auth/login");
+};

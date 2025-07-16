@@ -32,9 +32,6 @@ import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 import "./styles/global.css";
 import ExploreRoom from "./pages/UserPortal/ExploreRoom/ExploreRoom";
 
-
-
-
 function App() {
   const dispatch = useDispatch();
 
@@ -55,8 +52,8 @@ function App() {
       element: <UserLayout />,
       errorElement: <NotFound />,
       children: [
-        // { path: "adsDetails/:id", element:  },
-        { path: "home", element:  <LandingPage/>},
+        { index: true, element: <LandingPage /> },
+        { path: "home", element: <LandingPage /> },
         { path: "room-details/:id", element: <RoomDetails /> },
         { path: "ad-details/:id", element: <RoomDetails /> },
         {path:"exploreRoom" , element:<ExploreRoom/>},

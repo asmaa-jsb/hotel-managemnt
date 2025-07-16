@@ -47,7 +47,7 @@ const Login = () => {
         </Typography>
         <Typography className="form-subtitle" variant="body2">
           If you don’t have an account register You can{" "}
-          <Link href="/register" className="register-link">
+          <Link href="/auth/register" className="register-link">
             Register here !
           </Link>
         </Typography>
@@ -82,7 +82,7 @@ const Login = () => {
         <Typography
           variant="body2"
           className="link-text"
-          onClick={() => navigate("/forget-password")}
+          onClick={() => navigate("/auth/forget-password")}
         >
           Forgot Password ?
         </Typography>
