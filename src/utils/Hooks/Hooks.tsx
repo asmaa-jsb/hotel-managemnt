@@ -27,9 +27,19 @@ import { fetchBookings, deleteBooking } from "@/services/API/Bookingapi";
 import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 import { fetchChart } from "@/services/API/ChartApi";
 import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
-import { createADS, fetchAds, FetchAdsLanding, updateAds } from "@/services/API/Adsapi";
-import type { AdsLanding, IAdsListLanding } from "@/interfaces/AdsLandingInterface";
+import {
+  createADS,
+  fetchAds,
+  FetchAdsLanding,
+  updateAds,
+} from "@/services/API/Adsapi";
+import type {
+  AdsLanding,
+  IAdsListLanding,
+} from "@/interfaces/AdsLandingInterface";
 import { getAdDetails, getRoomDetails } from "@/services/API/DetailsApi";
+import type { PayBookingPayload } from "@/interfaces/PaymentInterface";
+import { payBookingAPI } from "@/services/API/PaymentApi";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -230,13 +240,13 @@ export const useAdsLanding = () => {
   });
 };
 
-export const useGetAdDetails=(id:string)=>{
-   return useQuery({
+export const useGetAdDetails = (id: string) => {
+  return useQuery({
     queryKey: ["ad-details", id],
-    queryFn: ()=> getAdDetails(id),
+    queryFn: () => getAdDetails(id),
     enabled: id != null && id !== "",
   });
-}
+};
 /****************users rooms********************** */
 export const useUsersRooms = () => {
   return useQuery({
@@ -245,10 +255,16 @@ export const useUsersRooms = () => {
   });
 };
 
-export const useGetRoomDetails=(id:string)=>{
-   return useQuery({
+export const useGetRoomDetails = (id: string) => {
+  return useQuery({
     queryKey: ["room-details", id],
-    queryFn: ()=> getRoomDetails(id),
+    queryFn: () => getRoomDetails(id),
     enabled: id != null && id !== "",
   });
-}
+};
+
+export const usePayBooking = () => {
+  return useMutation({
+    mutationFn: (data: PayBookingPayload) => payBookingAPI(data),
+  });
+};

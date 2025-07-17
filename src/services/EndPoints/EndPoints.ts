@@ -85,3 +85,7 @@ export const USER_ADS_URLS ={
 
 
 }
+
+export const BOOKINGPAYMENT_URLS = {
+  PAY_BOOKING: (id: string) => `${BasePortal}/booking/${id}/pay`,
+};
