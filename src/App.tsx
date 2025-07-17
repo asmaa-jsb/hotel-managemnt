@@ -30,10 +30,11 @@ import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 
 import "./styles/global.css";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
   const dispatch = useDispatch();
-
+ 
   useEffect(() => {
     dispatch(saveLoginData());
 
