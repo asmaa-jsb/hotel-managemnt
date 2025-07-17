@@ -1,3 +1,6 @@
+
+// src / ExploreRoomsInterface.ts
+
 export interface Facility {
   _id: string;
   name: string;

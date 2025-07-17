@@ -1,26 +1,43 @@
-// import { Box, Grid, Typography } from '@mui/material'
-// import React from 'react'
+import { Grid, Pagination, Typography, Box } from "@mui/material";
+import RoomCard from "../../../components/UserSharedModual/RoomCard/RoomCard";
+import { useExoloreRooms } from "../../../utils/Hooks/Hooks";
+import { useState } from "react";
 
-// const ExploreRoom = ()=> {
-//   return (
-//     <Box sx={{ p: 4 }}>
-//       <Typography variant="subtitle2" color="text.secondary" mb={1}>
-//         Home / Explore
-//       </Typography>
+const ExploreRoom = () => {
+  const [page, setPage] = useState(1);
+  const size = 12;
+  const startDate = "2025-07-20";
+  const endDate = "2025-07-25";
 
-//       <Typography variant="h4" fontWeight="bold" mb={4}>
-//         Explore <span style={{ color: "#3f51b5" }}>ALL Rooms</span>
-//       </Typography>
+  const { data, isLoading, isError } = useExoloreRooms(page, size, startDate, endDate);
 
-//       <Grid container spacing={3}>
-//         {rooms.map((room: any) => (
-//           <Grid item xs={12} sm={6} md={4} key={room._id}>
-//             <RoomCard room={room} />
-//           </Grid>
-//         ))}
-//       </Grid>
-//     </BoX>
-//   )
-// }
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (isError) return <Typography>Error loading rooms.</Typography>;
 
-// export default ExploreRoom
+  return (
+    <Box px={2} py={4}>
+      <Typography variant="h5" fontWeight={700} mb={3}>
+        All Rooms
+      </Typography>
+
+      <Grid container columns={12} spacing={2}>
+        {data?.rooms.map((room) => (
+          <Grid item xs={12} sm={6} md={4} lg={4} key={room._id}>
+            <RoomCard room={room} />
+          </Grid>
+        ))}
+      </Grid>
+
+      <Box mt={4} display="flex" justifyContent="center">
+        <Pagination
+          count={Math.ceil(data.totalCount / size)}
+          page={page}
+          onChange={(_, value) => setPage(value)}
+          color="primary"
+        />
+      </Box>
+    </Box>
+  );
+};
+
+export default ExploreRoom;
