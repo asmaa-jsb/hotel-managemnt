@@ -27,40 +27,52 @@ export interface IRoomList {
   };
 }
 /***********Booking**********/
- export interface Booking {
-    
-       _id: string;
-        roomNum: string;
-        startDate: string;
-        endDate: string;
-        status: string;
-        totalPrice: number;
-        user?: {
-          userName: string;
-        };
-      }
+export interface Booking {
+  _id: string;
+  roomNum: string;
+  startDate: string;
+  endDate: string;
+  status: string;
+  totalPrice: number;
+  user?: {
+    userName: string;
+  };
+}
 
-   
- export interface BookingDetails {
-    
-       _id: string;
-        roomNum: string;
-        startDate: string;
-        endDate: string;
-        status: string;
-        totalPrice: number;
-          userName: string;
-       
-      }
-      /*************user profile************ */
-    export type UserProfile = {
-      _id: string;
-      userName: string;
-      email: string;
-      phoneNumber: string;
-      country: string;
-      role: string;
-      profileImage: string;
-    };
-    
+export interface BookingDetails {
+  _id: string;
+  roomNum: string;
+  startDate: string;
+  endDate: string;
+  status: string;
+  totalPrice: number;
+  userName: string;
+}
 
+export interface CreateBooking {
+  startDate: string;
+  endDate: string;
+  room: string;
+  totalPrice: number;
+}
+/*************user profile************ */
+export type UserProfile = {
+  _id: string;
+  userName: string;
+  email: string;
+  phoneNumber: string;
+  country: string;
+  role: string;
+  profileImage: string;
+};
+/**************reviews************* */
+export interface Review {
+  roomId:string;
+  rating: number | null;
+  review: string;
+}
+/***************comments */
+export interface Comment {
+    roomId:string;
+    comment:string;
+}

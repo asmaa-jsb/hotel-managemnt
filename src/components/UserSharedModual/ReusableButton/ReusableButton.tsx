@@ -4,8 +4,8 @@ import { Link as RouterLink } from "react-router-dom";
 import type { SxProps } from "@mui/system";
 
 interface ReusableButtonProps {
-  label: string;
-  to: string;
+  label?: string;
+  to?: string;
   fullWidth?: boolean;
   disabled?: boolean;
   padding?: string;
