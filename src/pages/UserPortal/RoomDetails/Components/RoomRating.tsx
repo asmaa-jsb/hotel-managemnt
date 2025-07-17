@@ -56,13 +56,18 @@ const {
       onSuccess: () => {
         toast.success("Review created successfully!");
        resetReview();
-       setAlreadyReviewed(true)
+      
       },
       onError: (error:any) => {
-      
-          toast.error(
+       if (error?.response?.data?.message === "User has already added a review for this room"){
+       setAlreadyReviewed(true)
+       toast.error("you've already added review to this room!")
+     }
+        if(error?.response?.data?.message !== "User has already added a review for this room"){
+            toast.error(
            error?.response?.data?.message || "Failed to create Review, please try again later"
           );
+        }
         
       },
     });
@@ -83,7 +88,7 @@ const {
         
       },
       onError: (error:any) => {
-     
+    
           toast.error(
            error?.response?.data?.message || "Failed to create Comment, please try again later"
           );
@@ -101,8 +106,7 @@ const {
         spacing={8}
         sx={{ paddingBlock: "60px", paddingInline: "20px" }}
       >
-       {
-        alreadyReviewed ? ( <Grid size={{ md: 5, xs: 12 }}>
+        <Grid size={{ md: 5, xs: 12 }}>
           <Box component={"form"} onSubmit={handleReviewSubmit(onSubmitReview)}>
             <Typography
               className="main-title"
@@ -145,18 +149,14 @@ const {
             <Box sx={{ textAlign: { md: "right", xs: "center" }, pt: 4 }}>
               <ReusableButton
                 type="submit"
-                disabled={isReviewSubmitting}
+                disabled={isReviewSubmitting || alreadyReviewed}
                 label={isCreating || isReviewSubmitting ? "Rating..." : "Rate"}
                 padding="8px 85px"
               />
             </Box>
           </Box>
-        </Grid>):  ( <Box sx={{textAlign:'center'}}>
-        <Typography variant="h6" color="textSecondary">
-          You have already submitted a review for this room.
-        </Typography>
-      </Box>)
-       }
+        </Grid>
+       
         <Divider
           orientation="vertical"
           variant="middle"
@@ -183,7 +183,7 @@ const {
             <Box sx={{ textAlign: { md: "right", xs: "center" }, pt: 4 }}>
               <ReusableButton
                 type="submit"
-                disabled={isCommentSubmitting || alreadyReviewed}
+                disabled={isCommentSubmitting}
                 label={isAdding || isCommentSubmitting ? "Sending..." : "send"}
                 padding="8px 85px"
               />
