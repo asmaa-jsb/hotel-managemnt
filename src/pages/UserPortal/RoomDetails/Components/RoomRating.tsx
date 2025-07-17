@@ -56,16 +56,14 @@ const {
       onSuccess: () => {
         toast.success("Review created successfully!");
        resetReview();
+       setAlreadyReviewed(true)
       },
       onError: (error:any) => {
-        if (error?.response?.data?.message === "User has already added a review for this room") {
-          toast.error( error?.response?.data?.message );
-          setAlreadyReviewed(true);
-        } else {
+      
           toast.error(
            error?.response?.data?.message || "Failed to create Review, please try again later"
           );
-        }
+        
       },
     });
   };
@@ -75,13 +73,13 @@ const {
       roomId,
       comment: data.comment,
     };
-    console.log(roomId);
+   
     
       createComment(commentData, {
       onSuccess: () => {
         toast.success("Comment created successfully!");
         resetComment();
-        console.log();
+     
         
       },
       onError: (error:any) => {
@@ -185,7 +183,7 @@ const {
             <Box sx={{ textAlign: { md: "right", xs: "center" }, pt: 4 }}>
               <ReusableButton
                 type="submit"
-                disabled={isCommentSubmitting}
+                disabled={isCommentSubmitting || alreadyReviewed}
                 label={isAdding || isCommentSubmitting ? "Sending..." : "send"}
                 padding="8px 85px"
               />
