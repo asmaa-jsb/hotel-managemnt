@@ -31,6 +31,7 @@ import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 
 import "./styles/global.css";
 import { loadStripe } from "@stripe/stripe-js";
+import ExploreRoom from "./pages/UserPortal/ExploreRoom/ExploreRoom";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +57,11 @@ function App() {
         { path: "home", element: <LandingPage /> },
         { path: "room-details/:id", element: <RoomDetails /> },
         { path: "ad-details/:id", element: <RoomDetails /> },
+        {path:"exploreRoom" , element:<ExploreRoom/>},
+
+        
+
+      
       ],
     },
 

@@ -30,6 +30,7 @@ import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
 import { createADS, fetchAds, FetchAdsLanding, updateAds } from "@/services/API/Adsapi";
 import type { AdsLanding, IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 import { getAdDetails, getRoomDetails } from "@/services/API/DetailsApi";
+import { fetchAvailableRooms } from "@/services/API/ExploreRoom";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -252,3 +253,19 @@ export const useGetRoomDetails=(id:string)=>{
     enabled: id != null && id !== "",
   });
 }
+
+/************* User ExploreRooms *************** */
+export const useExoloreRooms = (
+   page: number,
+  size: number,
+  startDate: string,
+  endDate: string
+)=>{
+
+  return useQuery({
+        queryKey: ["availableRooms", page, size, startDate, endDate],
+    queryFn: () => fetchAvailableRooms(page, size, startDate, endDate),
+    enabled: !!startDate && !!endDate, // فقط لما يكون التواريخ متوفرة
+  })
+
+} 
