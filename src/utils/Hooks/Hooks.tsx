@@ -23,14 +23,17 @@ import type {
   FacilityPayload,
   IRoomFacilities,
 } from "@/interfaces/FacilityInterface";
-import { fetchBookings, deleteBooking } from "@/services/API/Bookingapi";
+import { fetchBookings, deleteBooking, createBooking } from "@/services/API/Bookingapi";
 import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 import { fetchChart } from "@/services/API/ChartApi";
 import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
 import { createADS, fetchAds, FetchAdsLanding, updateAds } from "@/services/API/Adsapi";
-import type { AdsLanding, IAdsListLanding } from "@/interfaces/AdsLandingInterface";
+import type {  IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 import { getAdDetails, getRoomDetails } from "@/services/API/DetailsApi";
 import { fetchAvailableRooms } from "@/services/API/ExploreRoom";
+import type { Comment, CreateBooking, Review } from "@/interfaces/Interfaces";
+import { createReview, getAllRoomReviews } from "@/services/API/reviewsApi";
+import { createComment, DeleteComment, getAllRoomComments, updateComment } from "@/services/API/commentsapi";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -116,7 +119,15 @@ export const useDeleteBooking = () => {
     },
   });
 };
-
+export const useAddBooking= () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: CreateBooking) => createBooking(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["bookings"] });
+    },
+  });
+};
 /*******************Users********************/
 export const useUsers = () => {
   return useQuery({
@@ -269,3 +280,64 @@ export const useExoloreRooms = (
   })
 
 } 
+/*****************reviews******************** */
+export const useGetAllRoomReviews=(id:string)=>{
+   return useQuery({
+    queryKey: ["room-reviews", id],
+    queryFn: ()=> getAllRoomReviews(id),
+    enabled: id != null && id !== "",
+  });
+}
+export const useAddReview= () => {
+const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: Review) => createReview(payload),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["room-comments", variables.roomId] });
+    },
+  });
+};
+/*****************comments******************** */
+export const useGetAllRoomComments=(id:string)=>{
+   return useQuery({
+    queryKey: ["room-comments", id],
+    queryFn: ()=> getAllRoomComments(id),
+    enabled: id != null && id !== "",
+  });
+}
+export const useAddComment= () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: Comment) => createComment(payload),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["room-comments", variables.roomId] });
+    },
+  });
+};
+export const useUpdateComment = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: Comment }) => updateComment(id, payload),
+    onSuccess: (_, variables) => {
+      if (variables.payload.roomId) {
+        queryClient.invalidateQueries({ queryKey: ["room-comments", variables.payload.roomId] });
+      }
+    },
+    onError: (error) => {
+      console.error("Error updating comment:", error);
+    },
+  });
+}
+
+export const useDeleteComment = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => DeleteComment(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["room-comments"] });
+    },
+    onError: (error) => {
+      console.error("Error deleting facility:", error);
+    },
+  });
+};
