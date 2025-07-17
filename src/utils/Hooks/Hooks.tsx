@@ -263,8 +263,4 @@ export const useGetRoomDetails = (id: string) => {
   });
 };
 
-export const usePayBooking = () => {
-  return useMutation({
-    mutationFn: (data: PayBookingPayload) => payBookingAPI(data),
-  });
-};
+
