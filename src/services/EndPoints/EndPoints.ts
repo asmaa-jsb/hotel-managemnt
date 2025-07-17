@@ -85,3 +85,9 @@ export const USER_ADS_URLS ={
 
 
 }
+
+//************* User Explore **************** */
+export const USER_Explore_URLS = {
+  GET_ALL_ROOMS: (page = 1, size = 10, startDate: string, endDate: string) =>
+    `${BasePortal}/rooms/available?page=${page}&size=${size}&startDate=${startDate}&endDate=${endDate}`,
+};
