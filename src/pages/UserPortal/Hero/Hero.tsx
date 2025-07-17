@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
-// @ts-ignore
+// @ts-expect-error
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
@@ -8,7 +9,6 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import {
   Box,
   Typography,
-  Button,
   IconButton,
   Container,
   ClickAwayListener,

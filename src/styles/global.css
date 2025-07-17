@@ -16,6 +16,7 @@ a {
 :root {
   --primary-color: #203FC7;
   --secondary-color :rgba(21, 44, 91, 1);
+  --dark-color: #152C5B;
 }
 
 .Primary-color {
@@ -30,12 +31,6 @@ a {
   text-decoration: none;
   color: white;
   display: block;
-}
-img{
-      height: 100%;
-    width: 100%;
-    object-fit: cover;
-    display: block;
 }
 
 .nav-link .MuiListItem-root {

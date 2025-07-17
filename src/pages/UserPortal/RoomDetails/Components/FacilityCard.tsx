@@ -10,10 +10,10 @@ interface FacilityCardProps{
 const FacilityCard: React.FC<FacilityCardProps> = ({icon, number,title}) => {
   return (
     <div>
-       <Box >
+       <Box>
               <img className="roomIcons" src={icon} alt="icon" />
-              <Typography component={"p"}>
-                <Typography component={"span"}>{number}</Typography> {title}
+              <Typography component={"p"} className='facilityCard-title'>
+                <Typography  component={"span"} className='facilityCard-span'>{number}</Typography> {title}
               </Typography>
             </Box>
     </div>

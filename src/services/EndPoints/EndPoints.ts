@@ -55,6 +55,7 @@ export const BOOKINGS = {
   GET_ALL_BOOKINGS: `${AdminPortal}/booking`,
   GET_BOOKING_BY_ID: (id: string) => `${AdminPortal}/booking/${id}`,
   DELETE_BOOKING_BY_ID: (id: string) => `${AdminPortal}/booking/${id}`,
+  CREATE_BOOKING: `${BasePortal}/booking`
 };
 // users list
 export const USERS = {
@@ -84,4 +85,20 @@ export const USER_ADS_URLS ={
   GET_AD_BY_ID:(id: string)=>`${BasePortal}/ads/${id}`
 
 
+}
+
+/*******************reviews******************* */
+export const REVIEWS_URLS ={
+  CREATE_REVIEW : `${BasePortal}/room-reviews`,
+  GET_ALL_REVIEWS:(id:string)=>`${BasePortal}/room-reviews/${id}`,
+
+}
+/*******************comments************************** */
+export const COMMENTS_URLS ={
+  CREATE_COMMENT: `${BasePortal}/room-comments`,
+  GET_ALL_COMMENTS:(id:string)=>`${BasePortal}/room-comments/${id}`,
+ DELETE_COMMENT:(id:string)=>`${BasePortal}/room-comments/${id}`,
+  UPDATE_COMMENT:(id:string)=>`${BasePortal}/room-comments/${id}`,
+
+  
 }
