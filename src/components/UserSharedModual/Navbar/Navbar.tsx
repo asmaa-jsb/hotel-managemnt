@@ -19,7 +19,7 @@ import ReusableButton from "../ReusableButton/ReusableButton";
 import { useUserProfile } from "@/utils/Hooks/Hooks";
 import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
 import { Profile } from "@/pages";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const pagesForUser = ["Home", "Explore", "Reviews", "Favorites"];
 const pagesForUserForAnonymous = ["Home", "Explore"];
@@ -72,6 +72,7 @@ const Navbar = () => {
   return (
     <AppBar
        position="fixed"
+       
       color="transparent"
       elevation={0}
       sx={{ borderBottom: "2px solid #e5e5e5", backgroundColor: "#fff", py: 1 }}
