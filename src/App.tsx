@@ -20,6 +20,10 @@ import {
   RoomDetails,
   ChangePassword,
   LandingPage,
+  RoomReviews,
+  ExploreRoom,
+  RoomComments,
+  AllBookings,
 } from "./pages/index";
 
 import PortalMainLayout from "./components/AdminSharedModual/AdminPortalLayout/AdminPortalLayout";
@@ -31,7 +35,8 @@ import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 
 import "./styles/global.css";
 import { loadStripe } from "@stripe/stripe-js";
-import ExploreRoom from "./pages/UserPortal/ExploreRoom/ExploreRoom";
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +63,11 @@ function App() {
         { path: "room-details/:id", element: <RoomDetails /> },
         { path: "ad-details/:id", element: <RoomDetails /> },
         {path:"exploreRoom" , element:<ExploreRoom/>},
+        {path:'room-reviews/:id', element:<RoomReviews/>},
+        {path:'room-comments/:id', element:<RoomComments/>},
+        {path:'my-bookings', element:<AllBookings/>},
+        // { path: "my-profile/:id", element: <Profile /> },
+
 
         
 
@@ -76,6 +86,7 @@ function App() {
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
         { path: "change-password", element: <ChangePassword /> },
+        
       ],
     },
 

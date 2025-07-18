@@ -71,8 +71,48 @@ export interface Review {
   rating: number | null;
   review: string;
 }
+interface User {
+  _id: string;
+  userName: string;
+  profileImage: string;
+}
+
+interface RoomReview {
+  _id: string;
+  roomNumber: string;
+}
+
+export interface Reviews {
+  _id: string;
+  createdAt: string; 
+  updatedAt: string; 
+  rating: number;
+  review: string;
+  room: RoomReview;
+  user: User;
+}
+export interface ReviewsApiResponse {
+  data: {
+   data:{ roomReviews: Reviews[]};
+  };
+}
 /***************comments */
 export interface Comment {
-    roomId:string;
+    roomId:string ;
     comment:string;
+}
+
+
+export interface Comments {
+  _id: string;
+  createdAt: string; 
+  updatedAt: string; 
+ comment: string;
+  room: RoomReview;
+  user: User;
+}
+export interface CommentsApiResponse {
+  data: {
+   data:{ roomComments: Comments[]};
+  };
 }

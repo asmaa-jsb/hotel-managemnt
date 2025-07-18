@@ -1,4 +1,4 @@
-import type { Comment } from "@/interfaces/Interfaces";
+import type { Comment, CommentsApiResponse } from "@/interfaces/Interfaces";
 import { axiosInstance, COMMENTS_URLS } from "../EndPoints/EndPoints";
 
 export const createComment= async (payload:Comment)=>{
@@ -7,7 +7,7 @@ export const createComment= async (payload:Comment)=>{
       return response.data;
 }
 
-export const getAllRoomComments= async (id:string)=>{
+export const getAllRoomComments= async (id:string): Promise<CommentsApiResponse['data']>=>{
   const response =  await  axiosInstance.get(COMMENTS_URLS.GET_ALL_COMMENTS(id))
     
       return response.data;

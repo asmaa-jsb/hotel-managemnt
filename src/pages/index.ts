@@ -18,3 +18,13 @@ export { default as Dashboard } from "./AdminPortal/Dashboard/Dashboard";
 /***************User portal*****************************************/
 export { default as LandingPage } from "./UserPortal/LandingPage/LandingPage";
 export { default as RoomDetails } from "./UserPortal/RoomDetails/Components/RoomDetails";
+export { default as ExploreRoom } from "./UserPortal/ExploreRoom/ExploreRoom";
+export { default as RoomReviews } from "./UserPortal/RoomReviews/RoomReviews";
+export { default as RoomComments } from "./UserPortal/RoomComments/RoomComments";
+export { default as AllBookings } from "./UserPortal/AllBookings/AllBookings";
+
+
+
+
+
+

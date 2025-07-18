@@ -23,6 +23,8 @@ const handlePriceUpdate = (price: number) => {
   const sideImg1 = ad?.images[1] || sideImage1;
   const sideImg2 = ad?.images[2] || sideImage2;
 
+  
+if (isLoading) return <Loader />;
   if (isError || !ad) {
     return (
       <Box sx={{ textAlign: 'center', mt: 4 }}>
@@ -32,7 +34,7 @@ const handlePriceUpdate = (price: number) => {
     );
   }
 
-  if (isLoading) return <Loader />;
+  
 
 
 

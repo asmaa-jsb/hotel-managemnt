@@ -31,7 +31,7 @@ import { createADS, fetchAds, FetchAdsLanding, updateAds } from "@/services/API/
 import type {  IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 import { getAdDetails, getRoomDetails } from "@/services/API/DetailsApi";
 import { fetchAvailableRooms } from "@/services/API/ExploreRoom";
-import type { Comment, CreateBooking, Review } from "@/interfaces/Interfaces";
+import type { Comment, CommentsApiResponse, CreateBooking, Review, ReviewsApiResponse } from "@/interfaces/Interfaces";
 import { createReview, getAllRoomReviews } from "@/services/API/reviewsApi";
 import { createComment, DeleteComment, getAllRoomComments, updateComment } from "@/services/API/commentsapi";
 
@@ -282,7 +282,7 @@ export const useExoloreRooms = (
 } 
 /*****************reviews******************** */
 export const useGetAllRoomReviews=(id:string)=>{
-   return useQuery({
+   return useQuery<ReviewsApiResponse['data'], Error>({
     queryKey: ["room-reviews", id],
     queryFn: ()=> getAllRoomReviews(id),
     enabled: id != null && id !== "",
@@ -299,7 +299,7 @@ const queryClient = useQueryClient();
 };
 /*****************comments******************** */
 export const useGetAllRoomComments=(id:string)=>{
-   return useQuery({
+   return useQuery<CommentsApiResponse['data'], Error>({
     queryKey: ["room-comments", id],
     queryFn: ()=> getAllRoomComments(id),
     enabled: id != null && id !== "",
@@ -317,10 +317,10 @@ export const useAddComment= () => {
 export const useUpdateComment = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: Comment }) => updateComment(id, payload),
+    mutationFn: ({ id, payload , roomId}: { id: string; payload: Comment ; roomId?: string}) => updateComment(id, payload),
     onSuccess: (_, variables) => {
-      if (variables.payload.roomId) {
-        queryClient.invalidateQueries({ queryKey: ["room-comments", variables.payload.roomId] });
+      if (variables.roomId) {
+        queryClient.invalidateQueries({ queryKey: ["room-comments", variables.roomId] });
       }
     },
     onError: (error) => {
