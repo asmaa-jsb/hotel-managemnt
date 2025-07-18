@@ -37,7 +37,7 @@ const handlePriceUpdate = (price: number) => {
 
 
   return (
-    <Box className="details-container">
+    <Box className="details-container" sx={{py:12}}>
       <UserHeader title={ad?.roomNumber} description="Bogor, Indonesia" page="Room Details" />
       <RoomImages imgOne={mainImg} imgTwo={sideImg1} imgThree={sideImg2} />
       <RoomBooking

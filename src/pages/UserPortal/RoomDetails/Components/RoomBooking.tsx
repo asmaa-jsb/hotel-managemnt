@@ -23,23 +23,29 @@ import { useAddBooking } from "@/utils/Hooks/Hooks";
 import { useForm } from "react-hook-form";
 import type { CreateBooking } from "@/interfaces/Interfaces";
 import toast from "react-hot-toast";
-interface IRoomBookingProps{
-  price: number,
-  discount:number,
-  capacity: number,
-  totalPrice:number,
-  room: string,
-    onPriceChange?: (price: number) => void;
+interface IRoomBookingProps {
+  price: number;
+  discount: number;
+  capacity: number;
+  totalPrice: number;
+  room: string;
+  onPriceChange?: (price: number) => void;
 }
-const RoomBooking:React.FC<IRoomBookingProps> =  ({ room, price, discount, capacity, totalPrice, onPriceChange }) => {
-const {mutate:createBooking, isPending: isCreating}= useAddBooking();
+const RoomBooking: React.FC<IRoomBookingProps> = ({
+  room,
+  price,
+  discount,
+  capacity,
+  totalPrice,
+  onPriceChange,
+}) => {
+  const { mutate: createBooking, isPending: isCreating } = useAddBooking();
   const {
     handleSubmit,
     reset,
     formState: { isSubmitting },
   } = useForm({ mode: "onChange" });
   const [openCalendar, setOpenCalendar] = useState(false);
-
 
   const [dateRange, setDateRange] = useState([
     {
@@ -48,47 +54,48 @@ const {mutate:createBooking, isPending: isCreating}= useAddBooking();
       key: "selection",
     },
   ]);
-    const startDate = dateRange[0].startDate;
+  const startDate = dateRange[0].startDate;
   const endDate = dateRange[0].endDate;
-     
 
-  // Price calculations with memoization  
-  const numberOfNights = useMemo(  
-    () => Math.max(1, differenceInDays(endDate, startDate)),  
-    [endDate, startDate]  
-  );  
+  // Price calculations with memoization
+  const numberOfNights = useMemo(
+    () => Math.max(1, differenceInDays(endDate, startDate)),
+    [endDate, startDate]
+  );
 
-  const calculatedTotalPrice = useMemo(  
-    () => numberOfNights * price,  
-    [numberOfNights, price]  
-  );  
+  const calculatedTotalPrice = useMemo(
+    () => numberOfNights * price,
+    [numberOfNights, price]
+  );
 
-  const priceAfterDiscount = useMemo(  
-    () => calculatedTotalPrice * (1 - discount / 100),  
-    [calculatedTotalPrice, discount]  
-  );  
-    useMemo(() => {
+  const priceAfterDiscount = useMemo(
+    () => calculatedTotalPrice * (1 - discount / 100),
+    [calculatedTotalPrice, discount]
+  );
+  useMemo(() => {
     if (onPriceChange) {
       onPriceChange(priceAfterDiscount);
     }
   }, [priceAfterDiscount, onPriceChange]);
-   // Form submission handler  
-  const onSubmit = () => {  
-    if (endDate < startDate) {  
-      toast.error("End date cannot be before start date");  
-      return;  
-    }  
+  // Form submission handler
+  const onSubmit = () => {
+    if (endDate < startDate) {
+      toast.error("End date cannot be before start date");
+      return;
+    }
 
     const formattedStartDate = format(startDate, "yyyy-MM-dd");
     const formattedEndDate = format(endDate, "yyyy-MM-dd");
-   const  bookingData:CreateBooking = {
+    const bookingData: CreateBooking = {
       startDate: formattedStartDate,
       endDate: formattedEndDate,
       room,
-       totalPrice,
-   };
-      createBooking(bookingData, {
-      onSuccess: () => {
+      totalPrice,
+    };
+    console.log("Booking Data:", bookingData);
+    createBooking(bookingData, {
+      onSuccess: (data) => {
+        console.log("✅ Response from API:", data);
         reset();
         toast.success("Booking  created successfully!");
         setOpenCalendar(false);
@@ -100,11 +107,17 @@ const {mutate:createBooking, isPending: isCreating}= useAddBooking();
           },
         ]);
       },
-      onError: (error) => toast.error(error?.message || "Failed to create Booking."),
+      onError: (error) =>
+        toast.error(error?.message || "Failed to create Booking."),
     });
   };
   return (
-    <Grid container sx={{ mt: "5.625rem", padding: "20px" }} spacing={6} alignItems={'center'}>
+    <Grid
+      container
+      sx={{ mt: "5.625rem", padding: "20px" }}
+      spacing={6}
+      alignItems={"center"}
+    >
       <Grid size={{ xs: 12, md: 6 }}>
         {/* left side */}
         <Box>
@@ -133,7 +146,7 @@ const {mutate:createBooking, isPending: isCreating}= useAddBooking();
         <Grid
           container
           spacing={2}
-          sx={{ mt: "30px", justifyContent:'center' }}
+          sx={{ mt: "30px", justifyContent: "center" }}
         >
           <Grid size={{ xs: 6, sm: 3 }}>
             <FacilityCard icon={icon1} number={5} title="bedroom" />
@@ -147,8 +160,8 @@ const {mutate:createBooking, isPending: isCreating}= useAddBooking();
           <Grid size={{ xs: 6, sm: 3 }}>
             <FacilityCard icon={icon4} number={1} title="dining room" />
           </Grid>
-           </Grid>
-            <Grid
+        </Grid>
+        <Grid
           container
           spacing={2}
           justifyContent={"center"}
@@ -170,7 +183,10 @@ const {mutate:createBooking, isPending: isCreating}= useAddBooking();
       </Grid>
       {/* right side */}
       <Grid size={{ xs: 12, md: 6 }}>
-        <Box className="booking-card " sx={{textAlign:{md:'left',xs:'center'}}}>
+        <Box
+          className="booking-card "
+          sx={{ textAlign: { md: "left", xs: "center" } }}
+        >
           <Typography className="main-title" variant="h5" component={"h5"}>
             Start Booking
           </Typography>
@@ -180,7 +196,9 @@ const {mutate:createBooking, isPending: isCreating}= useAddBooking();
             </Typography>{" "}
             per night
           </Typography>
-          <Typography className="discount">Discount {discount}% Off </Typography>
+          <Typography className="discount">
+            Discount {discount}% Off{" "}
+          </Typography>
           {/* Booking Card */}
           <Box
             component="form"
@@ -192,7 +210,7 @@ const {mutate:createBooking, isPending: isCreating}= useAddBooking();
             className="Secondary-color"
           >
             {/* Date Picker */}
-            <Typography sx={{fontWeight:'600'}} variant="body1" mb={1}>
+            <Typography sx={{ fontWeight: "600" }} variant="body1" mb={1}>
               Pick a Date
             </Typography>
             <ClickAwayListener onClickAway={() => setOpenCalendar(false)}>
@@ -275,16 +293,26 @@ const {mutate:createBooking, isPending: isCreating}= useAddBooking();
               name="to"
               value={format(dateRange[0].endDate, "yyyy-MM-dd")}
             />
-            <Typography className="facilityCard-title" sx={{textAlign:'center', marginBlock:'24px 15px'}}>
-              You will pay <Typography className="facilityCard-span" component={"span"}> ${totalPrice} USD</Typography> per{" "}
-              <Typography className="facilityCard-span" component={'span'}>{capacity} Person(s)</Typography>
+            <Typography
+              className="facilityCard-title"
+              sx={{ textAlign: "center", marginBlock: "24px 15px" }}
+            >
+              You will pay{" "}
+              <Typography className="facilityCard-span" component={"span"}>
+                {" "}
+                ${totalPrice} USD
+              </Typography>{" "}
+              per{" "}
+              <Typography className="facilityCard-span" component={"span"}>
+                {capacity} Person(s)
+              </Typography>
             </Typography>
-            <Box  sx={{ textAlign: "center" }}>
-             <ReusableButton
-                 type="submit"
+            <Box sx={{ textAlign: "center" }}>
+              <ReusableButton
+                type="submit"
                 label={isCreating ? "Booking..." : "Continue Book"}
                 padding="8px 85px"
-                disabled={isCreating || isSubmitting} 
+                disabled={isCreating || isSubmitting}
               />
             </Box>
           </Box>

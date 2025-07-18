@@ -16,14 +16,33 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { usePayBooking } from "@/utils/Hooks/Hooks";
+import styles from "./CheckoutForm.module.css";
 
 const CheckoutForm = () => {
+  const stripeInputStyle = {
+    style: {
+      base: {
+        fontSize: "16px",
+        color: "#333",
+        letterSpacing: "0.025em",
+        fontFamily: "inherit",
+        "::placeholder": {
+          color: "#999",
+        },
+      },
+      invalid: {
+        color: "#e53935",
+      },
+    },
+  };
+
   const stripe = useStripe();
   const elements = useElements();
   const { mutateAsync } = usePayBooking();
   const [step, setStep] = useState(0);
 
   const handleNext = () => setStep((prev) => prev + 1);
+  const handleBack = () => setStep((prev) => prev - 1);
 
   const handlePayment = async () => {
     if (!stripe || !elements) return;
@@ -39,20 +58,25 @@ const CheckoutForm = () => {
     if (error || !token) return;
 
     await mutateAsync({
-      bookingId: "68797c3fccc448ef85a039b3",
+      bookingId: "687a17ecccc448ef85a04626",
       token: token.id,
     });
+
     handleNext();
   };
 
   return (
-    <Container maxWidth="sm" sx={{ my: 20 }}>
-      <Paper elevation={4} sx={{ p: 4, borderRadius: 3 }}>
-        <Typography variant="h5" fontWeight={600} gutterBottom>
+    <Container maxWidth="md" className={styles.checkoutContainer}>
+      <Paper className={styles.checkoutCard}>
+        <Typography variant="h5" className={styles.checkoutTitle}>
           Room Booking Payment
         </Typography>
 
-        <Stepper activeStep={step} alternativeLabel sx={{ my: 3 }}>
+        <Stepper
+          activeStep={step}
+          alternativeLabel
+          className={styles.checkoutStepper}
+        >
           {["Address", "Payment Info", "Confirmation"].map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -63,33 +87,34 @@ const CheckoutForm = () => {
         {step === 0 && (
           <>
             <AddressElement options={{ mode: "billing" }} />
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3 }}
-              onClick={handleNext}
-            >
-              Next
-            </Button>
+            <Box className={styles.checkoutBtnGroup}>
+              <span />
+              <Button className={styles.checkoutBtn} onClick={handleNext}>
+                Next →
+              </Button>
+            </Box>
           </>
         )}
 
         {step === 1 && (
           <>
-            <CardElement options={{ style: { base: { fontSize: "16px" } } }} />
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3 }}
-              onClick={handlePayment}
-            >
-              Pay Now
-            </Button>
+            <Box className={styles.cardWrapper}>
+              <CardElement options={stripeInputStyle} />
+            </Box>
+
+            <Box className={styles.checkoutBtnGroup}>
+              <Button className={styles.checkoutBtn} onClick={handleBack}>
+                ← Back
+              </Button>
+              <Button className={styles.checkoutBtn} onClick={handlePayment}>
+                Pay Now →
+              </Button>
+            </Box>
           </>
         )}
 
         {step === 2 && (
-          <Typography color="success.main" variant="h6">
+          <Typography className={styles.checkoutSuccess}>
             ✅ Payment Successful! Your booking is confirmed.
           </Typography>
         )}
