@@ -23,6 +23,7 @@ import { useAddBooking } from "@/utils/Hooks/Hooks";
 import { useForm } from "react-hook-form";
 import type { CreateBooking } from "@/interfaces/Interfaces";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 interface IRoomBookingProps {
   price: number;
   discount: number;
@@ -46,7 +47,7 @@ const RoomBooking: React.FC<IRoomBookingProps> = ({
     formState: { isSubmitting },
   } = useForm({ mode: "onChange" });
   const [openCalendar, setOpenCalendar] = useState(false);
-
+  const navigate = useNavigate();
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -90,15 +91,17 @@ const RoomBooking: React.FC<IRoomBookingProps> = ({
       startDate: formattedStartDate,
       endDate: formattedEndDate,
       room,
-      totalPrice,
+      totalPrice: Math.round(priceAfterDiscount),
     };
     console.log("Booking Data:", bookingData);
     createBooking(bookingData, {
       onSuccess: (data) => {
-        console.log("✅ Response from API:", data);
-        reset();
         toast.success("Booking  created successfully!");
+        const bookingId = data.data.booking._id;
+        console.log("Booking ID:", bookingId);
+        navigate(`/payment/${bookingId}`);
         setOpenCalendar(false);
+
         setDateRange([
           {
             startDate: new Date(),

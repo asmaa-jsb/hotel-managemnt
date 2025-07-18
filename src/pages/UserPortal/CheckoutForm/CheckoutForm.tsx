@@ -18,7 +18,11 @@ import React, { useState } from "react";
 import { usePayBooking } from "@/utils/Hooks/Hooks";
 import styles from "./CheckoutForm.module.css";
 
-const CheckoutForm = () => {
+interface CheckoutFormProps {
+  bookingId: string;
+}
+
+const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
   const stripeInputStyle = {
     style: {
       base: {
@@ -40,6 +44,7 @@ const CheckoutForm = () => {
   const elements = useElements();
   const { mutateAsync } = usePayBooking();
   const [step, setStep] = useState(0);
+  const [apiMessage, setApiMessage] = useState(""); // ✅ الرسالة من الـ API
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
@@ -55,14 +60,24 @@ const CheckoutForm = () => {
     const addressDetails = await addressElement?.getValue();
     const { token, error } = await stripe.createToken(cardElement);
 
-    if (error || !token) return;
+    if (error || !token) {
+      setApiMessage(error?.message || "Something went wrong during payment.");
+      setStep(2);
+      return;
+    }
 
-    await mutateAsync({
-      bookingId: "687a17ecccc448ef85a04626",
-      token: token.id,
-    });
+    try {
+      const response = await mutateAsync({
+        bookingId: bookingId,
+        token: token.id,
+      });
 
-    handleNext();
+      setApiMessage(response?.message || "Payment processed."); // ✅ حفظ رسالة الـ API
+    } catch (err: any) {
+      setApiMessage(err?.message || "Payment failed unexpectedly.");
+    }
+
+    handleNext(); // الانتقال إلى خطوة الكونفرميشن
   };
 
   return (
@@ -115,7 +130,7 @@ const CheckoutForm = () => {
 
         {step === 2 && (
           <Typography className={styles.checkoutSuccess}>
-            ✅ Payment Successful! Your booking is confirmed.
+            ✅ {apiMessage}
           </Typography>
         )}
       </Paper>

@@ -58,12 +58,8 @@ function App() {
         { path: "home", element: <LandingPage /> },
         { path: "room-details/:id", element: <RoomDetails /> },
         { path: "ad-details/:id", element: <RoomDetails /> },
-        { path: "payment", element: <Payment /> },
-        {path:"exploreRoom" , element:<ExploreRoom/>},
-
-        
-
-      
+        { path: "payment/:bookingId", element: <Payment /> },
+        { path: "exploreRoom", element: <ExploreRoom /> },
       ],
     },
 

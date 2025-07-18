@@ -11,9 +11,7 @@ import { useNavigate } from "react-router-dom";
 const PopularAds = () => {
   const { data } = useAdsLanding();
   const ads = data?.data.ads || [];
-  console.log("frrr", ads);
   const isLoading = ads.length === 0;
-
   const [alertOpen, setAlertOpen] = React.useState(false);
   const LoginData = useSelector((state: RootState) => state.auth.loginData);
   const navigate = useNavigate();
@@ -23,9 +21,6 @@ const PopularAds = () => {
       setAlertOpen(true);
       return;
     }
-
-    // ✅ تابع الفيفوريت هنا إذا مسجل
-    console.log("Added to favorites");
   };
 
   const AdSkeletonCard = () => (

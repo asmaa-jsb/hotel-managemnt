@@ -9,6 +9,7 @@ interface ReusableButtonProps {
   fullWidth?: boolean;
   disabled?: boolean;
   padding?: string;
+  type?:string;
   sx?: SxProps; // ✅ دعم sx مخصص
 }
 
@@ -19,10 +20,14 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
   disabled = false,
   padding = "8px 35px",
   sx = {}, 
+  type,
 }) => {
+  const ButtonComponent: React.ElementType = to ? RouterLink : 'button';
+
   return (
     <Button
-      component={RouterLink}
+      type={to ? undefined : type} 
+      component={ButtonComponent}
       to={to}
       fullWidth={fullWidth}
       disabled={disabled}
