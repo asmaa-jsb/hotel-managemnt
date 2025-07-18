@@ -37,10 +37,12 @@ import "./styles/global.css";
 import { loadStripe } from "@stripe/stripe-js";
 
 
+import Payment from "./pages/UserPortal/Payment/Payment";
+
 
 function App() {
   const dispatch = useDispatch();
- 
+
   useEffect(() => {
     dispatch(saveLoginData());
 
@@ -71,6 +73,8 @@ function App() {
 
         
 
+      
+        { path: "payment/:bookingId", element: <Payment /> },
       
       ],
     },

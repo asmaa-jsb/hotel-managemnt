@@ -87,6 +87,9 @@ export const USER_ADS_URLS ={
 
 }
 
+export const BOOKINGPAYMENT_URLS = {
+  PAY_BOOKING: (id: string) => `${BasePortal}/booking/${id}/pay`,
+};
 //************* User Explore **************** */
 export const USER_Explore_URLS = {
   GET_ALL_ROOMS: (page = 1, size = 10, startDate: string, endDate: string) =>

@@ -23,17 +23,33 @@ import type {
   FacilityPayload,
   IRoomFacilities,
 } from "@/interfaces/FacilityInterface";
-import { fetchBookings, deleteBooking, createBooking } from "@/services/API/Bookingapi";
+import {
+  fetchBookings,
+  deleteBooking,
+  createBooking,
+} from "@/services/API/Bookingapi";
 import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 import { fetchChart } from "@/services/API/ChartApi";
 import type { CreateAdsInput, IAdsList } from "@/interfaces/AdsInterface";
-import { createADS, fetchAds, FetchAdsLanding, updateAds } from "@/services/API/Adsapi";
-import type {  IAdsListLanding } from "@/interfaces/AdsLandingInterface";
+import {
+  createADS,
+  fetchAds,
+  FetchAdsLanding,
+  updateAds,
+} from "@/services/API/Adsapi";
+import type { IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 import { getAdDetails, getRoomDetails } from "@/services/API/DetailsApi";
 import { fetchAvailableRooms } from "@/services/API/ExploreRoom";
 import type { Comment, CommentsApiResponse, CreateBooking, Review, ReviewsApiResponse } from "@/interfaces/Interfaces";
 import { createReview, getAllRoomReviews } from "@/services/API/reviewsApi";
-import { createComment, DeleteComment, getAllRoomComments, updateComment } from "@/services/API/commentsapi";
+import {
+  createComment,
+  DeleteComment,
+  getAllRoomComments,
+  updateComment,
+} from "@/services/API/commentsapi";
+import type { PayBookingPayload } from "@/interfaces/PaymentInterface";
+import { payBookingAPI } from "@/services/API/PaymentApi";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -119,7 +135,7 @@ export const useDeleteBooking = () => {
     },
   });
 };
-export const useAddBooking= () => {
+export const useAddBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateBooking) => createBooking(payload),
@@ -242,13 +258,13 @@ export const useAdsLanding = () => {
   });
 };
 
-export const useGetAdDetails=(id:string)=>{
-   return useQuery({
+export const useGetAdDetails = (id: string) => {
+  return useQuery({
     queryKey: ["ad-details", id],
-    queryFn: ()=> getAdDetails(id),
+    queryFn: () => getAdDetails(id),
     enabled: id != null && id !== "",
   });
-}
+};
 /****************users rooms********************** */
 export const useUsersRooms = () => {
   return useQuery({
@@ -257,43 +273,43 @@ export const useUsersRooms = () => {
   });
 };
 
-export const useGetRoomDetails=(id:string)=>{
-   return useQuery({
+export const useGetRoomDetails = (id: string) => {
+  return useQuery({
     queryKey: ["room-details", id],
-    queryFn: ()=> getRoomDetails(id),
+    queryFn: () => getRoomDetails(id),
     enabled: id != null && id !== "",
   });
-}
+};
 
 /************* User ExploreRooms *************** */
 export const useExoloreRooms = (
-   page: number,
+  page: number,
   size: number,
   startDate: string,
   endDate: string
-)=>{
-
+) => {
   return useQuery({
-        queryKey: ["availableRooms", page, size, startDate, endDate],
+    queryKey: ["availableRooms", page, size, startDate, endDate],
     queryFn: () => fetchAvailableRooms(page, size, startDate, endDate),
     enabled: !!startDate && !!endDate, // فقط لما يكون التواريخ متوفرة
-  })
-
-} 
+  });
+};
 /*****************reviews******************** */
 export const useGetAllRoomReviews=(id:string)=>{
    return useQuery<ReviewsApiResponse['data'], Error>({
     queryKey: ["room-reviews", id],
-    queryFn: ()=> getAllRoomReviews(id),
+    queryFn: () => getAllRoomReviews(id),
     enabled: id != null && id !== "",
   });
-}
-export const useAddReview= () => {
-const queryClient = useQueryClient();
+};
+export const useAddReview = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: Review) => createReview(payload),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["room-comments", variables.roomId] });
+      queryClient.invalidateQueries({
+        queryKey: ["room-comments", variables.roomId],
+      });
     },
   });
 };
@@ -301,16 +317,18 @@ const queryClient = useQueryClient();
 export const useGetAllRoomComments=(id:string)=>{
    return useQuery<CommentsApiResponse['data'], Error>({
     queryKey: ["room-comments", id],
-    queryFn: ()=> getAllRoomComments(id),
+    queryFn: () => getAllRoomComments(id),
     enabled: id != null && id !== "",
   });
-}
-export const useAddComment= () => {
+};
+export const useAddComment = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: Comment) => createComment(payload),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["room-comments", variables.roomId] });
+      queryClient.invalidateQueries({
+        queryKey: ["room-comments", variables.roomId],
+      });
     },
   });
 };
@@ -327,7 +345,7 @@ export const useUpdateComment = () => {
       console.error("Error updating comment:", error);
     },
   });
-}
+};
 
 export const useDeleteComment = () => {
   const queryClient = useQueryClient();
@@ -339,5 +357,11 @@ export const useDeleteComment = () => {
     onError: (error) => {
       console.error("Error deleting facility:", error);
     },
+  });
+};
+
+export const usePayBooking = () => {
+  return useMutation({
+    mutationFn: (data: PayBookingPayload) => payBookingAPI(data),
   });
 };

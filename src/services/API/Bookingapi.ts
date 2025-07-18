@@ -20,6 +20,5 @@ export  const deleteBooking = async (id:string) : Promise <void> =>{
 /***********user**************** */
 export const createBooking= async (payload:CreateBooking)=>{
   const response =  await  axiosInstance.post(BOOKINGS.CREATE_BOOKING, payload)
-    
       return response.data;
 }
