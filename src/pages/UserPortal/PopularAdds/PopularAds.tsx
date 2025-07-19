@@ -7,21 +7,53 @@ import ReusableAlertModal from "@/components/UserSharedModual/ReusableAlertModal
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { useNavigate } from "react-router-dom";
+import { useAddToFavorites } from "@/utils/Hooks/Hooks";
+import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const PopularAds = () => {
   const { data } = useAdsLanding();
   const ads = data?.data.ads || [];
   const isLoading = ads.length === 0;
   const [alertOpen, setAlertOpen] = React.useState(false);
+  const [addedFavorites, setAddedFavorites] = React.useState<string[]>([]);
   const LoginData = useSelector((state: RootState) => state.auth.loginData);
   const navigate = useNavigate();
 
-  const handleFavoriteClick = () => {
+  const addToFavorites = useAddToFavorites();
+
+  const handleFavoriteClick = (roomId: string) => {
     if (!LoginData) {
       setAlertOpen(true);
       return;
     }
+
+    addToFavorites.mutate(roomId, {
+      onSuccess: (res) => {
+        toast.success(res.message);
+        setAddedFavorites((prev) => [...prev, roomId]);
+        navigate(`favorites`);
+      },
+      onError: (error: any) => {
+        const message =
+          error?.response?.data?.message ||
+          error?.message ||
+          "Something went wrong";
+        toast.error(message);
+      },
+    });
   };
+
+  const renderFavoriteIcon = (roomId: string, size: number) => (
+    <FavoriteBorderIcon
+      sx={{
+        color: addedFavorites.includes(roomId) ? "#0F7AD3" : "#fff",
+        fontSize: size,
+        cursor: "pointer",
+      }}
+      onClick={() => handleFavoriteClick(roomId)}
+    />
+  );
 
   const AdSkeletonCard = () => (
     <Box
@@ -65,118 +97,98 @@ const PopularAds = () => {
         <Grid container spacing={3}>
           <Grid size={{ md: 4, xs: 12 }}>
             {isLoading ? (
-              <Box
-                sx={{
-                  position: "relative",
-                  borderRadius: 3,
-                  overflow: "hidden",
-                  bgcolor: "#fff",
-                }}
-              >
-                <Skeleton
-                  variant="rectangular"
-                  height={500}
-                  sx={{ borderRadius: 3 }}
-                />
-                <Skeleton
-                  variant="rounded"
-                  width={120}
-                  height={28}
-                  animation="wave"
-                  sx={{ position: "absolute", top: 12, right: 12 }}
-                />
-                <Box sx={{ p: 2 }}>
-                  <Skeleton variant="text" width="70%" height={28} />
-                  <Skeleton
-                    variant="text"
-                    width="50%"
-                    height={22}
-                    sx={{ mt: 1 }}
-                  />
-                </Box>
-              </Box>
+              <Skeleton
+                variant="rectangular"
+                height={500}
+                sx={{ borderRadius: 3 }}
+              />
             ) : (
-              <Box
-                sx={{
-                  height: { xs: 300, md: 500 },
-                  borderRadius: 3,
-                  overflow: "hidden",
-                  position: "relative",
-                  cursor: "pointer",
-                  "&:hover .overlay": { opacity: 1 },
-                }}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                <img
-                  src={ads[0]?.room.images[0]}
-                  alt="room"
-                  width="100%"
-                  height="100%"
-                  style={{ objectFit: "cover" }}
-                />
-
                 <Box
                   sx={{
-                    position: "absolute",
-                    top: 8,
-                    right: 8,
-                    bgcolor: "hotpink",
-                    px: 1.5,
-                    py: 0.5,
-                    borderRadius: 2,
-                    color: "#fff",
-                    fontWeight: "bold",
-                    fontSize: 14,
-                    zIndex: 2,
+                    height: { xs: 300, md: 500 },
+                    borderRadius: 3,
+                    overflow: "hidden",
+                    position: "relative",
+                    cursor: "pointer",
+                    "&:hover .overlay": { opacity: 1 },
                   }}
                 >
-                  ${ads[0]?.room.price} per night
-                </Box>
-
-                <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: 8,
-                    left: 8,
-                    color: "#fff",
-                    zIndex: 2,
-                  }}
-                >
-                  <Typography fontWeight="bold">
-                    {ads[0]?.room.roomNumber}
-                  </Typography>
-                  <Typography fontSize={13}>{ads[0]?.room.capacity}</Typography>
-                </Box>
-
-                <Box
-                  className="overlay"
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    bgcolor: "rgba(0,0,0,0.4)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 2,
-                    opacity: 0,
-                    transition: "0.3s ease",
-                    zIndex: 1,
-                  }}
-                >
-                  <FavoriteBorderIcon
-                    sx={{ color: "#fff", fontSize: 30, cursor: "pointer" }}
-                    onClick={handleFavoriteClick}
+                  <img
+                    src={ads[0]?.room.images[0]}
+                    alt="room"
+                    width="100%"
+                    height="100%"
+                    style={{ objectFit: "cover" }}
                   />
-                  <VisibilityOutlinedIcon
-                    sx={{ color: "#fff", fontSize: 30 }}
-                    onClick={() => {
-                      navigate(`/ad-details/${ads[0]?._id}`);
+
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 8,
+                      right: 8,
+                      bgcolor: "hotpink",
+                      px: 1.5,
+                      py: 0.5,
+                      borderRadius: 2,
+                      color: "#fff",
+                      fontWeight: "bold",
+                      fontSize: 14,
+                      zIndex: 2,
                     }}
-                  />
+                  >
+                    ${ads[0]?.room.price} per night
+                  </Box>
+
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 8,
+                      left: 8,
+                      color: "#fff",
+                      zIndex: 2,
+                    }}
+                  >
+                    <Typography fontWeight="bold">
+                      {ads[0]?.room.roomNumber}
+                    </Typography>
+                    <Typography fontSize={13}>
+                      {ads[0]?.room.capacity}
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    className="overlay"
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      bgcolor: "rgba(0,0,0,0.4)",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: 2,
+                      opacity: 0,
+                      transition: "0.3s ease",
+                      zIndex: 1,
+                    }}
+                  >
+                    {renderFavoriteIcon(ads[0]?.room._id, 30)}
+                    <VisibilityOutlinedIcon
+                      sx={{ color: "#fff", fontSize: 30 }}
+                      onClick={() => {
+                        navigate(`/ad-details/${ads[0]?._id}`);
+                      }}
+                    />
+                  </Box>
                 </Box>
-              </Box>
+              </motion.div>
             )}
           </Grid>
 
@@ -184,97 +196,96 @@ const PopularAds = () => {
             <Grid container spacing={3}>
               {(isLoading ? Array(4).fill(null) : ads.slice(1, 5)).map(
                 (ad, i) => (
-                  <Grid size={{ md: 6, xs: 6 }} key={i}>
+                  <Grid key={i} size={{ md: 6, xs: 6 }}>
                     {isLoading ? (
                       <AdSkeletonCard />
                     ) : (
-                      <Box
-                        sx={{
-                          height: 240,
-                          borderRadius: 3,
-                          overflow: "hidden",
-                          position: "relative",
-                          cursor: "pointer",
-                          "&:hover .overlay": { opacity: 1 },
-                        }}
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: i * 0.1 }}
                       >
-                        <img
-                          src={ad.room.images[0]}
-                          alt="room"
-                          width="100%"
-                          height="100%"
-                          style={{ objectFit: "cover" }}
-                        />
-
                         <Box
                           sx={{
-                            position: "absolute",
-                            top: 8,
-                            right: 8,
-                            bgcolor: "hotpink",
-                            px: 1.2,
-                            py: 0.5,
-                            borderRadius: 2,
-                            color: "#fff",
-                            fontWeight: "bold",
-                            fontSize: 13,
-                            zIndex: 2,
+                            height: 240,
+                            borderRadius: 3,
+                            overflow: "hidden",
+                            position: "relative",
+                            cursor: "pointer",
+                            "&:hover .overlay": { opacity: 1 },
                           }}
                         >
-                          ${ad.room.price} per night
-                        </Box>
+                          <img
+                            src={ad.room.images[0]}
+                            alt="room"
+                            width="100%"
+                            height="100%"
+                            style={{ objectFit: "cover" }}
+                          />
 
-                        <Box
-                          sx={{
-                            position: "absolute",
-                            bottom: 8,
-                            left: 8,
-                            color: "#fff",
-                            zIndex: 2,
-                          }}
-                        >
-                          <Typography fontWeight="bold" fontSize={15}>
-                            {ad.room.roomNumber}
-                          </Typography>
-                          <Typography fontSize={15}>
-                            {ad.room.capacity}
-                          </Typography>
-                        </Box>
-
-                        <Box
-                          className="overlay"
-                          sx={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            bgcolor: "rgba(0,0,0,0.4)",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            gap: 2,
-                            opacity: 0,
-                            transition: "0.3s ease",
-                            zIndex: 1,
-                          }}
-                        >
-                          <FavoriteBorderIcon
+                          <Box
                             sx={{
+                              position: "absolute",
+                              top: 8,
+                              right: 8,
+                              bgcolor: "hotpink",
+                              px: 1.2,
+                              py: 0.5,
+                              borderRadius: 2,
                               color: "#fff",
-                              fontSize: 28,
-                              cursor: "pointer",
+                              fontWeight: "bold",
+                              fontSize: 13,
+                              zIndex: 2,
                             }}
-                            onClick={handleFavoriteClick}
-                          />
-                          <VisibilityOutlinedIcon
-                            sx={{ color: "#fff", fontSize: 28 }}
-                            onClick={() => {
-                              navigate(`/ad-details/${ad?._id}`);
+                          >
+                            ${ad.room.price} per night
+                          </Box>
+
+                          <Box
+                            sx={{
+                              position: "absolute",
+                              bottom: 8,
+                              left: 8,
+                              color: "#fff",
+                              zIndex: 2,
                             }}
-                          />
+                          >
+                            <Typography fontWeight="bold" fontSize={15}>
+                              {ad.room.roomNumber}
+                            </Typography>
+                            <Typography fontSize={15}>
+                              {ad.room.capacity}
+                            </Typography>
+                          </Box>
+
+                          <Box
+                            className="overlay"
+                            sx={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              bgcolor: "rgba(0,0,0,0.4)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              gap: 2,
+                              opacity: 0,
+                              transition: "0.3s ease",
+                              zIndex: 1,
+                            }}
+                          >
+                            {renderFavoriteIcon(ad.room._id, 28)}
+                            <VisibilityOutlinedIcon
+                              sx={{ color: "#fff", fontSize: 28 }}
+                              onClick={() => {
+                                navigate(`/ad-details/${ad._id}`);
+                              }}
+                            />
+                          </Box>
                         </Box>
-                      </Box>
+                      </motion.div>
                     )}
                   </Grid>
                 )
