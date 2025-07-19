@@ -40,7 +40,13 @@ import {
 import type { IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 import { getAdDetails, getRoomDetails } from "@/services/API/DetailsApi";
 import { fetchAvailableRooms } from "@/services/API/ExploreRoom";
-import type { Comment, CommentsApiResponse, CreateBooking, Review, ReviewsApiResponse } from "@/interfaces/Interfaces";
+import type {
+  Comment,
+  CommentsApiResponse,
+  CreateBooking,
+  Review,
+  ReviewsApiResponse,
+} from "@/interfaces/Interfaces";
 import { createReview, getAllRoomReviews } from "@/services/API/reviewsApi";
 import {
   createComment,
@@ -50,6 +56,11 @@ import {
 } from "@/services/API/commentsapi";
 import type { PayBookingPayload } from "@/interfaces/PaymentInterface";
 import { payBookingAPI } from "@/services/API/PaymentApi";
+import {
+  addToFavorites,
+  getFavoriteRooms,
+  removeFavoriteRoom,
+} from "@/services/API/Favorites";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -295,8 +306,8 @@ export const useExoloreRooms = (
   });
 };
 /*****************reviews******************** */
-export const useGetAllRoomReviews=(id:string)=>{
-   return useQuery<ReviewsApiResponse['data'], Error>({
+export const useGetAllRoomReviews = (id: string) => {
+  return useQuery<ReviewsApiResponse["data"], Error>({
     queryKey: ["room-reviews", id],
     queryFn: () => getAllRoomReviews(id),
     enabled: id != null && id !== "",
@@ -314,8 +325,8 @@ export const useAddReview = () => {
   });
 };
 /*****************comments******************** */
-export const useGetAllRoomComments=(id:string)=>{
-   return useQuery<CommentsApiResponse['data'], Error>({
+export const useGetAllRoomComments = (id: string) => {
+  return useQuery<CommentsApiResponse["data"], Error>({
     queryKey: ["room-comments", id],
     queryFn: () => getAllRoomComments(id),
     enabled: id != null && id !== "",
@@ -335,10 +346,20 @@ export const useAddComment = () => {
 export const useUpdateComment = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, payload , roomId}: { id: string; payload: Comment ; roomId?: string}) => updateComment(id, payload),
+    mutationFn: ({
+      id,
+      payload,
+      roomId,
+    }: {
+      id: string;
+      payload: Comment;
+      roomId?: string;
+    }) => updateComment(id, payload),
     onSuccess: (_, variables) => {
       if (variables.roomId) {
-        queryClient.invalidateQueries({ queryKey: ["room-comments", variables.roomId] });
+        queryClient.invalidateQueries({
+          queryKey: ["room-comments", variables.roomId],
+        });
       }
     },
     onError: (error) => {
@@ -359,9 +380,46 @@ export const useDeleteComment = () => {
     },
   });
 };
+/*****************Payment******************** */
 
 export const usePayBooking = () => {
   return useMutation({
     mutationFn: (data: PayBookingPayload) => payBookingAPI(data),
+  });
+};
+
+/*****************Favorites******************** */
+
+// Add to favorites hook
+export const useAddToFavorites = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (roomId: string) => addToFavorites(roomId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["favoriteRooms"] });
+    },
+  });
+};
+
+
+// Remove from favorites hook
+export const useRemoveFavoriteRoom = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (roomId: string) => removeFavoriteRoom(roomId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["favoriteRooms"] });
+    },
+  });
+};
+
+
+// Get all favorites hook
+export const useGetFavoriteRooms = () => {
+  return useQuery({
+    queryKey: ["favoriteRooms"],
+    queryFn: getFavoriteRooms,
   });
 };

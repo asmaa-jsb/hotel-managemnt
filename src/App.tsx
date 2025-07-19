@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+ import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { saveLoginData } from "./redux/slices/authSlice";
@@ -36,9 +36,9 @@ import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 import "./styles/global.css";
 import { loadStripe } from "@stripe/stripe-js";
 
-
 import Payment from "./pages/UserPortal/Payment/Payment";
-
+import Favorites from "./pages/UserPortal/Favorites/Favorites";
+import TestimonialCarousel from "./pages/UserPortal/TestimonialsCard/TestmonialsCard";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,18 +64,14 @@ function App() {
         { path: "home", element: <LandingPage /> },
         { path: "room-details/:id", element: <RoomDetails /> },
         { path: "ad-details/:id", element: <RoomDetails /> },
-        {path:"exploreRoom" , element:<ExploreRoom/>},
-        {path:'room-reviews/:id', element:<RoomReviews/>},
-        {path:'room-comments/:id', element:<RoomComments/>},
-        {path:'my-bookings', element:<AllBookings/>},
-        // { path: "my-profile/:id", element: <Profile /> },
-
-
-        
-
-      
+        { path: "exploreRoom", element: <ExploreRoom /> },
+        { path: "room-reviews/:id", element: <RoomReviews /> },
+        { path: "room-comments/:id", element: <RoomComments /> },
+        { path: "my-bookings", element: <AllBookings /> },
+        { path: "my-profile/:id", element: <Profile /> },
         { path: "payment/:bookingId", element: <Payment /> },
-      
+        { path: "favorites", element: <Favorites /> },
+        { path: "reviews", element: <TestimonialCarousel /> },
       ],
     },
 
@@ -90,7 +86,6 @@ function App() {
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
         { path: "change-password", element: <ChangePassword /> },
-        
       ],
     },
 
@@ -125,3 +120,4 @@ function App() {
 }
 
 export default App;
+ 

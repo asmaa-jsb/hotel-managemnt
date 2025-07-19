@@ -11,8 +11,12 @@ import {
 
 import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";
 import AuthSubmitButton from "@/components/AdminSharedModual/AuthSubmitButton/AuthSubmitButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { LoginFormInputs } from "@/interfaces/AuthInterface";
+
+import { useDispatch, useSelector } from "react-redux";
+import { saveLoginData } from "@/redux/slices/authSlice";
+import type { RootState } from "@/redux/store";
 
 const Login = () => {
   const {
@@ -22,22 +26,41 @@ const Login = () => {
   } = useForm<LoginFormInputs>({ mode: "onChange" });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loginData = useSelector((state: RootState) => state.auth.loginData);
+
   const [loading, setLoading] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false); // 🔄 للتحكم في التوجيه بعد التحديث
+
   const onSubmit = async (data: LoginFormInputs) => {
     try {
       setLoading(true);
+
       const response = await axiosInstance.post(USERS_URLS.LOGIN, data);
-      CookieServices.set("token", response?.data?.data?.token);
+      const { token } = response.data.data;
+
+      CookieServices.set("token", token); // ✅ خزّن التوكن
+      dispatch(saveLoginData()); // ✅ حدث الـ Redux
 
       toast.success(response?.data?.message || "Logged in successfully!");
-      navigate("/admin");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setShouldRedirect(true); // ✅ فعّل التوجيه بعد تحديث Redux
     } catch (error: any) {
       toast.error(error?.message || "Login failed:");
       console.error("Login failed:", error);
       setLoading(false);
     }
   };
+
+  // ✅ بمجرد ما يتحدث loginData ويتم السماح بالتوجيه
+  useEffect(() => {
+    if (shouldRedirect && loginData?.role) {
+      if (loginData.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/home");
+      }
+    }
+  }, [loginData, shouldRedirect, navigate]);
 
   return (
     <Box className="form">

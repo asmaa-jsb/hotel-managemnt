@@ -14,7 +14,7 @@ import {
   Paper,
   Container,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePayBooking } from "@/utils/Hooks/Hooks";
 import styles from "./CheckoutForm.module.css";
 
@@ -72,13 +72,16 @@ const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
         token: token.id,
       });
 
-      setApiMessage(response?.message || "Payment processed."); // ✅ حفظ رسالة الـ API
+      setApiMessage(response?.message || "Payment processed.");
     } catch (err: any) {
       setApiMessage(err?.message || "Payment failed unexpectedly.");
     }
 
-    handleNext(); // الانتقال إلى خطوة الكونفرميشن
+    handleNext();
   };
+useEffect(() => {
+  window.scrollTo(0, 0); 
+}, []);
 
   return (
     <Container maxWidth="md" className={styles.checkoutContainer}>

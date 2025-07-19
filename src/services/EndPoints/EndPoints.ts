@@ -55,7 +55,7 @@ export const BOOKINGS = {
   GET_ALL_BOOKINGS: `${AdminPortal}/booking`,
   GET_BOOKING_BY_ID: (id: string) => `${AdminPortal}/booking/${id}`,
   DELETE_BOOKING_BY_ID: (id: string) => `${AdminPortal}/booking/${id}`,
-  CREATE_BOOKING: `${BasePortal}/booking`
+  CREATE_BOOKING: `${BasePortal}/booking`,
 };
 // users list
 export const USERS = {
@@ -73,19 +73,16 @@ export const CHART = {
 };
 /**********user portal************ */
 /**************Users Rooms******************* */
-export const USER_ROOMS_URLS ={
-  GET_ALL_USERS_ADS:`${BasePortal}rooms/available`,
-  GET_ROOM_BY_ID:(id: string)=>`${BasePortal}/rooms/${id}`
-
-}
+export const USER_ROOMS_URLS = {
+  GET_ALL_USERS_ADS: `${BasePortal}rooms/available`,
+  GET_ROOM_BY_ID: (id: string) => `${BasePortal}/rooms/${id}`,
+};
 /**************Users ADS******************* */
 
-export const USER_ADS_URLS ={
-  GET_ALL_USERS_ADS:`${BasePortal}/ads`,
-  GET_AD_BY_ID:(id: string)=>`${BasePortal}/ads/${id}`
-
-
-}
+export const USER_ADS_URLS = {
+  GET_ALL_USERS_ADS: `${BasePortal}/ads`,
+  GET_AD_BY_ID: (id: string) => `${BasePortal}/ads/${id}`,
+};
 
 export const BOOKINGPAYMENT_URLS = {
   PAY_BOOKING: (id: string) => `${BasePortal}/booking/${id}/pay`,
@@ -96,18 +93,23 @@ export const USER_Explore_URLS = {
     `${BasePortal}/rooms/available?page=${page}&size=${size}&startDate=${startDate}&endDate=${endDate}`,
 };
 /*******************reviews******************* */
-export const REVIEWS_URLS ={
-  CREATE_REVIEW : `${BasePortal}/room-reviews`,
-  GET_ALL_REVIEWS:(id:string)=>`${BasePortal}/room-reviews/${id}`,
-
-}
+export const REVIEWS_URLS = {
+  CREATE_REVIEW: `${BasePortal}/room-reviews`,
+  GET_ALL_REVIEWS: (id: string) => `${BasePortal}/room-reviews/${id}`,
+};
 /*******************comments************************** */
-export const COMMENTS_URLS ={
+export const COMMENTS_URLS = {
   CREATE_COMMENT: `${BasePortal}/room-comments`,
-  GET_ALL_COMMENTS:(id:string)=>`${BasePortal}/room-comments/${id}`,
- DELETE_COMMENT:(id:string)=>`${BasePortal}/room-comments/${id}`,
-  UPDATE_COMMENT:(id:string)=>`${BasePortal}/room-comments/${id}`,
+  GET_ALL_COMMENTS: (id: string) => `${BasePortal}/room-comments/${id}`,
+  DELETE_COMMENT: (id: string) => `${BasePortal}/room-comments/${id}`,
+  UPDATE_COMMENT: (id: string) => `${BasePortal}/room-comments/${id}`,
+};
 
-  
-}
+/*******************Favorites************************** */
 
+export const FAVORITES_URL = {
+  ADD_TO_FAVORITES: `${BasePortal}/favorite-rooms`,
+  GET_ALL_FAVORITES: `${BasePortal}/favorite-rooms`,
+  REMOVE_FAVORITES: (roomId: string) => `${BasePortal}/favorite-rooms/${roomId}`,
+
+};

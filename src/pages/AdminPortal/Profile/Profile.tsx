@@ -1,44 +1,76 @@
-import { Box, Divider, Grid, Typography } from "@mui/material"
-import { useUserProfile } from '@/utils/Hooks/Hooks';
+import { Avatar, Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import { useUserProfile } from "@/utils/Hooks/Hooks";
 import type { UserProfile } from "@/interfaces/Interfaces";
 import { Loader } from "@/components/AdminSharedModual/Loader/Loader";
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
-const Profile = () => {  
+const Profile = () => {
   const { id } = useParams<{ id?: string }>();
-      const { data, isLoading, isError } = useUserProfile<UserProfile>(id);
-     const user = data?.data?.user;
-   
-     
-       if(isLoading) return <Loader/> 
-     
-     
-   
+  const { data, isLoading, isError } = useUserProfile(id || "");
+  const user: UserProfile | undefined = data?.data?.user;
+
+  if (isLoading) return <Loader />;
+  if (isError || !user)
+    return (
+      <Typography align="center" color="error" mt={5}>
+        Error loading profile.
+      </Typography>
+    );
+
   return (
-  
-         <Grid container justifyContent={"center"}>
-            <Grid size={{md:6}}>
-             <Box className="profile-container">
-             <Box className="img-Container">
-                  <img className="profileImg" src={user?.profileImage} alt="profile image" />
-               <Typography sx={{marginBlock:'10px', fontSize:'23px', fontWeight:'700'}}>{user?.userName}</Typography>
-               <Typography sx={{color:"grey"}}>{user?.email}</Typography>
-             </Box>
-                  <Divider sx={{marginBlock:'20px'}} />
-              <Box sx={{textTransform:'capitalize' , marginBlock:'20px'}}>
-               <Typography><Typography className="profile-span"component={'span'}>Country : </Typography>{user?.country}</Typography>
-               <Typography><Typography className="profile-span"component={'span'} >Phone Number : </Typography>{user?.phoneNumber}</Typography>
-               <Typography><Typography className="profile-span"component={'span'} >Role : </Typography>{user?.role}</Typography>
-              </Box>
+    <Grid container justifyContent="center" sx={{ mt: 8, mb: 8 }}>
+      <Grid size={{ md: 4 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Paper
+            elevation={4}
+            sx={{
+              p: 4,
+              borderRadius: 4,
+              textAlign: "center",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
+            }}
+          >
+            <Avatar
+              src={user.profileImage}
+              alt="Profile"
+              sx={{
+                width: 100,
+                height: 100,
+                mx: "auto",
+                mb: 2,
+                border: "3px solid #1976d2",
+              }}
+            />
+            <Typography variant="h6" fontWeight={700}>
+              {user.userName}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {user.email}
+            </Typography>
 
+            <Divider sx={{ my: 3 }} />
 
-             </Box>
-            </Grid>
+            <Box sx={{ textAlign: "left", px: 2 }}>
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                <strong>Country:</strong> {user.country}
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                <strong>Phone Number:</strong> {user.phoneNumber}
+              </Typography>
+              <Typography variant="body2">
+                <strong>Role:</strong> {user.role}
+              </Typography>
+            </Box>
+          </Paper>
+        </motion.div>
+      </Grid>
+    </Grid>
+  );
+};
 
-         </Grid>
-     
-  
-  )
-}
-
-export default Profile
+export default Profile;
