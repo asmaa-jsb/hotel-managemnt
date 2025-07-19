@@ -27,16 +27,6 @@ const testimonials = [
   },
 ];
 
-const arrowStyle = {
-  border: "2px solid #3F5BF6",
-  color: "#3F5BF6",
-  width: 50,
-  height: 50,
-  "&:hover": {
-    backgroundColor: "#3F5BF6",
-    color: "#fff",
-  },
-};
 
 const TestimonialCarousel = () => {
   return (
@@ -142,11 +132,12 @@ const TestimonialCarousel = () => {
                     sx={{
                       border: "2px solid #3F5BF6",
                       color: "#3F5BF6",
-                      width: 50,
-                      height: 50,
+                      width: 40,
+                      height: 40,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      marginLeft:"52px",
                       "&:hover": {
                         backgroundColor: "#3F5BF6",
                         color: "#fff",
@@ -159,8 +150,8 @@ const TestimonialCarousel = () => {
                     sx={{
                       border: "2px solid #3F5BF6",
                       color: "#3F5BF6",
-                      width: 50,
-                      height: 50,
+                      width: 40,
+                      height: 40,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",

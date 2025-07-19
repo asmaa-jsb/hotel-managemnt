@@ -101,6 +101,10 @@ export const REVIEWS_URLS ={
   GET_ALL_REVIEWS:(id:string)=>`${BasePortal}/room-reviews/${id}`,
 
 }
+
+// export const ROOM_REVIEWS = {
+//   ROOM_REVIEW :   `${BasePortal}/`
+// }
 /*******************comments************************** */
 export const COMMENTS_URLS ={
   CREATE_COMMENT: `${BasePortal}/room-comments`,
