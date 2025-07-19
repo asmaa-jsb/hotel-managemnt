@@ -1,4 +1,9 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 import hotel1 from "@/assets/Images/hotel1.png";
 import hotel2 from "@/assets/Images/hotel2.png";
@@ -27,9 +32,20 @@ const Hotels = () => {
         Hotels with large living room
       </Typography>
 
-      <Grid container spacing={3}>
+      <Swiper
+        modules={[Navigation, Pagination]}
+        spaceBetween={20}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        breakpoints={{
+          600: { slidesPerView: 1 },
+          900: { slidesPerView: 2 },
+          1200: { slidesPerView: 3 },
+        }}
+      >
         {houseData.map((house, index) => (
-          <Grid key={index} size={{ md: 3, xs: 12 }}>
+          <SwiperSlide key={index}>
             <Box sx={{ position: "relative" }}>
               <Box
                 component="img"
@@ -70,9 +86,9 @@ const Hotels = () => {
                 {house.location}
               </Typography>
             </Box>
-          </Grid>
+          </SwiperSlide>
         ))}
-      </Grid>
+      </Swiper>
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Box,
@@ -11,6 +11,7 @@ import {
   Typography,
   Avatar,
   Divider,
+  Select,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,37 +20,51 @@ import ReusableButton from "../ReusableButton/ReusableButton";
 import { useUserProfile } from "@/utils/Hooks/Hooks";
 import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
 import { useNavigate, useLocation } from "react-router-dom";
-
-const pagesForUser = [
-  { name: "Home", path: "/" },
-  { name: "Explore", path: "/explore" },
-  { name: "Reviews", path: "/reviews" },
-  { name: "Favorites", path: "/favorites" },
-];
-
-const pagesForUserForAnonymous = [
-  { name: "Home", path: "/" },
-  { name: "Explore", path: "/explore" },
-];
+import { useTranslation } from "react-i18next";
+import type { SelectChangeEvent } from "@mui/material/Select";
 
 const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const { t, i18n } = useTranslation();
 
   const LoginData = useSelector((state: RootState) => state.auth.loginData);
-  const pages = LoginData ? pagesForUser : pagesForUserForAnonymous;
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [language, setLanguage] = useState(() => {
+    const stored = localStorage.getItem("lang");
+    return stored === "ar" || stored === "en" ? stored : "en";
+  });
+
+  const handleLanguageChange = (event: SelectChangeEvent) => {
+    const newLang = event.target.value;
+    setLanguage(newLang);
+    localStorage.setItem("lang", newLang);
+    i18n.changeLanguage(newLang);
+    window.location.reload(); // Apply RTL theme
+  };
+
+  const pagesForUser = [
+    { name: "home", labelKey: "home", path: "/" },
+    { name: "explore", labelKey: "explore", path: "/explore" },
+    { name: "reviews", labelKey: "reviews", path: "/reviews" },
+    { name: "favorites", labelKey: "favorites", path: "/favorites" },
+  ];
+
+  const pagesForUserForAnonymous = [
+    { name: "home", labelKey: "home", path: "/" },
+    { name: "explore", labelKey: "explore", path: "/explore" },
+  ];
+
+  const pages = LoginData ? pagesForUser : pagesForUserForAnonymous;
+
   const userId = LoginData?._id;
   const { data } = useUserProfile(userId || "");
   const user = data?.data?.user;
+    console.log("rrrrrrrrrrrr",t("home"))
 
   const displayName = user?.userName || "Guest";
   const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
@@ -72,19 +87,18 @@ const Navbar = () => {
 
   const handleMenuClick = (option: string) => {
     handleCloseUserMenu();
-    if (option === "Logout") {
+    if (option === "logout") {
       HandleLogout(dispatch, navigate);
     } else {
       navigate(`/admin/my-profile/${userId}`);
     }
   };
 
-  const handleNavClick = (page: { name: string; path: string }) => {
+  const handleNavClick = (page: { name: string; labelKey: string; path: string }) => {
     handleCloseNavMenu();
-
-    if (page.name === "Reviews") {
+    if (page.name === "reviews") {
       navigate("/", { state: { scrollTo: "reviews" } });
-    } else if (page.name === "Home") {
+    } else if (page.name === "home") {
       if (location.pathname === "/") {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
@@ -105,9 +119,7 @@ const Navbar = () => {
       <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto" }}>
         <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
           {/* Mobile Menu Icon */}
-          <Box
-            sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}
-          >
+          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
             <IconButton onClick={handleOpenNavMenu} color="inherit">
               <MenuIcon />
             </IconButton>
@@ -141,10 +153,7 @@ const Navbar = () => {
                 pointerEvents: "auto",
               }}
             >
-              <Box component="span" className="Primary-color">
-                Sta
-              </Box>
-              ycation
+              <Box component="span" className="Primary-color">Sta</Box>ycation
             </Typography>
           </Box>
 
@@ -159,24 +168,35 @@ const Navbar = () => {
           >
             {pages.map((page) => (
               <MenuItem key={page.name} onClick={() => handleNavClick(page)}>
-                <Typography textAlign="center">{page.name}</Typography>
+              
+                <Typography textAlign="center">{t(page.labelKey)}</Typography>
               </MenuItem>
             ))}
           </Menu>
 
-          {/* Desktop nav buttons */}
-          <Box
-            sx={{ display: "flex", alignItems: "center", gap: 2, ml: "auto" }}
-          >
+          {/* Desktop Nav & Language Switch */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, ml: "auto" }}>
+            <Select
+              value={language}
+              onChange={handleLanguageChange}
+              size="small"
+              sx={{
+                minWidth: 110,
+                fontSize: "0.875rem",
+                borderRadius: 2,
+                height: "36px",
+                backgroundColor: "#f9f9f9",
+              }}
+            >
+              <MenuItem value="en">English</MenuItem>
+              <MenuItem value="ar">العربية</MenuItem>
+            </Select>
+
             {pages.map((page) => {
               const isActive =
-                (page.name === "Home" &&
-                  location.pathname === "/" &&
-                  !location.state?.scrollTo) ||
-                (page.name === "Reviews" &&
-                  location.pathname === "/" &&
-                  location.state?.scrollTo === "reviews") ||
-                (location.pathname === page.path && page.name !== "Reviews");
+                (page.name === "home" && location.pathname === "/" && !location.state?.scrollTo) ||
+                (page.name === "reviews" && location.pathname === "/" && location.state?.scrollTo === "reviews") ||
+                (location.pathname === page.path && page.name !== "reviews");
 
               return (
                 <Button
@@ -192,15 +212,15 @@ const Navbar = () => {
                     borderRadius: 0,
                   }}
                 >
-                  {page.name}
+                  {t(page.labelKey)}
                 </Button>
               );
             })}
 
             {!LoginData && (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                <ReusableButton label="Register" to="/auth/register" />
-                <ReusableButton label="Login Now" to="/auth/login" />
+                <ReusableButton label={t("register")} to="/auth/register" />
+                <ReusableButton label={t("login_now")} to="/auth/login" />
               </Box>
             )}
 
@@ -221,16 +241,8 @@ const Navbar = () => {
                     "&:hover": { backgroundColor: "#f0f0f0" },
                   }}
                 >
-                  <Avatar
-                    alt={displayName}
-                    src={avatarSrc}
-                    sx={{ width: 30, height: 30 }}
-                  />
-                  <Typography
-                    fontSize={13}
-                    fontWeight={600}
-                    sx={{ display: { xs: "none", sm: "block" } }}
-                  >
+                  <Avatar alt={displayName} src={avatarSrc} sx={{ width: 30, height: 30 }} />
+                  <Typography fontSize={13} fontWeight={600} sx={{ display: { xs: "none", sm: "block" } }}>
                     {displayName}
                   </Typography>
                 </Box>
@@ -253,43 +265,25 @@ const Navbar = () => {
                     },
                   }}
                 >
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    gap={1}
-                    px={1}
-                    py={0.8}
-                  >
+                  <Box display="flex" alignItems="center" gap={1} px={1} py={0.8}>
                     <Avatar
                       alt={displayName}
                       src={avatarSrc}
-                      sx={{
-                        width: 28,
-                        height: 28,
-                        border: "2px solid #203FC7",
-                      }}
+                      sx={{ width: 28, height: 28, border: "2px solid #203FC7" }}
                     />
                     <Box>
-                      <Typography fontWeight={600} fontSize={13}>
-                        {displayName}
-                      </Typography>
+                      <Typography fontWeight={600} fontSize={13}>{displayName}</Typography>
                       <Typography variant="caption" color="text.secondary">
                         @{user?.userName || "username"}
                       </Typography>
                     </Box>
                   </Box>
                   <Divider sx={{ my: 1 }} />
-                  <MenuItem
-                    onClick={() => handleMenuClick("Profile")}
-                    sx={{ fontSize: 13, py: 0.8 }}
-                  >
-                    My Profile
+                  <MenuItem onClick={() => handleMenuClick("profile")} sx={{ fontSize: 13, py: 0.8 }}>
+                    {t("my_profile")}
                   </MenuItem>
-                  <MenuItem
-                    onClick={() => handleMenuClick("Logout")}
-                    sx={{ fontSize: 13, py: 0.8, color: "#F44336" }}
-                  >
-                    Logout
+                  <MenuItem onClick={() => handleMenuClick("logout")} sx={{ fontSize: 13, py: 0.8, color: "#F44336" }}>
+                    {t("logout")}
                   </MenuItem>
                 </Menu>
               </Box>

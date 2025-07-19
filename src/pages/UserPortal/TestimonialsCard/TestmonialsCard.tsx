@@ -2,8 +2,7 @@ import { Box, Typography, IconButton, Stack, Container } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+
 import "swiper/swiper-bundle.css";
 
 import family1 from "@/assets/Images/family1.png";
