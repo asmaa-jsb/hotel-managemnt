@@ -52,7 +52,7 @@ const Hero = () => {
             flexDirection: { xs: "column", sm: "row" },
             alignItems: "stretch",
             justifyContent: "space-between",
-            mt: { xs: 12, sm: 15, md: 20 },
+            mt: { xs: 12, sm: 15, md: 10 },
             gap: 6,
           }}
         >
