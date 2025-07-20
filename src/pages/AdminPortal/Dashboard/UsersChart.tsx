@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import Highcharts, { Chart as HighchartsChart, SeriesPieOptions, Point } from 'highcharts';
+import Highcharts, { Chart as HighchartsChart, type SeriesPieOptions, Point } from 'highcharts';
 
 interface ChartProps {
   userValue: number;
@@ -15,13 +15,13 @@ const UsersChart: React.FC<ChartProps> = ({ userValue, adminValue }) => {
 
     // Override the pie series animate method
     (() => {
-      const H = Highcharts;
-      H.seriesTypes.pie.prototype.animate = function (init: boolean) {
-        const series = this,
-          chart = series.chart,
-          points = series.points,
-          { animation } = series.options,
-          { startAngleRad } = series;
+      const H:any = Highcharts;
+     H.seriesTypes.pie.prototype.animate = function (this: Highcharts.Series,init: boolean ) {
+        const series = this as any;
+      const chart = series.chart;
+      const points = series.points;
+      const { animation } = series.options;
+      const { startAngleRad } = series;
 
         function fanAnimate(point: Point, startAngleRad: number) {
           const graphic = point.graphic,
@@ -57,7 +57,7 @@ const UsersChart: React.FC<ChartProps> = ({ userValue, adminValue }) => {
                         opacity: 1,
                       });
                     }
-                    points.forEach((p: Point) => {
+                    points.forEach((p: any) => {
                       p.opacity = 1;
                     });
                     series.update(
@@ -82,7 +82,7 @@ const UsersChart: React.FC<ChartProps> = ({ userValue, adminValue }) => {
 
         if (init) {
           // Hide points on init
-          points.forEach((point: Point) => {
+          points.forEach((point: any) => {
             if (point.graphic) {
               point.graphic.attr({ opacity: 0 });
             }
@@ -96,23 +96,24 @@ const UsersChart: React.FC<ChartProps> = ({ userValue, adminValue }) => {
     })();
 
     // Generate chart
-    chartInstanceRef.current = Highcharts.chart(chartRef.current, {
+    if (chartRef.current) {
+    chartInstanceRef.current = Highcharts.chart(chartRef.current as HTMLElement, {
       chart: {
         type: 'pie',
         events: {
           load: function () {
-            const chart = this;
+            // const chart = this;
      
-            const centerX = chart.plotLeft + chart.plotWidth / 2;
-            const centerY = chart.plotTop + chart.plotHeight / 2;
+            const centerX = this.plotLeft + this.plotWidth / 2;
+            const centerY = this.plotTop + this.plotHeight / 2;
 
-            chart.renderer.text('Users', centerX, centerY)
+            this.renderer.text('Users', centerX, centerY)
               .css({
                 fontSize: '14px',
                 fontWeight: 'bold',
              
                 textAlign: 'center', 
-                width: '100%',    
+               
               
               })
               .attr({
@@ -169,7 +170,8 @@ const UsersChart: React.FC<ChartProps> = ({ userValue, adminValue }) => {
           ],
         } as SeriesPieOptions,
       ],
-    });
+    }as Highcharts.Options
+  )};
     // cleanup on unmount
     return () => {
       if (chartInstanceRef.current) {

@@ -1,8 +1,7 @@
 // src/components/AdminSharedModual/ReusableTable/TableRowCard.tsx
 import React from 'react';
-import { Box, Typography, Button, IconButton } from '@mui/material';
+import { Box, Typography, IconButton } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { FaEye, FaRegEdit, FaTrash } from 'react-icons/fa';
 import type {Column,TableRowData} from "../ReusableTable/ReusableTable"
 
 interface TableRowCardProps {
@@ -19,9 +18,6 @@ const TableRowCard: React.FC<TableRowCardProps> = ({
   row,
   columns,
   idKey,
-  onView,
-  onEdit,
-  onDelete,
   onMenuOpen,
 }) => {
   const primaryColumn = columns[0]; // Assuming the first column is the primary identifier

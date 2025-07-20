@@ -6,7 +6,7 @@ import {
   Box,
   Typography,
   InputLabel,
-  FormControl,
+
 } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -15,12 +15,10 @@ import {
   useCreateAd,
   useRooms,
   useUpdateAd,
-  useUpdateRoom,
 } from "@/utils/Hooks/Hooks";
 import { toast } from "react-hot-toast";
 import Header from "@/components/AdminSharedModual/Header/Header";
 import type { CreateAdsInput } from "@/interfaces/AdsInterface";
-import { updateAds } from "@/services/API/Adsapi";
 // import { createADS } from "@/services/API/Adsapi";
 
 const AdsForm: React.FC = () => {
@@ -29,7 +27,7 @@ const AdsForm: React.FC = () => {
   const isEditMode = Boolean(id);
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useRooms(1, 1000);
+  const { data} = useRooms(1, 1000);
   const { mutate: createAd, isPending: isCreating } = useCreateAd();
   const { mutate: updateAds, isPending: isUpdating } = useUpdateAd();
 

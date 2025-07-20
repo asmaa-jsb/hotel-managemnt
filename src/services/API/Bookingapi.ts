@@ -22,3 +22,11 @@ export const createBooking= async (payload:CreateBooking)=>{
   const response =  await  axiosInstance.post(BOOKINGS.CREATE_BOOKING, payload)
       return response.data;
 }
+  export const getMyBookings = async() =>{
+  const response = await axiosInstance.get(BOOKINGS.GET_MY_BOOKING, {
+
+  });
+
+  return response.data;
+
+ }

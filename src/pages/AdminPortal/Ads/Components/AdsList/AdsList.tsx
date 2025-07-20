@@ -12,6 +12,7 @@ import TablePagination from "@/components/AdminSharedModual/TablePagination/Tabl
 import { useDeleteRoom, useAds } from "@/utils/Hooks/Hooks";
 import { useNavigate } from "react-router-dom";
 import NoData from "@/components/AdminSharedModual/NoData/NoData";
+import type { AdData } from "@/interfaces/Interfaces";
 
 const RoomList = () => {
   const [page, setPage] = useState(1);
@@ -25,11 +26,10 @@ const RoomList = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<TableRowData | null>(null);
   const [roomIdToDelete, setRoomIdToDelete] = useState<string | null>(null);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
 
 
   const [searchLoading, setSearchLoading] = useState(false);
-  const rooms = data?.data?.ads ?? [];
+  const rooms: AdData[]  = data?.data?.ads ?? [];
   const totalPages = data?.data?.totalPages ?? 1;
   const totalItems = data?.data?.totalItems ?? 0;
 
@@ -156,11 +156,11 @@ const RoomList = () => {
               "../../../../../assets/Sound/fast-swipe-48158.mp3"
             );
             audio.play();
-            setDeletingId(roomIdToDelete);
+          
             setTimeout(() => {
               deleteRoom(roomIdToDelete);
               setRoomIdToDelete(null);
-              setDeletingId(null);
+             
             }, 400);
           }
           setOpenDelete(false);

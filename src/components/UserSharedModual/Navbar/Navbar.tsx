@@ -19,9 +19,15 @@ import type { RootState } from "@/redux/store";
 import ReusableButton from "../ReusableButton/ReusableButton";
 import { useUserProfile } from "@/utils/Hooks/Hooks";
 import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { SelectChangeEvent } from "@mui/material/Select";
+
+
+// const pagesForUser = ["Home", "Explore", "Reviews", "Favorites"];
+// const pagesForUserForAnonymous = ["Home", "Explore"];
+
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -108,6 +114,7 @@ const Navbar = () => {
       navigate(page.path);
     }
   };
+ 
 
   return (
     <AppBar

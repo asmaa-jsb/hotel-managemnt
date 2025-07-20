@@ -7,7 +7,7 @@ import { Loader } from "@/components/AdminSharedModual/Loader/Loader";
 import Header from "@/components/AdminSharedModual/Header/Header";
 
 const Dashboard = () => {
-  const {isLoading,isError , data } = useChart();
+  const {isLoading , data } = useChart();
   const charts = data?.data;
 
   const theme = useTheme();

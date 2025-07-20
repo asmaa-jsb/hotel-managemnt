@@ -9,7 +9,7 @@ import { useState } from "react";
 
 
 const Users = () => {
-  const { data: usersData, isLoading, isError } = useUsers();
+  const { data: usersData, isLoading} = useUsers();
   const users = usersData?.data?.users ?? [];
 
   const [open, setOpen] = useState(false);

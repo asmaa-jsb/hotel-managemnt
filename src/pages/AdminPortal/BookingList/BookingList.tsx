@@ -8,7 +8,7 @@ import { useBookings, useDeleteBooking } from "@/utils/Hooks/Hooks";
 import { useState } from "react";
 
 const BookingList = () => {
-  const { data, isLoading, isError, refetch } = useBookings();
+  const { data, isLoading, refetch } = useBookings();
   const bookings = data?.data?.booking;
   console.log(bookings);
 

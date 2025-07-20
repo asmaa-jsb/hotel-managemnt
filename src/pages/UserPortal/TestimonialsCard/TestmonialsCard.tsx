@@ -2,7 +2,6 @@ import { Box, Typography, IconButton, Stack, Container } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-
 import "swiper/swiper-bundle.css";
 
 import family1 from "@/assets/Images/family1.png";
@@ -26,6 +25,16 @@ const testimonials = [
   },
 ];
 
+// const arrowStyle = {
+//   border: "2px solid #3F5BF6",
+//   color: "#3F5BF6",
+//   width: 50,
+//   height: 50,
+//   "&:hover": {
+//     backgroundColor: "#3F5BF6",
+//     color: "#fff",
+//   },
+// };
 
 const TestimonialCarousel = () => {
   return (

@@ -170,7 +170,8 @@ const HotelNavbar: React.FC<NavbarProps> = ({ setOpen, open }) => {
       
         <MenuItem onClick={() => { navigate(`/my-profile/${userId}`); handleUserMenuClose(); }}>Profile</MenuItem>
         <MenuItem
-          onClick={HandleLogout}
+        
+          onClick={()=>HandleLogout(dispatch, navigate)}
         >
           Logout
         </MenuItem>

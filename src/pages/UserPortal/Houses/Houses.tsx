@@ -1,5 +1,4 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import React from "react";
 import { motion } from "framer-motion";
 import house1 from "@/assets/Images/Housa1.png";
 import house2 from "@/assets/Images/Housa2.png";

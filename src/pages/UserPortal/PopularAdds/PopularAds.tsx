@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useAddToFavorites } from "@/utils/Hooks/Hooks";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
+import StarIcon from '@mui/icons-material/Star';
+import CommentIcon from '@mui/icons-material/Comment';
 
 const PopularAds = () => {
   const { data } = useAdsLanding();
@@ -187,6 +189,19 @@ const PopularAds = () => {
                       }}
                     />
                   </Box>
+                  
+                  <StarIcon
+                    sx={{ color: "#fff", fontSize: 30 }}
+                    onClick={() => {
+                      navigate(`/room-reviews/${ads[0]?.room._id}`);
+                    }}
+                    />
+                  <CommentIcon
+                    sx={{ color: "#fff", fontSize: 30 }}
+                    onClick={() => {
+                      navigate(`/room-comments/${ads[0]?.room._id}`);
+                    }}
+                  />
                 </Box>
               </motion.div>
             )}
@@ -284,6 +299,19 @@ const PopularAds = () => {
                               }}
                             />
                           </Box>
+                       
+                               <StarIcon
+                    sx={{ color: "#fff", fontSize: 30 }}
+                    onClick={() => {
+                      navigate(`/room-reviews/${ads[0]?.room._id}`);
+                    }}
+                    />
+                  <CommentIcon
+                    sx={{ color: "#fff", fontSize: 30 }}
+                    onClick={() => {
+                      navigate(`/room-comments/${ads[0]?.room._id}`);
+                    }}
+                  />
                         </Box>
                       </motion.div>
                     )}

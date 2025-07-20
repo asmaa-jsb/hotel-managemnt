@@ -36,7 +36,7 @@ const Hero = () => {
   const handleExplore = () => {
     const from = format(dateRange[0].startDate, "yyyy-MM-dd");
     const to = format(dateRange[0].endDate, "yyyy-MM-dd");
-    navigate(`/search?from=${from}&to=${to}&capacity=${capacity}`);
+  navigate(`/room-explore/search?from=${from}&to=${to}&capacity=${capacity}`);
   };
 
   return (
@@ -245,9 +245,23 @@ const Hero = () => {
                 </IconButton>
               </Box>
 
-              <Box pt={{ md: 4, xs: 2 }}>
-                <ReusableButton label="Explore" to="/" padding="8px 85px" />
-              </Box>
+              <IconButton
+                onClick={() => setCapacity((prev) => prev + 1)}
+                sx={{
+                  height: "100%",
+                  width: "48px",
+                  borderRadius: 0,
+                  backgroundColor: "#32C99F",
+                  color: "#fff",
+                  "&:hover": { backgroundColor: "#2cb98e" },
+                }}
+              >
+                <AddIcon />
+              </IconButton>
+            </Box>
+
+            <Box pt={{ md: 4, xs: 2 }}>
+              <ReusableButton label="Explore" type="submit" padding="8px 85px" />
             </Box>
           </Box>
 

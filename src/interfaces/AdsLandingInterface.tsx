@@ -1,4 +1,4 @@
-import type { CreatedBy, Facility } from "./RoomInterface";
+import type { CreatedBy} from "./RoomInterface";
 
 export interface AdsLanding {
   _id: string;

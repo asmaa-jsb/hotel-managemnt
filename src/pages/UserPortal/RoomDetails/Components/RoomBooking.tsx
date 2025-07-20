@@ -43,7 +43,6 @@ const RoomBooking: React.FC<IRoomBookingProps> = ({
   const { mutate: createBooking, isPending: isCreating } = useAddBooking();
   const {
     handleSubmit,
-    reset,
     formState: { isSubmitting },
   } = useForm({ mode: "onChange" });
   const [openCalendar, setOpenCalendar] = useState(false);

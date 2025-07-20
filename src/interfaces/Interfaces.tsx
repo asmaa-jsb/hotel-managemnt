@@ -55,6 +55,11 @@ export interface CreateBooking {
   room: string;
   totalPrice: number;
 }
+export interface ReviewsApiResponse {
+  data: {
+   data:{ roomReviews : Reviews[]};
+  };
+}
 /*************user profile************ */
 export type UserProfile = {
   _id: string;
@@ -91,14 +96,15 @@ export interface Reviews {
   room: RoomReview;
   user: User;
 }
-export interface ReviewsApiResponse {
+export interface MyBookingApiResponse {
   data: {
-   data:{ roomReviews: Reviews[]};
+   data:{ myBooking: MyBooking[]};
   };
 }
+
 /***************comments */
 export interface Comment {
-    roomId:string ;
+    roomId?:string ;
     comment:string;
 }
 
@@ -115,4 +121,61 @@ export interface CommentsApiResponse {
   data: {
    data:{ roomComments: Comments[]};
   };
+}
+// Interface for the "ad" object received from the API.
+export interface AdData {
+    _id?: string;
+  isActive?: boolean;
+  room?: {
+    _id?: string;
+    roomNumber?: string;
+    price?: number;
+    discount?: number;
+    capacity?: number;
+  };
+}
+
+// Interface for data used to render table rows
+export interface TableRowData {
+  id: string;
+  roomNumber: string;
+  price: string;
+  discount: string;
+  capacity: string;
+}
+interface User {
+  _id: string;
+}
+
+export interface MyBooking {
+  _id: string;
+  createdAt: string;       
+  endDate: string;         
+  room: string;
+  startDate: string;       
+  status: string;
+  stripeChargeId: string;
+  totalPrice: number;
+  updatedAt: string;       
+  user: User;
+}
+
+
+
+export interface AdDetails {
+   _id: string;
+  createdAt: string; 
+  createdBy: User;
+  isActive: boolean;
+  room: Room;
+  updatedAt: string; 
+};
+
+
+export interface DetailsApiResponse {
+ 
+   data: {
+    ads: AdDetails;
+  };
+  
 }

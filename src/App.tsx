@@ -34,7 +34,6 @@ import RoomForm from "./pages/AdminPortal/Room/Components/RoomForm/RoomForm";
 import AdsForm from "./pages/AdminPortal/Ads/Components/AdsForm/AdsForm";
 
 import "./styles/global.css";
-import { loadStripe } from "@stripe/stripe-js";
 
 import Payment from "./pages/UserPortal/Payment/Payment";
 import Favorites from "./pages/UserPortal/Favorites/Favorites";

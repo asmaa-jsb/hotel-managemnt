@@ -4,7 +4,7 @@ export interface Ads {
   price: number;
   capacity: number;
   discount: number;
-  rooms: [];
+ 
 }
 
 export interface IAdsList {

@@ -1,6 +1,8 @@
 
 import { useRef, useEffect } from 'react';
-import Highcharts, { Chart as HighchartsChart, SeriesPieOptions, Point } from 'highcharts';
+import Highcharts, { Chart as HighchartsChart, type SeriesPieOptions} from 'highcharts';
+
+
 interface ChartProps {
     pendingValue: number;
     completedValue: number;
@@ -11,18 +13,16 @@ const BookingChart: React.FC<ChartProps> =({pendingValue, completedValue}) => {
 
   useEffect(() => {
     if (!chartRef.current) return;
-
-    // Override the pie series animate method
     (() => {
-      const H = Highcharts;
-      H.seriesTypes.pie.prototype.animate = function (init: boolean) {
-        const series = this,
+      const H:any = Highcharts;
+     H.seriesTypes.pie.prototype.animate = function (this: Highcharts.Series,init: boolean) {
+        const series = this as any,
           chart = series.chart,
           points = series.points,
           { animation } = series.options,
           { startAngleRad } = series;
 
-        function fanAnimate(point: Point, startAngleRad: number) {
+        function fanAnimate(point: any, startAngleRad: number) {
           const graphic = point.graphic,
             args = point.shapeArgs;
 
@@ -56,7 +56,7 @@ const BookingChart: React.FC<ChartProps> =({pendingValue, completedValue}) => {
                         opacity: 1,
                       });
                     }
-                    points.forEach((p: Point) => {
+                    points.forEach((p: any) => {
                       p.opacity = 1;
                     });
                     series.update(
@@ -81,7 +81,7 @@ const BookingChart: React.FC<ChartProps> =({pendingValue, completedValue}) => {
 
         if (init) {
           // Hide points on init
-          points.forEach((point: Point) => {
+          points.forEach((point: any) => {
             if (point.graphic) {
               point.graphic.attr({ opacity: 0 });
             }
@@ -95,7 +95,8 @@ const BookingChart: React.FC<ChartProps> =({pendingValue, completedValue}) => {
     })();
 
     // Generate chart
-    chartInstanceRef.current = Highcharts.chart(chartRef.current, {
+    if (chartRef.current) {
+    chartInstanceRef.current = Highcharts.chart( chartRef.current as HTMLElement, {
 chart: {
   type: 'pie',
 },
@@ -145,8 +146,8 @@ credits: {
     ],
         } as SeriesPieOptions,
       ],
-    });
-
+    }as Highcharts.Options);
+  }
     // cleanup on unmount
     return () => {
       if (chartInstanceRef.current) {
