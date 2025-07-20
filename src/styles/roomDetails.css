@@ -1,0 +1,71 @@
+.details-container{
+    max-width: 1236px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.roomImage{
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+          height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+.imgs-container{
+    display: flex;
+    flex-direction: column;
+    padding-block:5px ;
+    gap: 10px;
+}
+
+.roomIcons{
+    width: 38px;
+    height: 38px;
+}
+.roomDescription{
+  color:#B0B0B0;  
+  font-size: 16px;
+  font-weight: 300;
+}
+.facilityCard-title {
+    color:#B0B0B0;
+}
+.facilityCard-span{
+    color: var(--secondary-color) !important;
+    font-weight: 700 !important;
+}
+.booking-card{
+    border: 1px solid #E5E5E5;
+    padding: 4.4rem;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+.main-title{
+    color: var(--dark-color);
+}
+.booking-title{
+    color:#B0B0B0;
+   font-size:36px !important; 
+   margin: 14px 0 5px 0 !important;
+ }
+.price-span{
+   color: #1ABC9C;
+   font-weight: 500 !important;
+     font-size:36px !important; 
+   
+}
+.discount{
+    color: #FF1612;
+    font-weight: 400;
+    margin-bottom: 7.9rem !important;
+}
+.rating-container{
+    border: 1px solid #E5E5E5;
+    margin-block:60px 24px ;
+}
