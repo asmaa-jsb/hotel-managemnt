@@ -20,7 +20,8 @@ import { useUserProfile } from "@/utils/Hooks/Hooks";
 import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 
-const pagesForUser = ["Home", "Explore", "Reviews", "Favorites"];
+// Updated pages for logged-in users to include "My Bookings"
+const pagesForUser = ["Home", "Explore", "Reviews", "Favorites", "My Bookings"];
 const pagesForUserForAnonymous = ["Home", "Explore"];
 
 const Navbar = () => {
@@ -37,7 +38,6 @@ const Navbar = () => {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -45,10 +45,10 @@ const Navbar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,8 +57,10 @@ const Navbar = () => {
     if (option === "Logout") {
       HandleLogout(dispatch, navigate);
     } else if (option === "Profile") {
-      navigate(`/admin/my-profile/${userId}`);
+      navigate(`/admin/my-profile/${userId}`); // Assuming this path is correct for profile
     }
+    // No specific handling needed for "My Bookings" here if it's a direct navigation
+    // through <MenuItem component={RouterLink} ...> or <Button component={RouterLink} ...>
   };
 
   const userId = LoginData?._id;
@@ -66,19 +68,25 @@ const Navbar = () => {
   const user = data?.data?.user;
 
   const displayName = user?.userName || "Guest";
-  const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
+  const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40"; // Default avatar
 
   return (
     <AppBar
       position="fixed"
       color="transparent"
       elevation={0}
-      sx={{ borderBottom: "2px solid #e5e5e5", backgroundColor: "#fff", py: 1 }}
+      sx={{
+        borderBottom: "2px solid #e5e5e5",
+        backgroundColor: "#fff",
+        py: 1,
+      }}
     >
       <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto" }}>
         <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
           {/* Left Burger Menu */}
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
+          <Box
+            sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}
+          >
             <IconButton onClick={handleOpenNavMenu} color="inherit">
               <MenuIcon />
             </IconButton>
@@ -113,8 +121,9 @@ const Navbar = () => {
               }}
             >
               <Box component="span" className="Primary-color">
-                Sta
-              </Box>
+                {" "}
+                Sta{" "}
+              </Box>{" "}
               ycation
             </Typography>
           </Box>
@@ -131,8 +140,9 @@ const Navbar = () => {
             {pages.map((page) => (
               <MenuItem
                 key={page}
+                // Construct the 'to' prop dynamically
                 component={RouterLink}
-                to={`/${page.toLowerCase()}`}
+                to={page === "My Bookings" ? "/my-bookings" : `/${page.toLowerCase()}`}
                 onClick={handleCloseNavMenu}
               >
                 <Typography textAlign="center">{page}</Typography>
@@ -140,12 +150,23 @@ const Navbar = () => {
             ))}
             {!LoginData && (
               <>
-                <MenuItem component={RouterLink} to="/auth/login" onClick={handleCloseNavMenu}>
-                  <Button fullWidth sx={{ color: "#203FC7", border: "1px solid #203FC7" }}>
+                <MenuItem
+                  component={RouterLink}
+                  to="/auth/login"
+                  onClick={handleCloseNavMenu}
+                >
+                  <Button
+                    fullWidth
+                    sx={{ color: "#203FC7", border: "1px solid #203FC7" }}
+                  >
                     Login
                   </Button>
                 </MenuItem>
-                <MenuItem component={RouterLink} to="/auth/register" onClick={handleCloseNavMenu}>
+                <MenuItem
+                  component={RouterLink}
+                  to="/auth/register"
+                  onClick={handleCloseNavMenu}
+                >
                   <Button fullWidth sx={{ backgroundColor: "#203FC7", color: "white" }}>
                     Register
                   </Button>
@@ -159,8 +180,9 @@ const Navbar = () => {
             {pages.map((page) => (
               <Button
                 key={page}
+                // Construct the 'to' prop dynamically
                 component={RouterLink}
-                to={`/${page.toLowerCase()}`}
+                to={page === "My Bookings" ? "/my-bookings" : `/${page.toLowerCase()}`}
                 sx={{
                   color: "black",
                   textTransform: "none",
@@ -172,7 +194,6 @@ const Navbar = () => {
                 {page}
               </Button>
             ))}
-
             {!LoginData && (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                 <ReusableButton
@@ -185,7 +206,6 @@ const Navbar = () => {
                     display: { sm: "block", xs: "none" },
                   }}
                 />
-
                 <ReusableButton
                   label="Login Now"
                   to="/auth/login"
@@ -197,7 +217,6 @@ const Navbar = () => {
                 />
               </Box>
             )}
-
             {LoginData && (
               <Box sx={{ position: "relative" }}>
                 <Box
@@ -215,11 +234,7 @@ const Navbar = () => {
                     "&:hover": { backgroundColor: "#f0f0f0" },
                   }}
                 >
-                  <Avatar
-                    alt={displayName}
-                    src={avatarSrc}
-                    sx={{ width: 30, height: 30 }}
-                  />
+                  <Avatar alt={displayName} src={avatarSrc} sx={{ width: 30, height: 30 }} />
                   <Typography
                     fontSize={13}
                     fontWeight={600}
@@ -228,7 +243,6 @@ const Navbar = () => {
                     {displayName}
                   </Typography>
                 </Box>
-
                 <Menu
                   anchorEl={anchorElUser}
                   open={Boolean(anchorElUser)}
@@ -247,21 +261,11 @@ const Navbar = () => {
                     },
                   }}
                 >
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    gap={1}
-                    px={1}
-                    py={0.8}
-                  >
+                  <Box display="flex" alignItems="center" gap={1} px={1} py={0.8}>
                     <Avatar
                       alt={displayName}
                       src={avatarSrc}
-                      sx={{
-                        width: 28,
-                        height: 28,
-                        border: "2px solid #203FC7",
-                      }}
+                      sx={{ width: 28, height: 28, border: "2px solid #203FC7" }}
                     />
                     <Box>
                       <Typography fontWeight={600} fontSize={13}>
@@ -273,16 +277,10 @@ const Navbar = () => {
                     </Box>
                   </Box>
                   <Divider sx={{ my: 1 }} />
-                  <MenuItem
-                    onClick={() => handleMenuClick("Profile")}
-                    sx={{ fontSize: 13, py: 0.8 }}
-                  >
+                  <MenuItem onClick={() => handleMenuClick("Profile")} sx={{ fontSize: 13, py: 0.8 }}>
                     My Profile
                   </MenuItem>
-                  <MenuItem
-                    onClick={() => handleMenuClick("Logout")}
-                    sx={{ fontSize: 13, py: 0.8, color: "#F44336" }}
-                  >
+                  <MenuItem onClick={() => handleMenuClick("Logout")} sx={{ fontSize: 13, py: 0.8, color: "#F44336" }}>
                     Logout
                   </MenuItem>
                 </Menu>
