@@ -92,6 +92,7 @@ const PopularAds = () => {
           fontWeight="bold"
           mb={2}
           className="Secondary-color"
+          sx={{border:"none"}}
         >
           Most popular ads
         </Typography>

@@ -2542,10 +2542,10 @@ swiper.js@^1.0.0:
   dependencies:
     jquery "^2.2.1"
 
-swiper@^11.2.10:
-  version "11.2.10"
-  resolved "https://registry.npmjs.org/swiper/-/swiper-11.2.10.tgz"
-  integrity sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==
+swiper@^10.3.1:
+  version "10.3.1"
+  resolved "https://registry.npmjs.org/swiper/-/swiper-10.3.1.tgz"
+  integrity sha512-24Wk3YUdZHxjc9faID97GTu6xnLNia+adMt6qMTZG/HgdSUt4fS0REsGUXJOgpTED0Amh/j+gRGQxsLayJUlBQ==
 
 tinyglobby@^0.2.14:
   version "0.2.14"

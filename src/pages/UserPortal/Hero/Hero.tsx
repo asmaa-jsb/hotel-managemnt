@@ -36,7 +36,7 @@ const Hero = () => {
   const handleExplore = () => {
     const from = format(dateRange[0].startDate, "yyyy-MM-dd");
     const to = format(dateRange[0].endDate, "yyyy-MM-dd");
-  navigate(`/room-explore/search?from=${from}&to=${to}&capacity=${capacity}`);
+    navigate(`/room-explore/search?from=${from}&to=${to}&capacity=${capacity}`);
   };
 
   return (
@@ -52,7 +52,7 @@ const Hero = () => {
             flexDirection: { xs: "column", sm: "row" },
             alignItems: "stretch",
             justifyContent: "space-between",
-            mt: { xs: 12, sm: 15, md: 10 },
+            mt: { xs: 5, sm: 7, md: 10 },
             gap: 6,
           }}
         >
@@ -171,9 +171,7 @@ const Hero = () => {
                     >
                       <DateRange
                         editableDateInputs={true}
-                        onChange={(item: any) =>
-                          setDateRange([item.selection])
-                        }
+                        onChange={(item: any) => setDateRange([item.selection])}
                         moveRangeOnFirstSelection={false}
                         ranges={dateRange}
                       />
@@ -261,7 +259,11 @@ const Hero = () => {
             </Box>
 
             <Box pt={{ md: 4, xs: 2 }}>
-              <ReusableButton label="Explore" type="submit" padding="8px 85px" />
+              <ReusableButton
+                label="Explore"
+                type="submit"
+                padding="8px 85px"
+              />
             </Box>
           </Box>
 

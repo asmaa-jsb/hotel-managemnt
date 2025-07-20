@@ -1,10 +1,18 @@
-import { Box, Typography, IconButton, Stack, Container } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 
 import family1 from "@/assets/Images/family1.png";
+import arrowLeft from "@/assets/Images/arrow1.png";
+import arrowRight from "@/assets/Images/arrow2.png";
 
 const testimonials = [
   {
@@ -16,41 +24,45 @@ const testimonials = [
     rating: 5,
   },
   {
-    name: "Salma",
-    title: "Lovely Stay",
-    job: "UI Developer",
-    text: "Super comfy and clean. Best vacation ever!",
+    name: "Angga",
+    title: "Happy Family",
+    job: "Product Designer",
+    text: "What a great trip with my family and I should try again next time soon ...",
     image: family1,
-    rating: 4,
+    rating: 5,
+  },
+  {
+    name: "Angga",
+    title: "Happy Family",
+    job: "Product Designer",
+    text: "What a great trip with my family and I should try again next time soon ...",
+    image: family1,
+    rating: 5,
   },
 ];
 
-// const arrowStyle = {
-//   border: "2px solid #3F5BF6",
-//   color: "#3F5BF6",
-//   width: 50,
-//   height: 50,
-//   "&:hover": {
-//     backgroundColor: "#3F5BF6",
-//     color: "#fff",
-//   },
-// };
-
 const TestimonialCarousel = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <Container
-      maxWidth="xl"
-      sx={{ maxWidth: "1400px", mx: "auto", my: { lg: 10, sm: 4, xs: 2 } }}
+    <Box
+      sx={{
+        bgcolor: "#fff",
+        py: { xs: 6, sm: 8, md: 4 },
+        px: { xs: 2, sm: 4, md: 10 },
+        width: "100%",
+      }}
     >
       <Swiper
         spaceBetween={30}
         slidesPerView={1}
         loop
-        navigation={{
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        }}
         modules={[Navigation]}
+        navigation={{
+          nextEl: ".custom-next",
+          prevEl: ".custom-prev",
+        }}
       >
         {testimonials.map((item, index) => (
           <SwiperSlide key={index}>
@@ -58,124 +70,155 @@ const TestimonialCarousel = () => {
               sx={{
                 display: "flex",
                 flexDirection: { xs: "column", sm: "row" },
-                alignItems: "stretch",
-                justifyContent: "space-between",
-                mt: { xs: 12, sm: 15, md: 20 },
-                gap: 10,
+                alignItems: "center",
+                justifyContent: "flex-start",
+                gap: { xs: 4, sm: 8 },
+                mt: { xs: 6, sm: 0 },
+                width: "100%",
               }}
             >
-              {/* Left Image Section */}
+              {/* Left Box containing background and image */}
               <Box
                 sx={{
-                  flexShrink: 0,
+                  width: { xs: 320, sm: 440 },
+                  height: { xs: 420, sm: 520 },
                   position: "relative",
-                  width: "fit-content",
+                  flexShrink: 0,
                 }}
               >
+                {/* خلفية بيضاء */} 
                 <Box
                   sx={{
-                    width: 230,
-                    height: 322,
-                    borderRadius: "28px",
-                    backgroundColor: "#fff",
                     position: "absolute",
-                    top: -12,
-                    left: 20,
-                    border: "1px solid #E5E5E5",
-                    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+                    top: 2,
+                    left: 0,
+                    width: "80%",
+                    height: "95%",
+                    backgroundColor: "#fff",
+                    borderRadius: "28px",
+                    border: "1px solid #e0e0e0",
+                    boxShadow: "0 12px 24px rgba(0, 0, 0, 0.05)",
+                    zIndex: 1,
                   }}
                 />
 
+                {/* الصورة */} 
                 <Box
                   component="img"
                   src={item.image}
                   alt="testimonial"
                   sx={{
-                    width: 230,
-                    height: 344,
-                    borderRadius: "28px",
+                    position: "absolute",
+                    top: 0,
+                    left: { xs: 20, sm: 28 }, // زحزحة لليمين
+                    width: { xs: 280, sm: 380 },
+                    height: { xs: 400, sm: 500 },
+                    borderRadius: "24px",
                     objectFit: "cover",
-                    position: "relative",
                     zIndex: 2,
                   }}
                 />
               </Box>
 
-              {/* Right Text Section */}
-              <Box sx={{ flex: 1 }}>
+              {/* Right Text */}
+              <Box
+                sx={{
+                  mt: { xs: 0, sm: 6 },
+                  textAlign: { xs: "center", sm: "left" },
+                  maxWidth: { xs: "100%", sm: "640px", md: "700px" },
+                }}
+              >
                 <Typography
-                  fontWeight={600}
+                  fontWeight={700}
                   color="#081735"
-                  mb={1}
-                  fontSize={18}
+                  fontSize={{ xs: 22, sm: 26, md: 28 }}
+                  mb={1.5}
                 >
                   {item.title}
                 </Typography>
 
-                <Box display="flex" alignItems="center" mb={1}>
+                <Box
+                  display="flex"
+                  justifyContent={{ xs: "center", sm: "flex-start" }}
+                  alignItems="center"
+                  mb={1.5}
+                >
                   {[...Array(item.rating)].map((_, i) => (
-                    <StarIcon key={i} sx={{ color: "#FFB400", fontSize: 20 }} />
+                    <Box
+                      key={i}
+                      component="span"
+                      sx={{
+                        color: "#FFB400",
+                        fontSize: 24,
+                      }}
+                    >
+                      ★
+                    </Box>
                   ))}
                 </Box>
 
-                <Typography fontSize={20} fontWeight={500} color="#081735">
-                  {item.text}
-                </Typography>
                 <Typography
-                  fontSize={20}
+                  fontSize={{ xs: 18, sm: 20 }}
                   fontWeight={500}
                   color="#081735"
-                  mb={2}
+                  mb={3}
                   lineHeight={1.8}
                 >
                   {item.text}
                 </Typography>
+
                 <Typography fontSize={14} color="#9E9E9E" mb={4}>
                   {item.name}, {item.job}
                 </Typography>
 
-                <Stack direction="row" spacing={3} alignItems="center" mt={2}>
+                {/* Arrows */}
+                <Stack
+                  direction="row"
+                  spacing={3}
+                  justifyContent={{ xs: "center", sm: "flex-start" }}
+                >
                   <IconButton
-                    className="swiper-button-prev"
+                    className="custom-prev"
                     sx={{
-                      border: "2px solid #3F5BF6",
-                      color: "#3F5BF6",
-                      width: 40,
-                      height: 40,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginLeft:"52px",
-                      "&:hover": {
-                        backgroundColor: "#3F5BF6",
-                        color: "#fff",
-                      },
+                      width: 56,
+                      height: 56,
+                      border: "3px solid #3F5BF6",
+                      borderRadius: "50%",
+                      p: 1.5,
                     }}
-                  ></IconButton>
+                  >
+                    <Box
+                      component="img"
+                      src={arrowLeft}
+                      alt="prev"
+                      sx={{ width: 24, height: 24 }}
+                    />
+                  </IconButton>
 
                   <IconButton
-                    className="swiper-button-next"
+                    className="custom-next"
                     sx={{
-                      border: "2px solid #3F5BF6",
-                      color: "#3F5BF6",
-                      width: 40,
-                      height: 40,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      "&:hover": {
-                        backgroundColor: "#3F5BF6",
-                        color: "#fff",
-                      },
+                      width: 56,
+                      height: 56,
+                      border: "3px solid #3F5BF6",
+                      borderRadius: "50%",
+                      p: 1.5,
                     }}
-                  ></IconButton>
+                  >
+                    <Box
+                      component="img"
+                      src={arrowRight}
+                      alt="next"
+                      sx={{ width: 24, height: 24 }}
+                    />
+                  </IconButton>
                 </Stack>
               </Box>
             </Box>
           </SwiperSlide>
         ))}
       </Swiper>
-    </Container>
+    </Box>
   );
 };
 

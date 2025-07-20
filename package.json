@@ -4,14 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "lint": "eslint .",
-  "preview": "vite preview",
-  "build": "vite build",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
-},
-
+    "dev": "vite",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
   "homepage": "https://asmaa-jsb.github.io/hotel-managemnt/",
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -47,7 +46,7 @@
     "react-router-dom": "^7.6.3",
     "stylis": "^4.3.6",
     "stylis-plugin-rtl": "^2.1.1",
-    "swiper": "^11.2.10",
+    "swiper": "^10.3.1",
     "swiper.js": "^1.0.0",
     "universal-cookie": "^8.0.1"
   },

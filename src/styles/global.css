@@ -14,9 +14,9 @@ a {
   text-decoration: none !important;
 }
 :root {
-  --primary-color: #203FC7;
-  --secondary-color :rgba(21, 44, 91, 1);
-  --dark-color: #152C5B;
+  --primary-color: #203fc7;
+  --secondary-color: rgba(21, 44, 91, 1);
+  --dark-color: #152c5b;
 }
 
 .Primary-color {
@@ -43,6 +43,25 @@ a {
   border-left: 4px solid white;
 }
 
-.swiper-button-prev:after, .swiper-button-next:after{
+.swiper-button-prev:after,
+.swiper-button-next:after {
   font-size: 25px;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.MuiTypography-root {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mui-z1grn7 {
+  width: 80%;
+  border-radius: 28px;
+  background-color: #fff;
+  position: absolute;
+  top: 23px;
+  border: none !important;
+  box-shadow: none !important;
 }
