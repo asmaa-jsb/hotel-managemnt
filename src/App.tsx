@@ -108,7 +108,10 @@ function App() {
         { path: "my-profile/:id", element: <Profile /> },
       ],
     },
-  ]);
+  ], {
+   
+    basename: '/hotel-managemnt/',
+  });
 
   return (
     <>
