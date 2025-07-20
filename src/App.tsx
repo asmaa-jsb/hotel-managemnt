@@ -1,4 +1,4 @@
- import { useEffect } from "react";
+import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { saveLoginData } from "./redux/slices/authSlice";
@@ -53,65 +53,64 @@ function App() {
     return () => window.removeEventListener("storage", handleStorage);
   }, [dispatch]);
 
-  const routes = createBrowserRouter([
+  const routes = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <UserLayout />,
+        errorElement: <NotFound />,
+        children: [
+          { index: true, element: <LandingPage /> },
+          { path: "home", element: <LandingPage /> },
+          { path: "room-details/:id", element: <RoomDetails /> },
+          { path: "ad-details/:id", element: <RoomDetails /> },
+          { path: "exploreRoom", element: <ExploreRoom /> },
+          { path: "room-reviews/:id", element: <RoomReviews /> },
+          { path: "room-comments/:id", element: <RoomComments /> },
+          { path: "my-bookings", element: <AllBookings /> },
+          { path: "my-profile/:id", element: <Profile /> },
+          { path: "payment/:bookingId", element: <Payment /> },
+          { path: "favorites", element: <Favorites /> },
+          { path: "reviews", element: <TestimonialCarousel /> },
+        ],
+      },
+      {
+        path: "/auth",
+        element: <AuthLayout />,
+        errorElement: <NotFound />,
+        children: [
+          { index: true, element: <Login /> },
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+          { path: "forget-password", element: <ForgetPassword /> },
+          { path: "reset-password", element: <ResetPassword /> },
+          { path: "change-password", element: <ChangePassword /> },
+        ],
+      },
+      {
+        path: "/admin",
+        element: <PortalMainLayout />,
+        errorElement: <NotFound />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: "dashboard", element: <Dashboard /> },
+          { path: "rooms", element: <RoomList /> },
+          { path: "rooms/new-room", element: <RoomForm /> },
+          { path: "rooms/:roomId", element: <RoomForm /> },
+          { path: "ads", element: <AdsList /> },
+          { path: "ads/add", element: <AdsForm /> },
+          { path: "ads/edit/:id", element: <AdsForm /> },
+          { path: "facilities", element: <FacilitiesList /> },
+          { path: "bookings", element: <BookingList /> },
+          { path: "users", element: <Users /> },
+          { path: "my-profile/:id", element: <Profile /> },
+        ],
+      },
+    ],
     {
-      path: "/",
-      element: <UserLayout />,
-      errorElement: <NotFound />,
-      children: [
-        { index: true, element: <LandingPage /> },
-        { path: "home", element: <LandingPage /> },
-        { path: "room-details/:id", element: <RoomDetails /> },
-        { path: "ad-details/:id", element: <RoomDetails /> },
-        { path: "exploreRoom", element: <ExploreRoom /> },
-        { path: "room-reviews/:id", element: <RoomReviews /> },
-        { path: "room-comments/:id", element: <RoomComments /> },
-        { path: "my-bookings", element: <AllBookings /> },
-        { path: "my-profile/:id", element: <Profile /> },
-        { path: "payment/:bookingId", element: <Payment /> },
-        { path: "favorites", element: <Favorites /> },
-        { path: "reviews", element: <TestimonialCarousel /> },
-      ],
-    },
-
-    {
-      path: "/auth",
-      element: <AuthLayout />,
-      errorElement: <NotFound />,
-      children: [
-        { index: true, element: <Login /> },
-        { path: "login", element: <Login /> },
-        { path: "register", element: <Register /> },
-        { path: "forget-password", element: <ForgetPassword /> },
-        { path: "reset-password", element: <ResetPassword /> },
-        { path: "change-password", element: <ChangePassword /> },
-      ],
-    },
-
-    // Admin portal after login
-    {
-      path: "/admin",
-      element: <PortalMainLayout />,
-      errorElement: <NotFound />,
-      children: [
-        { index: true, element: <Dashboard /> },
-        { path: "dashboard", element: <Dashboard /> },
-        { path: "rooms", element: <RoomList /> },
-        { path: "rooms/new-room", element: <RoomForm /> },
-        { path: "rooms/:roomId", element: <RoomForm /> },
-        { path: "ads", element: <AdsList /> },
-        { path: "ads/add", element: <AdsForm /> },
-        { path: "ads/edit/:id", element: <AdsForm /> },
-        { path: "facilities", element: <FacilitiesList /> },
-        { path: "bookings", element: <BookingList /> },
-        { path: "users", element: <Users /> },
-        { path: "my-profile/:id", element: <Profile /> },
-      ],
-    },
-  ], {
-   
-    basename: '/hotel-managemnt/',
-  });
+      basename: "/hotel-managemnt/",
+    }
+  );
 
   return (
     <>
@@ -122,4 +121,3 @@ function App() {
 }
 
 export default App;
- 
