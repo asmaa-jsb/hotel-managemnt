@@ -18,8 +18,7 @@ import type { RootState } from "@/redux/store";
 import ReusableButton from "../ReusableButton/ReusableButton";
 import { useUserProfile } from "@/utils/Hooks/Hooks";
 import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
-import { Profile } from "@/pages";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 
 const pagesForUser = ["Home", "Explore", "Reviews", "Favorites"];
 const pagesForUserForAnonymous = ["Home", "Explore"];
@@ -57,13 +56,13 @@ const Navbar = () => {
     handleCloseUserMenu();
     if (option === "Logout") {
       HandleLogout(dispatch, navigate);
-    } else {
+    } else if (option === "Profile") {
       navigate(`/admin/my-profile/${userId}`);
     }
   };
 
   const userId = LoginData?._id;
-  const { data, isLoading } = useUserProfile(userId || "");
+  const { data } = useUserProfile(userId || "");
   const user = data?.data?.user;
 
   const displayName = user?.userName || "Guest";
@@ -71,8 +70,7 @@ const Navbar = () => {
 
   return (
     <AppBar
-       position="fixed"
-       
+      position="fixed"
       color="transparent"
       elevation={0}
       sx={{ borderBottom: "2px solid #e5e5e5", backgroundColor: "#fff", py: 1 }}
@@ -80,9 +78,7 @@ const Navbar = () => {
       <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto" }}>
         <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
           {/* Left Burger Menu */}
-          <Box
-            sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}
-          >
+          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
             <IconButton onClick={handleOpenNavMenu} color="inherit">
               <MenuIcon />
             </IconButton>
@@ -104,8 +100,8 @@ const Navbar = () => {
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="#"
+              component={RouterLink}
+              to="/"
               sx={{
                 fontFamily: "monospace",
                 fontWeight: 700,
@@ -133,25 +129,24 @@ const Navbar = () => {
             sx={{ display: { xs: "block", md: "none" } }}
           >
             {pages.map((page) => (
-              <MenuItem key={page} onClick={handleCloseNavMenu}>
+              <MenuItem
+                key={page}
+                component={RouterLink}
+                to={`/${page.toLowerCase()}`}
+                onClick={handleCloseNavMenu}
+              >
                 <Typography textAlign="center">{page}</Typography>
               </MenuItem>
             ))}
             {!LoginData && (
               <>
-                <MenuItem>
-                  <Button
-                    fullWidth
-                    sx={{ color: "#203FC7", border: "1px solid #203FC7" }}
-                  >
+                <MenuItem component={RouterLink} to="/auth/login" onClick={handleCloseNavMenu}>
+                  <Button fullWidth sx={{ color: "#203FC7", border: "1px solid #203FC7" }}>
                     Login
                   </Button>
                 </MenuItem>
-                <MenuItem>
-                  <Button
-                    fullWidth
-                    sx={{ backgroundColor: "#203FC7", color: "white" }}
-                  >
+                <MenuItem component={RouterLink} to="/auth/register" onClick={handleCloseNavMenu}>
+                  <Button fullWidth sx={{ backgroundColor: "#203FC7", color: "white" }}>
                     Register
                   </Button>
                 </MenuItem>
@@ -160,12 +155,12 @@ const Navbar = () => {
           </Menu>
 
           {/* Right section for md+ */}
-          <Box
-            sx={{ display: "flex", alignItems: "center", gap: 2, ml: "auto" }}
-          >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, ml: "auto" }}>
             {pages.map((page) => (
               <Button
                 key={page}
+                component={RouterLink}
+                to={`/${page.toLowerCase()}`}
                 sx={{
                   color: "black",
                   textTransform: "none",
@@ -179,14 +174,13 @@ const Navbar = () => {
             ))}
 
             {!LoginData && (
-             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                 <ReusableButton
                   label="Register"
                   to="/auth/register"
                   sx={{
-                    px: { xs: 0.2,sm:2, md: 3 },
-                    py: { xs: 0.5,sm:0.8, md: 1 },
+                    px: { xs: 0.2, sm: 2, md: 3 },
+                    py: { xs: 0.5, sm: 0.8, md: 1 },
                     fontSize: { xs: "12px", sm: "14px", md: "16px" },
                     display: { sm: "block", xs: "none" },
                   }}
@@ -196,10 +190,9 @@ const Navbar = () => {
                   label="Login Now"
                   to="/auth/login"
                   sx={{
-                    px: { xs: 0.7,sm:2, md: 3 },
-                    py: { xs: 0.7,sm:0.8, md: 1 },
+                    px: { xs: 0.7, sm: 2, md: 3 },
+                    py: { xs: 0.7, sm: 0.8, md: 1 },
                     fontSize: { xs: "9px", sm: "14px", md: "16px" },
-                    
                   }}
                 />
               </Box>
