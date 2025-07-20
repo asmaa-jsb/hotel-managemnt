@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "build": "tsc && vite build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
+  "dev": "vite",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "build": "vite build",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+},
+
   "homepage": "https://asmaa-jsb.github.io/hotel-managemnt/",
   "dependencies": {
     "@emotion/cache": "^11.14.0",
