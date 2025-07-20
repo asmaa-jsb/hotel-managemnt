@@ -48,7 +48,8 @@ const RoomReviews = () => {
               boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
                 paddingInline:'30px',
                 paddingBlock:'30px 0',
-                margin:'20px'
+                margin:'20px',
+                height:{lg:'300px', xs:"450px"},
               }}
             >
               {/* Left Image Section */}

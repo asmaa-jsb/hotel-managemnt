@@ -5,10 +5,16 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 const UserLayout = () => {
+ 
   return (
     <>
-      <Navbar />
-    <Box sx={{marginTop:'130px'}}>
+    <Box sx={{position:"sticky", zIndex: (theme) => theme.zIndex.appBar}}>
+       <Navbar />
+       </Box>
+     
+    <Box    sx={{
+      pt: 8, 
+    }}>
         <Outlet/>
       <Footer />
     </Box>

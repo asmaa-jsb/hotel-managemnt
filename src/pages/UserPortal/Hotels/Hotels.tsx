@@ -1,9 +1,9 @@
 import { Box, Container, Typography } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+// import "swiper/css";
+// import "swiper/css/navigation";
+// import "swiper/css/pagination";
 
 import hotel1 from "@/assets/Images/hotel1.png";
 import hotel2 from "@/assets/Images/hotel2.png";

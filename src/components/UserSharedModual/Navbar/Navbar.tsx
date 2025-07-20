@@ -70,7 +70,7 @@ const Navbar = () => {
   const userId = LoginData?._id;
   const { data } = useUserProfile(userId || "");
   const user = data?.data?.user;
-    console.log("rrrrrrrrrrrr",t("home"))
+  
 
   const displayName = user?.userName || "Guest";
   const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";

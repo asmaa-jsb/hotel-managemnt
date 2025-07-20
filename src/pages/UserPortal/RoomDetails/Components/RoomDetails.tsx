@@ -8,14 +8,17 @@ import { Loader } from "@/components/AdminSharedModual/Loader/Loader"
 import RoomBooking from "./RoomBooking"
 import RoomRating from "./RoomRating"
 import { useState } from "react"
+import type { RootState } from "@/redux/store"
+import { useSelector } from "react-redux"
 
 const RoomDetails = () => {
   const { id } = useParams<{ id?: string }>();
   const { data, isError, isLoading } = useGetAdDetails(id||"");
   const ad = data?.data?.ads?.room ?? null;
  
+
   
- 
+   const loginData = useSelector((state: RootState) => state.auth.loginData);
   
   const [roomPrice, setRoomPrice]= useState((ad?.price || 0));
 
@@ -56,7 +59,7 @@ const handlePriceUpdate = (price: number) => {
         room={ad?._id}
          onPriceChange={handlePriceUpdate}
       />
-      <RoomRating roomId={ad?._id}/>
+    {loginData?<RoomRating roomId={ad?._id}/>:""}  
     </Box>
   );
 }

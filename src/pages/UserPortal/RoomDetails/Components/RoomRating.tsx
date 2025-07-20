@@ -1,5 +1,4 @@
-import { Box, Divider, Grid, Rating, Typography } from "@mui/material";
-import Textarea from "@mui/joy/Textarea";
+import { Box, Divider, Grid, Rating, TextareaAutosize, Typography } from "@mui/material";
 import { useState } from "react";
 import ReusableButton from "@/components/UserSharedModual/ReusableButton/ReusableButton";
 import { useAddComment, useAddReview } from "@/utils/Hooks/Hooks";
@@ -140,11 +139,11 @@ const {
             >
               Message
             </Typography>
-            <Textarea
-              minRows={4}
-              variant="outlined"
-              sx={{ backgroundColor: "#fff", border: "1px solid #203FC7" }}
+            <TextareaAutosize
+              minRows={8}
+              style={{ backgroundColor: "#fff", border: "1px solid #203FC7" , width:"100%"}}
               {...registerReview("review")}
+              
             />
             <Box sx={{ textAlign: { md: "right", xs: "center" }, pt: 4 }}>
               <ReusableButton
@@ -174,10 +173,9 @@ const {
               Add Your Comment
             </Typography>
 
-            <Textarea
-              minRows={6}
-              variant="outlined"
-              sx={{ backgroundColor: "#fff", border: "1px solid #203FC7" }}
+            <TextareaAutosize
+              minRows={10}
+              style={{ backgroundColor: "#fff", border: "1px solid #203FC7"  ,width:"100%"}}
               {...registerComment("comment")}
             />
             <Box sx={{ textAlign: { md: "right", xs: "center" }, pt: 4 }}>

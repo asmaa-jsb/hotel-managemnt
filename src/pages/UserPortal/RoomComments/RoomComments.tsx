@@ -13,11 +13,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditSquareIcon from '@mui/icons-material/EditSquare';
 import ReusableModal from "@/components/AdminSharedModual/ReusableModal/ReusableModal"
 import ReusableButton from "@/components/UserSharedModual/ReusableButton/ReusableButton"
+import { useSelector } from "react-redux"
+import type { RootState } from "@/redux/store"
 const RoomComments = () => {
     const [openDelete, setOpenDelete] = useState(false);
   const [CommentId, setCommentId] = useState<string | number>();
   const [Id, setId] = useState<string | number>();
 
+   const loginData = useSelector((state: RootState) => state.auth.loginData);
   
   const {mutate: deleteComment} = useDeleteComment();
     const [openFormModal, setOpenFormModal] = useState(false);
@@ -99,8 +102,9 @@ const RoomComments = () => {
                 gap: 10,
               boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
                 paddingInline:'30px',
-                paddingBlock:'30px',
-                margin:'20px'
+                paddingBlock:'20px',
+                margin:'20px',
+                  height:{lg:'300px', xs:"450px"},
               }}
             >
               {/* Left Image Section */}
@@ -165,10 +169,11 @@ const RoomComments = () => {
                 <Typography fontSize={14} color="#9E9E9E" mb={2}>
              {  new Date(comment?.createdAt).toLocaleDateString()}
                 </Typography>
-                <Box >
+                {loginData?._id===comment?.user?._id?<Box >
                   <DeleteIcon sx={{fontSize:'25px', color:'red', cursor:'pointer'}} onClick={()=>handleShowDelete(comment?._id)}/>
                   <EditSquareIcon sx={{fontSize:'25px', color:'#1ABC9C',cursor:'pointer'}} onClick={()=>handleViewModal(comment?._id)}/>
-                </Box>
+                </Box>:''}
+                
               </Box>
             </Box>
             </Grid>

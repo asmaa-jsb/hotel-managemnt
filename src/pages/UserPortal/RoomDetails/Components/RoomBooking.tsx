@@ -24,6 +24,9 @@ import { useForm } from "react-hook-form";
 import type { CreateBooking } from "@/interfaces/Interfaces";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import type { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+import ReusableAlertModal from "@/components/UserSharedModual/ReusableAlertModal/ReusableAlertModal";
 interface IRoomBookingProps {
   price: number;
   discount: number;
@@ -47,6 +50,9 @@ const RoomBooking: React.FC<IRoomBookingProps> = ({
   } = useForm({ mode: "onChange" });
   const [openCalendar, setOpenCalendar] = useState(false);
   const navigate = useNavigate();
+   const loginData = useSelector((state: RootState) => state.auth.loginData);
+     const [alertOpen, setAlertOpen] = useState(false);
+   
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -79,7 +85,8 @@ const RoomBooking: React.FC<IRoomBookingProps> = ({
   }, [priceAfterDiscount, onPriceChange]);
   // Form submission handler
   const onSubmit = () => {
-    if (endDate < startDate) {
+    if(loginData){
+       if (endDate < startDate) {
       toast.error("End date cannot be before start date");
       return;
     }
@@ -92,7 +99,7 @@ const RoomBooking: React.FC<IRoomBookingProps> = ({
       room,
       totalPrice: Math.round(priceAfterDiscount),
     };
-    console.log("Booking Data:", bookingData);
+   
     createBooking(bookingData, {
       onSuccess: (data) => {
         toast.success("Booking  created successfully!");
@@ -112,11 +119,16 @@ const RoomBooking: React.FC<IRoomBookingProps> = ({
       onError: (error) =>
         toast.error(error?.message || "Failed to create Booking."),
     });
+    }else{
+       setAlertOpen(true);
+      return;
+    }
+   
   };
   return (
     <Grid
       container
-      sx={{ mt: "5.625rem", padding: "20px" }}
+      sx={{ mt: "2rem", padding: "20px" }}
       spacing={6}
       alignItems={"center"}
     >
@@ -320,6 +332,16 @@ const RoomBooking: React.FC<IRoomBookingProps> = ({
           </Box>
         </Box>
       </Grid>
+      <ReusableAlertModal
+       open={alertOpen}   
+       onClose={() => setAlertOpen(false)}
+        title="Login Required"
+        message="You need to be logged in to Create A New Booking."
+        confirmText="Login Now"
+        onConfirm={() => {
+          setAlertOpen(false);
+          navigate("/auth/login");
+        }}/>
     </Grid>
   );
 };

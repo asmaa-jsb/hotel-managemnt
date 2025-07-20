@@ -11,6 +11,7 @@ interface ReusableButtonProps {
   padding?: string;
   type?:string;
   sx?: SxProps; // ✅ دعم sx مخصص
+  onClick?:()=>void
 }
 
 const ReusableButton: React.FC<ReusableButtonProps> = ({
@@ -20,6 +21,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
   disabled = false,
   padding = "8px 35px",
   sx = {}, 
+  onClick= ()=>{},
   type,
 }) => {
   const ButtonComponent: React.ElementType = to ? RouterLink : 'button';
@@ -32,6 +34,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
       fullWidth={fullWidth}
       disabled={disabled}
       variant="contained"
+      onClick={onClick}
       sx={{
         background: "rgba(50, 82, 223, 1)",
         color: "#fff",
@@ -50,6 +53,7 @@ const ReusableButton: React.FC<ReusableButtonProps> = ({
       }}
     >
       {label}
+      
     </Button>
   );
 };

@@ -188,9 +188,8 @@ const PopularAds = () => {
                         navigate(`/ad-details/${ads[0]?._id}`);
                       }}
                     />
-                  </Box>
-                  
-                  <StarIcon
+                    {LoginData? <>
+                             <StarIcon
                     sx={{ color: "#fff", fontSize: 30 }}
                     onClick={() => {
                       navigate(`/room-reviews/${ads[0]?.room._id}`);
@@ -201,8 +200,11 @@ const PopularAds = () => {
                     onClick={() => {
                       navigate(`/room-comments/${ads[0]?.room._id}`);
                     }}
-                  />
+                  /></>: ""}
                 </Box>
+                  </Box>
+                  
+         
               </motion.div>
             )}
           </Grid>
@@ -297,10 +299,8 @@ const PopularAds = () => {
                               onClick={() => {
                                 navigate(`/ad-details/${ad._id}`);
                               }}
-                            />
-                          </Box>
-                       
-                               <StarIcon
+                            /> 
+                 {LoginData?    <> <StarIcon
                     sx={{ color: "#fff", fontSize: 30 }}
                     onClick={() => {
                       navigate(`/room-reviews/${ads[0]?.room._id}`);
@@ -311,7 +311,10 @@ const PopularAds = () => {
                     onClick={() => {
                       navigate(`/room-comments/${ads[0]?.room._id}`);
                     }}
-                  />
+                  /></>:''}
+                          </Box>
+                       
+                    
                         </Box>
                       </motion.div>
                     )}
