@@ -35,7 +35,7 @@ const Hero = () => {
   const handleExplore = () => {
     const from = format(dateRange[0].startDate, "yyyy-MM-dd");
     const to = format(dateRange[0].endDate, "yyyy-MM-dd");
-    navigate(`/search?from=${from}&to=${to}&capacity=${capacity}`);
+  navigate(`/room-explore/search?from=${from}&to=${to}&capacity=${capacity}`);
   };
 
   return (
@@ -239,7 +239,7 @@ const Hero = () => {
             </Box>
 
             <Box pt={{ md: 4, xs: 2 }}>
-              <ReusableButton label="Explore" to="/" padding="8px 85px" />
+              <ReusableButton label="Explore" type="submit" padding="8px 85px" />
             </Box>
           </Box>
         </Box>

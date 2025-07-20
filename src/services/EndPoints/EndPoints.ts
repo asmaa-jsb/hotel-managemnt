@@ -55,7 +55,9 @@ export const BOOKINGS = {
   GET_ALL_BOOKINGS: `${AdminPortal}/booking`,
   GET_BOOKING_BY_ID: (id: string) => `${AdminPortal}/booking/${id}`,
   DELETE_BOOKING_BY_ID: (id: string) => `${AdminPortal}/booking/${id}`,
-  CREATE_BOOKING: `${BasePortal}/booking`
+  CREATE_BOOKING: `${BasePortal}/booking`,
+  GET_MY_BOOKING: `${BasePortal}/booking/my`
+
 };
 // users list
 export const USERS = {
@@ -92,9 +94,16 @@ export const BOOKINGPAYMENT_URLS = {
 };
 //************* User Explore **************** */
 export const USER_Explore_URLS = {
-  GET_ALL_ROOMS: (page = 1, size = 10, startDate: string, endDate: string) =>
-    `${BasePortal}/rooms/available?page=${page}&size=${size}&startDate=${startDate}&endDate=${endDate}`,
+  GET_AVAILABLE_ROOMS: (
+    page: number,
+    size: number,
+    startDate: string,
+    endDate: string,
+    capacity: number
+  ) =>
+    `${BasePortal}/rooms/available?page=${page}&size=${size}&startDate=${startDate}&endDate=${endDate}&capacity=${capacity}`,
 };
+
 /*******************reviews******************* */
 export const REVIEWS_URLS ={
   CREATE_REVIEW : `${BasePortal}/room-reviews`,

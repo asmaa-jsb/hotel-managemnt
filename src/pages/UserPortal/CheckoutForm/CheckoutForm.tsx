@@ -14,7 +14,7 @@ import {
   Paper,
   Container,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { usePayBooking } from "@/utils/Hooks/Hooks";
 import styles from "./CheckoutForm.module.css";
 
@@ -53,11 +53,11 @@ const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
     if (!stripe || !elements) return;
 
     const cardElement = elements.getElement(CardElement);
-    const addressElement = elements.getElement("address");
+   
 
     if (!cardElement) return;
 
-    const addressDetails = await addressElement?.getValue();
+   
     const { token, error } = await stripe.createToken(cardElement);
 
     if (error || !token) {

@@ -7,6 +7,8 @@ import ReusableAlertModal from "@/components/UserSharedModual/ReusableAlertModal
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { useNavigate } from "react-router-dom";
+import StarIcon from '@mui/icons-material/Star';
+import CommentIcon from '@mui/icons-material/Comment';
 
 const PopularAds = () => {
   const { data } = useAdsLanding();
@@ -175,6 +177,18 @@ const PopularAds = () => {
                       navigate(`/ad-details/${ads[0]?._id}`);
                     }}
                   />
+                  <StarIcon
+                    sx={{ color: "#fff", fontSize: 30 }}
+                    onClick={() => {
+                      navigate(`/room-reviews/${ads[0]?.room._id}`);
+                    }}
+                    />
+                  <CommentIcon
+                    sx={{ color: "#fff", fontSize: 30 }}
+                    onClick={() => {
+                      navigate(`/room-comments/${ads[0]?.room._id}`);
+                    }}
+                  />
                 </Box>
               </Box>
             )}
@@ -273,6 +287,18 @@ const PopularAds = () => {
                               navigate(`/ad-details/${ad?._id}`);
                             }}
                           />
+                               <StarIcon
+                    sx={{ color: "#fff", fontSize: 30 }}
+                    onClick={() => {
+                      navigate(`/room-reviews/${ads[0]?.room._id}`);
+                    }}
+                    />
+                  <CommentIcon
+                    sx={{ color: "#fff", fontSize: 30 }}
+                    onClick={() => {
+                      navigate(`/room-comments/${ads[0]?.room._id}`);
+                    }}
+                  />
                         </Box>
                       </Box>
                     )}

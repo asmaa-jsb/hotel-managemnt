@@ -27,6 +27,7 @@ import {
   fetchBookings,
   deleteBooking,
   createBooking,
+  getMyBookings,
 } from "@/services/API/Bookingapi";
 import { fetchUsers, getUserProfile } from "@/services/API/UsersApi";
 import { fetchChart } from "@/services/API/ChartApi";
@@ -40,7 +41,7 @@ import {
 import type { IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 import { getAdDetails, getRoomDetails } from "@/services/API/DetailsApi";
 import { fetchAvailableRooms } from "@/services/API/ExploreRoom";
-import type { Comment, CommentsApiResponse, CreateBooking, Review, ReviewsApiResponse } from "@/interfaces/Interfaces";
+import type {  Comment, CommentsApiResponse, CreateBooking, DetailsApiResponse, MyBookingApiResponse, Review, ReviewsApiResponse } from "@/interfaces/Interfaces";
 import { createReview, getAllRoomReviews } from "@/services/API/reviewsApi";
 import {
   createComment,
@@ -50,6 +51,7 @@ import {
 } from "@/services/API/commentsapi";
 import type { PayBookingPayload } from "@/interfaces/PaymentInterface";
 import { payBookingAPI } from "@/services/API/PaymentApi";
+import type { ExploreRoomsApiResponse} from "@/interfaces/ExploreRoomsInterface";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -120,7 +122,7 @@ export const useUpdateRoom = () => {
 
 /************Bookings****************/
 export const useBookings = () => {
-  return useQuery<IRoomFacilities>({
+  return useQuery({
     queryKey: ["bookings"],
     queryFn: fetchBookings,
   });
@@ -142,6 +144,12 @@ export const useAddBooking = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bookings"] });
     },
+  });
+};
+export const useMyBookings = () => {
+  return useQuery<MyBookingApiResponse['data'], Error>({
+    queryKey: ["my-bookings"],
+    queryFn: getMyBookings,
   });
 };
 /*******************Users********************/
@@ -259,7 +267,7 @@ export const useAdsLanding = () => {
 };
 
 export const useGetAdDetails = (id: string) => {
-  return useQuery({
+  return useQuery<DetailsApiResponse, Error>({
     queryKey: ["ad-details", id],
     queryFn: () => getAdDetails(id),
     enabled: id != null && id !== "",
@@ -286,12 +294,13 @@ export const useExoloreRooms = (
   page: number,
   size: number,
   startDate: string,
-  endDate: string
+  endDate: string,
+  capacity: number
 ) => {
-  return useQuery({
-    queryKey: ["availableRooms", page, size, startDate, endDate],
-    queryFn: () => fetchAvailableRooms(page, size, startDate, endDate),
-    enabled: !!startDate && !!endDate, // فقط لما يكون التواريخ متوفرة
+  return useQuery<ExploreRoomsApiResponse['data'], Error>({
+    queryKey: ["availableRooms", page, size, startDate, endDate, capacity],
+    queryFn: () => fetchAvailableRooms(page, size, startDate, endDate, capacity),
+    enabled: !!startDate && !!endDate,
   });
 };
 /*****************reviews******************** */
@@ -334,8 +343,8 @@ export const useAddComment = () => {
 };
 export const useUpdateComment = () => {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: ({ id, payload , roomId}: { id: string; payload: Comment ; roomId?: string}) => updateComment(id, payload),
+  return useMutation<null, Error, { id: string; payload: Comment; roomId?: string }>({
+    mutationFn: ({ id, payload }) => updateComment(id, payload),
     onSuccess: (_, variables) => {
       if (variables.roomId) {
         queryClient.invalidateQueries({ queryKey: ["room-comments", variables.roomId] });

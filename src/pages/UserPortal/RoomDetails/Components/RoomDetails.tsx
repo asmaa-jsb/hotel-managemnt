@@ -11,20 +11,26 @@ import { useState } from "react"
 
 const RoomDetails = () => {
   const { id } = useParams<{ id?: string }>();
-  const { data, isError, isLoading } = useGetAdDetails(id);
+  const { data, isError, isLoading } = useGetAdDetails(id||"");
   const ad = data?.data?.ads?.room ?? null;
+ 
+  
+ 
+  
   const [roomPrice, setRoomPrice]= useState((ad?.price || 0));
 
+
 const handlePriceUpdate = (price: number) => {
-  setRoomPrice(price*ad?.capacity);
+  if(ad){
+    setRoomPrice(price * ad?.capacity);
+  }
 };
 
   const mainImg = ad?.images[0] || mainImage;
   const sideImg1 = ad?.images[1] || sideImage1;
   const sideImg2 = ad?.images[2] || sideImage2;
 
-  
-if (isLoading) return <Loader />;
+    if (isLoading) return <Box sx={{paddingY:'150px'}}> <Loader /></Box>;
   if (isError || !ad) {
     return (
       <Box sx={{ textAlign: 'center', mt: 4 }}>

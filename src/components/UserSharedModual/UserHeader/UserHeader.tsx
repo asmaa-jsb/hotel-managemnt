@@ -11,7 +11,7 @@ const UserHeader: React.FC<HeaderProps>  =({title, page,description}) => {
   const theme = useTheme(); 
 
   return (
-    <Box >
+    <Box className="details-container">
       <Grid
         container
         alignItems="center" 

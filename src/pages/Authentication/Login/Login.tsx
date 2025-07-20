@@ -13,8 +13,15 @@ import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";
 import AuthSubmitButton from "@/components/AdminSharedModual/AuthSubmitButton/AuthSubmitButton";
 import { useState } from "react";
 import type { LoginFormInputs } from "@/interfaces/AuthInterface";
+import type { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+    
+    const loginData = useSelector((state: RootState) => state.auth.loginData);
+  console.log(loginData);
+  
+  const role =  loginData?.role;
   const {
     register,
     formState: { errors },
@@ -30,7 +37,11 @@ const Login = () => {
       CookieServices.set("token", response?.data?.data?.token);
 
       toast.success(response?.data?.message || "Logged in successfully!");
-      navigate("/admin");
+     if (role==="admin") {
+       navigate("/admin/dashboard");
+     }else{
+      navigate("/home")
+     }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.message || "Login failed:");

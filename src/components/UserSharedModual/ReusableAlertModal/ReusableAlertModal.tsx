@@ -8,8 +8,6 @@ import {
   Button,
   IconButton,
   Box,
-  useTheme,
-  useMediaQuery,
 } from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 import CloseIcon from "@mui/icons-material/Close";
@@ -41,8 +39,7 @@ const ReusableAlertModal: React.FC<Props> = ({
   confirmText = "OK",
   onConfirm,
 }) => {
-  const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+ 
 
   return (
     <Dialog

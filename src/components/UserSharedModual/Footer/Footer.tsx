@@ -5,7 +5,7 @@ const Footer = () => {
     <Box sx={{ bgcolor: "#fff", py: 6, borderTop: "1px solid #f0f0f0" }}>
       <Container maxWidth="xl" sx={{ maxWidth: "1200px", mx: "auto" }}>
         <Grid container spacing={10}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{xs:12, sm:6, md:3} } >
             <Typography
               variant="h6"
               sx={{
@@ -37,7 +37,7 @@ const Footer = () => {
           </Grid>
 
           {/* For Beginners */}
-          <Grid item xs={6} sm={3} md={3}>
+          <Grid size={{xs:12, sm:6, md:3} }>
             <Typography fontWeight="bold" color="#081735" mb={2}>
               For Beginners
             </Typography>
@@ -55,7 +55,7 @@ const Footer = () => {
           </Grid>
 
           {/* Explore Us */}
-          <Grid item xs={6} sm={3} md={3}>
+          <Grid size={{xs:12, sm:6, md:3} }>
             <Typography fontWeight="bold" color="#081735" mb={2}>
               Explore Us
             </Typography>
@@ -73,7 +73,7 @@ const Footer = () => {
           </Grid>
 
           {/* Connect Us */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{xs:12, sm:6, md:3} }>
             <Typography fontWeight="bold" color="#081735" mb={2}>
               Connect Us
             </Typography>

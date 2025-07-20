@@ -122,7 +122,7 @@ const {
                 name="simple-controlled"
                 value={value}
                 precision={0.5}
-                onChange={(event, newValue) => {
+                onChange={(_event, newValue) => {
                   if (newValue == null || newValue < 1) {
                     setValue(1);
                   } else {

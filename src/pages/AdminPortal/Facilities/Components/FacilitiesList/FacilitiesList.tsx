@@ -17,7 +17,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import TablePagination from "@/components/AdminSharedModual/TablePagination/TablePagination";
 
 const FacilitiesList = () => {
-  const { data, isLoading, isError } = useRoomsFacilities();
+  const { data, isLoading } = useRoomsFacilities();
   const { mutate: deleteFacilityMutate } = useDeleteFacility();
   const { mutate: addFacilityMutate } = useAddFacility();
   const { mutate: updateFacilityMutate } = useUpdateFacility();

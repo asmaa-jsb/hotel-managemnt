@@ -1,12 +1,11 @@
 import { Box, Divider, Grid, Typography } from "@mui/material"
 import { useUserProfile } from '@/utils/Hooks/Hooks';
-import type { UserProfile } from "@/interfaces/Interfaces";
 import { Loader } from "@/components/AdminSharedModual/Loader/Loader";
 import { useParams } from "react-router-dom";
 
 const Profile = () => {  
   const { id } = useParams<{ id?: string }>();
-      const { data, isLoading, isError } = useUserProfile<UserProfile>(id);
+      const { data, isLoading } = useUserProfile(id||'');
      const user = data?.data?.user;
    
      

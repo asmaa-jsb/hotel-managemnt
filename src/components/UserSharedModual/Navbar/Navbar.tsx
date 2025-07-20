@@ -18,7 +18,6 @@ import type { RootState } from "@/redux/store";
 import ReusableButton from "../ReusableButton/ReusableButton";
 import { useUserProfile } from "@/utils/Hooks/Hooks";
 import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
-import { Profile } from "@/pages";
 import {  useNavigate } from "react-router-dom";
 
 const pagesForUser = ["Home", "Explore", "Reviews", "Favorites"];
@@ -63,7 +62,7 @@ const Navbar = () => {
   };
 
   const userId = LoginData?._id;
-  const { data, isLoading } = useUserProfile(userId || "");
+  const { data} = useUserProfile(userId || "");
   const user = data?.data?.user;
 
   const displayName = user?.userName || "Guest";

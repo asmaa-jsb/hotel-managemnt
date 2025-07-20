@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { axiosInstance, USERS_URLS } from "@/services/EndPoints/EndPoints";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
 
 // Reusable components
 import AuthInput from "@/components/AdminSharedModual/AuthInput/AuthInput";

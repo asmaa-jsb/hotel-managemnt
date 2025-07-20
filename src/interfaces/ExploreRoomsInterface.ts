@@ -25,6 +25,14 @@ export interface Room {
 }
 
 export interface RoomExploreList {
-  rooms: Room[];
-  totalCount: number;
+  data:{
+    rooms: Room[];
+    totalCount: number;
+  }
+  
+}
+
+export interface ExploreRoomsApiResponse {
+  data:RoomExploreList
+ 
 }

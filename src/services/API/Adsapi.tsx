@@ -5,7 +5,7 @@ import {
   axiosInstance,
   USER_ADS_URLS,
 } from "../EndPoints/EndPoints";
-import type { AdsLanding, IAdsListLanding } from "@/interfaces/AdsLandingInterface";
+import type {  IAdsListLanding } from "@/interfaces/AdsLandingInterface";
 
 export const fetchAds = async (page = 1, size = 10): Promise<IAdsList> => {
   const response = await axiosInstance.get(ADS_URLS.ADS_LIST, {

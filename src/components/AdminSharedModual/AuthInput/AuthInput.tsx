@@ -5,6 +5,7 @@ import {
   IconButton,
   Typography,
   InputBase,
+ type InputProps as MuiInputProps
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -20,6 +21,7 @@ interface AuthInputProps {
   register: any;
   disabled?: boolean;
   defaultValue?: string;
+  InputProps?: MuiInputProps;
 }
 
 const AuthInput: React.FC<AuthInputProps> = ({

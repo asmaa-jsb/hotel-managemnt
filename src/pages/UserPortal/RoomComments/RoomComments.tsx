@@ -59,7 +59,7 @@ const RoomComments = () => {
     toast.error("Invalid comment Id");
     return;
   }
-    updateCommentMutate({ id: Id, payload: { comment }, roomId: id  },{
+    updateCommentMutate({ id: String(Id), payload: { comment },  roomId: String(id)  },{
       
          onSuccess: () => {
           setOpenFormModal(false);
@@ -73,15 +73,15 @@ const RoomComments = () => {
     })
   }
        
-      if (isLoading) return <Loader />;
+  if (isLoading) return <Box sx={{paddingY:'150px'}}> <Loader /></Box>;
         if (isError ) {
         toast.error("Room Comments could not be found or an error occurred.")
         return null;
         }
   return (
    <>
-  
-    <UserHeader title="comments" description="check our customers opinion!" page="Comments" />
+      <UserHeader title="Comments" description="check our customers opinion!" page="Comments" />
+    
   {    comments.length=== 0 ? <Box sx={{display:'flex', justifyContent:"center"}}><NoData/></Box>:(<Box  
 
       sx={{ maxWidth: comments.length >2 ? {lg:"1350px", xs:'95%'} : {lg:"700px" , xs:'95%'} , mx: "auto", mb: { lg: 20, sm: 4, xs: 2 }, mt:"30px" }}

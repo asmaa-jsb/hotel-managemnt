@@ -18,7 +18,7 @@ const RoomReviews = () => {
       console.log(reviews);
       
        
-      if (isLoading) return <Loader />;
+     if (isLoading) return <Box sx={{paddingY:'150px'}}> <Loader /></Box>;
         if (isError ) {
         toast.error("Room reviews could not be found or an error occurred.")
         }
