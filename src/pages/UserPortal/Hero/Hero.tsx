@@ -85,17 +85,13 @@ const Hero = () => {
 
             {/* Form */}
             <Box
-              component="form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleExplore();
-              }}
               sx={{
                 backgroundColor: "#fff",
                 borderRadius: 2,
                 maxWidth: 450,
                 position: "relative",
                 boxSizing: "border-box",
+                p: 2,
               }}
               className="Secondary-color"
             >
@@ -180,18 +176,6 @@ const Hero = () => {
                 </Box>
               </ClickAwayListener>
 
-              <input
-                type="hidden"
-                name="from"
-                value={format(dateRange[0].startDate, "yyyy-MM-dd")}
-              />
-              <input
-                type="hidden"
-                name="to"
-                value={format(dateRange[0].endDate, "yyyy-MM-dd")}
-              />
-              <input type="hidden" name="capacity" value={capacity} />
-
               {/* Capacity Section */}
               <Typography variant="body2" fontWeight="bold" mt={1} mb={0.5}>
                 Capacity
@@ -205,7 +189,7 @@ const Hero = () => {
                   borderRadius: "12px",
                   overflow: "hidden",
                   height: "48px",
-                  mb: 1.5,
+                  mb: 2,
                 }}
               >
                 <IconButton
@@ -280,10 +264,7 @@ const Hero = () => {
             <Box
               sx={{
                 width: "80%",
-                height: {
-                  xs: "100%",
-                  sm: "100%",
-                },
+                height: "100%",
                 borderRadius: "28px",
                 backgroundColor: "#fff",
                 position: "absolute",
@@ -293,18 +274,12 @@ const Hero = () => {
                 boxShadow: "0 0 10px rgba(0,0,0,0.1)",
               }}
             />
-
             <Box
               component="img"
               src={heroImg}
               alt="Hero"
               sx={{
                 width: "100%",
-                height: {
-                  xs: "100%",
-                  sm: "100%",
-                  md: "auto",
-                },
                 maxWidth: 500,
                 position: "relative",
                 zIndex: 1,

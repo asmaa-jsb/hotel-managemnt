@@ -34,5 +34,12 @@ export interface RoomExploreList {
 
 export interface ExploreRoomsApiResponse {
   data:RoomExploreList
- 
+}
+
+export interface FetchAvailableRoomsParams {
+  page?: number;
+  size?: number;
+  startDate?: string;
+  endDate?: string;
+  guests?: number;
 }
