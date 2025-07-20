@@ -36,7 +36,7 @@ const Hero = () => {
   const handleExplore = () => {
     const from = format(dateRange[0].startDate, "yyyy-MM-dd");
     const to = format(dateRange[0].endDate, "yyyy-MM-dd");
-  navigate(`/room-explore/search?from=${from}&to=${to}&capacity=${capacity}`);
+    navigate(`/room-explore/search?from=${from}&to=${to}&capacity=${capacity}`);
   };
 
   return (
@@ -85,17 +85,13 @@ const Hero = () => {
 
             {/* Form */}
             <Box
-              component="form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleExplore();
-              }}
               sx={{
                 backgroundColor: "#fff",
                 borderRadius: 2,
                 maxWidth: 450,
                 position: "relative",
                 boxSizing: "border-box",
+                p: 2,
               }}
               className="Secondary-color"
             >
@@ -182,18 +178,6 @@ const Hero = () => {
                 </Box>
               </ClickAwayListener>
 
-              <input
-                type="hidden"
-                name="from"
-                value={format(dateRange[0].startDate, "yyyy-MM-dd")}
-              />
-              <input
-                type="hidden"
-                name="to"
-                value={format(dateRange[0].endDate, "yyyy-MM-dd")}
-              />
-              <input type="hidden" name="capacity" value={capacity} />
-
               {/* Capacity Section */}
               <Typography variant="body2" fontWeight="bold" mt={1} mb={0.5}>
                 Capacity
@@ -207,7 +191,7 @@ const Hero = () => {
                   borderRadius: "12px",
                   overflow: "hidden",
                   height: "48px",
-                  mb: 1.5,
+                  mb: 2,
                 }}
               >
                 <IconButton
@@ -245,23 +229,14 @@ const Hero = () => {
                 </IconButton>
               </Box>
 
-              <IconButton
-                onClick={() => setCapacity((prev) => prev + 1)}
-                sx={{
-                  height: "100%",
-                  width: "48px",
-                  borderRadius: 0,
-                  backgroundColor: "#32C99F",
-                  color: "#fff",
-                  "&:hover": { backgroundColor: "#2cb98e" },
-                }}
-              >
-                <AddIcon />
-              </IconButton>
-            </Box>
-
-            <Box pt={{ md: 4, xs: 2 }}>
-              <ReusableButton label="Explore" type="submit" padding="8px 85px" />
+              <Box pt={2} textAlign="center">
+                <ReusableButton
+                  label="Explore"
+                  type="button"
+                  padding="8px 85px"
+                  onClick={handleExplore}
+                />
+              </Box>
             </Box>
           </Box>
 
@@ -278,10 +253,7 @@ const Hero = () => {
             <Box
               sx={{
                 width: "80%",
-                height: {
-                  xs: "100%",
-                  sm: "100%",
-                },
+                height: "100%",
                 borderRadius: "28px",
                 backgroundColor: "#fff",
                 position: "absolute",
@@ -291,18 +263,12 @@ const Hero = () => {
                 boxShadow: "0 0 10px rgba(0,0,0,0.1)",
               }}
             />
-
             <Box
               component="img"
               src={heroImg}
               alt="Hero"
               sx={{
                 width: "100%",
-                height: {
-                  xs: "100%",
-                  sm: "100%",
-                  md: "auto",
-                },
                 maxWidth: 500,
                 position: "relative",
                 zIndex: 1,

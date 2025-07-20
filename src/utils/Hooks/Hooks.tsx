@@ -56,7 +56,7 @@ import {
   getFavoriteRooms,
   removeFavoriteRoom,
 } from "@/services/API/Favorites";
-import type { ExploreRoomsApiResponse} from "@/interfaces/ExploreRoomsInterface";
+import type { ExploreRoomsApiResponse, FetchAvailableRoomsParams} from "@/interfaces/ExploreRoomsInterface";
 
 /**********Rooms*************/
 export const useRooms = (page: number, size: number) => {
@@ -295,19 +295,18 @@ export const useGetRoomDetails = (id: string) => {
 };
 
 /************* User ExploreRooms *************** */
-export const useExoloreRooms = (
-  page: number,
-  size: number,
-  startDate: string,
-  endDate: string,
-  capacity: number
-) => {
-  return useQuery<ExploreRoomsApiResponse['data'], Error>({
-    queryKey: ["availableRooms", page, size, startDate, endDate, capacity],
-    queryFn: () => fetchAvailableRooms(page, size, startDate, endDate, capacity),
-    enabled: !!startDate && !!endDate,
+export const useAvailableRooms = (params: any) => {
+  return useQuery({
+    queryKey: ["availableRooms", params],
+    queryFn: async () => {
+      const response = await fetchAvailableRooms(params);
+      console.log("Fetched Rooms: ", response);  
+      return response;
+    },
+    enabled: !!params,
   });
 };
+
 /*****************reviews******************** */
 export const useGetAllRoomReviews = (id: string) => {
   return useQuery<ReviewsApiResponse["data"], Error>({

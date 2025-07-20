@@ -94,11 +94,21 @@ export const USER_Explore_URLS = {
   GET_AVAILABLE_ROOMS: (
     page: number,
     size: number,
+
+    
+  ) =>
+    `${BasePortal}/rooms/available?page=${page}&size=${size}`,
+};
+
+export const USER_FILTER_Explore = {
+  GET_AVAILABLE_ROOMS: (
+    page: number,
+    size: number,
     startDate: string,
     endDate: string,
-    capacity: number
+    
   ) =>
-    `${BasePortal}/rooms/available?page=${page}&size=${size}&startDate=${startDate}&endDate=${endDate}&capacity=${capacity}`,
+    `${BasePortal}/rooms/available?page=${page}&size=${size}&startDate=${startDate}&endDate=${endDate}`,
 };
 
 /*******************reviews******************* */
