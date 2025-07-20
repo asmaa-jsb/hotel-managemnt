@@ -18,19 +18,11 @@ import type { RootState } from "@/redux/store";
 import ReusableButton from "../ReusableButton/ReusableButton";
 import { useUserProfile } from "@/utils/Hooks/Hooks";
 import { HandleLogout } from "@/utils/HelperFunctions/HelperFunctions";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Profile } from "@/pages";
+import {  useNavigate } from "react-router-dom";
 
-const pagesForUser = [
-  { name: "Home", path: "/" },
-  { name: "Explore", path: "/explore" },
-  { name: "Reviews", path: "/reviews" },
-  { name: "Favorites", path: "/favorites" },
-];
-
-const pagesForUserForAnonymous = [
-  { name: "Home", path: "/" },
-  { name: "Explore", path: "/explore" },
-];
+const pagesForUser = ["Home", "Explore", "Reviews", "Favorites"];
+const pagesForUserForAnonymous = ["Home", "Explore"];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -42,17 +34,6 @@ const Navbar = () => {
 
   const LoginData = useSelector((state: RootState) => state.auth.loginData);
   const pages = LoginData ? pagesForUser : pagesForUserForAnonymous;
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const userId = LoginData?._id;
-  const { data } = useUserProfile(userId || "");
-  const user = data?.data?.user;
-
-  const displayName = user?.userName || "Guest";
-  const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -69,6 +50,8 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleMenuClick = (option: string) => {
     handleCloseUserMenu();
@@ -79,32 +62,24 @@ const Navbar = () => {
     }
   };
 
-  const handleNavClick = (page: { name: string; path: string }) => {
-    handleCloseNavMenu();
+  const userId = LoginData?._id;
+  const { data, isLoading } = useUserProfile(userId || "");
+  const user = data?.data?.user;
 
-    if (page.name === "Reviews") {
-      navigate("/", { state: { scrollTo: "reviews" } });
-    } else if (page.name === "Home") {
-      if (location.pathname === "/") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        navigate("/");
-      }
-    } else {
-      navigate(page.path);
-    }
-  };
+  const displayName = user?.userName || "Guest";
+  const avatarSrc = user?.profileImage || "https://i.pravatar.cc/40";
 
   return (
     <AppBar
-      position="fixed"
+       position="fixed"
+       
       color="transparent"
       elevation={0}
       sx={{ borderBottom: "2px solid #e5e5e5", backgroundColor: "#fff", py: 1 }}
     >
       <Container maxWidth="xl" sx={{ maxWidth: "1400px", mx: "auto" }}>
         <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
-          {/* Mobile Menu Icon */}
+          {/* Left Burger Menu */}
           <Box
             sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}
           >
@@ -113,7 +88,7 @@ const Navbar = () => {
             </IconButton>
           </Box>
 
-          {/* Centered Logo */}
+          {/* Centered Logo for xs */}
           <Box
             sx={{
               position: { xs: "absolute", md: "static" },
@@ -148,7 +123,7 @@ const Navbar = () => {
             </Typography>
           </Box>
 
-          {/* Mobile Menu Drawer */}
+          {/* Mobile Menu */}
           <Menu
             anchorEl={anchorElNav}
             anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
@@ -158,49 +133,75 @@ const Navbar = () => {
             sx={{ display: { xs: "block", md: "none" } }}
           >
             {pages.map((page) => (
-              <MenuItem key={page.name} onClick={() => handleNavClick(page)}>
-                <Typography textAlign="center">{page.name}</Typography>
+              <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">{page}</Typography>
               </MenuItem>
             ))}
+            {!LoginData && (
+              <>
+                <MenuItem>
+                  <Button
+                    fullWidth
+                    sx={{ color: "#203FC7", border: "1px solid #203FC7" }}
+                  >
+                    Login
+                  </Button>
+                </MenuItem>
+                <MenuItem>
+                  <Button
+                    fullWidth
+                    sx={{ backgroundColor: "#203FC7", color: "white" }}
+                  >
+                    Register
+                  </Button>
+                </MenuItem>
+              </>
+            )}
           </Menu>
 
-          {/* Desktop nav buttons */}
+          {/* Right section for md+ */}
           <Box
             sx={{ display: "flex", alignItems: "center", gap: 2, ml: "auto" }}
           >
-            {pages.map((page) => {
-              const isActive =
-                (page.name === "Home" &&
-                  location.pathname === "/" &&
-                  !location.state?.scrollTo) ||
-                (page.name === "Reviews" &&
-                  location.pathname === "/" &&
-                  location.state?.scrollTo === "reviews") ||
-                (location.pathname === page.path && page.name !== "Reviews");
-
-              return (
-                <Button
-                  key={page.name}
-                  onClick={() => handleNavClick(page)}
-                  sx={{
-                    color: isActive ? "#203FC7" : "black",
-                    fontWeight: isActive ? 600 : 400,
-                    textTransform: "none",
-                    fontSize: "17px",
-                    display: { xs: "none", md: "inline-flex" },
-                    borderBottom: isActive ? "2px solid #203FC7" : "none",
-                    borderRadius: 0,
-                  }}
-                >
-                  {page.name}
-                </Button>
-              );
-            })}
+            {pages.map((page) => (
+              <Button
+                key={page}
+                sx={{
+                  color: "black",
+                  textTransform: "none",
+                  fontSize: "17px",
+                  display: { xs: "none", md: "inline-flex" },
+                  "&:hover": { color: "#203FC7" },
+                }}
+              >
+                {page}
+              </Button>
+            ))}
 
             {!LoginData && (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                <ReusableButton label="Register" to="/auth/register" />
-                <ReusableButton label="Login Now" to="/auth/login" />
+             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+
+                <ReusableButton
+                  label="Register"
+                  to="/auth/register"
+                  sx={{
+                    px: { xs: 0.2,sm:2, md: 3 },
+                    py: { xs: 0.5,sm:0.8, md: 1 },
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    display: { sm: "block", xs: "none" },
+                  }}
+                />
+
+                <ReusableButton
+                  label="Login Now"
+                  to="/auth/login"
+                  sx={{
+                    px: { xs: 0.7,sm:2, md: 3 },
+                    py: { xs: 0.7,sm:0.8, md: 1 },
+                    fontSize: { xs: "9px", sm: "14px", md: "16px" },
+                    
+                  }}
+                />
               </Box>
             )}
 

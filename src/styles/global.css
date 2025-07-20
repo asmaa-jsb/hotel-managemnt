@@ -65,3 +65,14 @@ a {
   border: none !important;
   box-shadow: none !important;
 }
+
+.mui-lfavr3 {
+    width: 80%;
+    height: 100%;
+    border-radius: 28px;
+    background-color: #fff;
+    position: absolute;
+    top: 23px;
+    border: none !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
