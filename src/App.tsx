@@ -64,7 +64,7 @@ function App() {
           { path: "home", element: <LandingPage /> },
           { path: "room-details/:id", element: <RoomDetails /> },
           { path: "ad-details/:id", element: <RoomDetails /> },
-          { path: "exploreRoom", element: <ExploreRoom /> },
+          { path: "explore", element: <ExploreRoom /> },
           { path: "room-reviews/:id", element: <RoomReviews /> },
           { path: "room-comments/:id", element: <RoomComments /> },
           { path: "my-bookings", element: <AllBookings /> },
